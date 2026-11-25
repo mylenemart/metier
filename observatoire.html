@@ -346,7 +346,7 @@
         <article class="card kpi">
           <div class="kpi-label">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
-            Offres analysées
+            Offres analysées (cumul)
           </div>
           <div class="kpi-value" id="kpiOffres"><div class="skeleton sk-big">&nbsp;</div></div>
           <div class="kpi-sub" id="kpiOffresSub"><div class="skeleton sk-line" style="width:70%">&nbsp;</div></div>
@@ -585,6 +585,8 @@
         contratsPublies: raw.contrats_publies !== false,
         sites: Array.isArray(raw.sites) ? raw.sites : [],
         dateCollecte: raw.date_collecte ?? null,
+        nouvelles: firstNum(raw.nouvelles),
+        actives: firstNum(raw.actives),
         approx: false
       };
     }
@@ -943,7 +945,12 @@
 
       // Offres
       $("#kpiOffres").textContent = fmtInt.format(a.nb);
-      $("#kpiOffresSub").innerHTML = state.active === "all"
+      const cumul = [
+        isNum(a.nouvelles) ? `<span class="delta">+${fmtInt.format(a.nouvelles)}</span> nouvelles` : "",
+        isNum(a.actives) ? `${fmtInt.format(a.actives)} encore en ligne` : ""
+      ].filter(Boolean).join(" · ");
+      $("#kpiOffresSub").innerHTML = cumul ? cumul + "<br>" : "";
+      $("#kpiOffresSub").innerHTML += state.active === "all"
         ? (() => {
             const n = Object.keys(state.data.sources).length;
             const m = state.data.meta?.metiers;
