@@ -232,6 +232,9 @@ SITES_LIBRES = {
 }
 RECHERCHES_FR = {"marketing": 10, "communication": 3, "community manager": 2, "seo": 2,
                  "e-commerce": 2, "chef de produit": 2, "marketing digital": 3}
+# Compte Adzuna en essai (25 appels au total) : 5 appels par collecte. Passer à None une fois
+# le compte activé (5 000 appels par mois) pour utiliser toutes les recherches ci-dessus.
+ADZUNA_RECHERCHES_ESSAI = {"marketing": 5}
 HIMALAYAS_RECHERCHES = {"marketing": 5, "seo": 1, "content": 1, "social media": 1, "e-commerce": 1}
 ZONES_FRANCE = re.compile(r"france|europe|emea|worldwide|anywhere|partout|paris", re.IGNORECASE)
 PERIODES = {"year": 1, "annual": 1, "yearly": 1, "month": 12, "monthly": 12, "hour": 1607, "hourly": 1607}
@@ -359,11 +362,15 @@ def collecter_adzuna():
         return {}
     contrats = {"permanent": "CDI", "contract": "CDD"}
     offres = {}
-    for q, pages in RECHERCHES_FR.items():
+    for q, pages in (ADZUNA_RECHERCHES_ESSAI or RECHERCHES_FR).items():
         for page in range(1, pages + 1):
             time.sleep(1)
-            d = lire_json(f"https://api.adzuna.com/v1/api/jobs/fr/search/{page}?app_id={app_id}&app_key={app_key}"
-                          f"&results_per_page=50&max_days_old=2&what={urllib.parse.quote(q)}&content-type=application/json")
+            try:
+                d = lire_json(f"https://api.adzuna.com/v1/api/jobs/fr/search/{page}?app_id={app_id}&app_key={app_key}"
+                              f"&results_per_page=50&max_days_old=2&what={urllib.parse.quote(q)}&content-type=application/json")
+            except urllib.error.HTTPError as e:  # quota épuisé ou clé refusée : on garde ce qui est déjà reçu
+                print(f"Adzuna : arrêt (HTTP {e.code}), {len(offres)} offres gardées")
+                return offres
             res = d.get("results") or []
             for j in res:
                 predit = str(j.get("salary_is_predicted")) == "1"  # salaire estimé par Adzuna : écarté
