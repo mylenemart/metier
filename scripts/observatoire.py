@@ -1,5 +1,9 @@
 r"""Écrit data/observatoire.json : la synthèse par source qu'affiche observatoire.html.
 
+La synthèse est cumulative : elle porte sur toutes les offres vues depuis le début de la veille
+(data/brut et data/jobicy gardent tout l'historique) ; chaque jour, les nouvelles offres s'ajoutent
+aux anciennes, qui restent comptées même après leur retrait du site d'origine.
+
 Trois sources, toutes en accès libre et légal :
   - France Travail     offres déposées directement sur francetravail.fr (origineOffre.origine = 1) ;
   - Sites partenaires  offres d'autres sites d'emploi (Indeed, Meteojob, DirectEmploi, PMEJob…)
@@ -112,7 +116,8 @@ def teletravail(texte):
 
 # ----------------------------------------------------------------------------- France Travail
 def offres_france_travail():
-    """Offres actives du dernier jour extrait, chacune dans sa dernière version connue."""
+    """Toutes les offres vues depuis le début, chacune dans sa dernière version connue,
+    avec la date à laquelle on l'a vue pour la première fois et si elle est encore en ligne."""
     jours = sorted(f for f in (RACINE / "data" / "actives").glob("*.csv")
                    if re.fullmatch(r"\d{4}-\d{2}-\d{2}", f.stem))
     if not jours:
@@ -120,14 +125,16 @@ def offres_france_travail():
     with jours[-1].open(encoding="utf-8") as f:
         ids_actifs = {r["id"] for r in csv.DictReader(f)}
 
-    versions = {}
+    versions, premiere = {}, {}
     for fichier in sorted((RACINE / "data" / "brut").glob("*/*.jsonl")):
         with fichier.open(encoding="utf-8") as fh:
             for ligne in fh:
                 if ligne.strip():
                     v = json.loads(ligne)
-                    if v["id"] in ids_actifs:
-                        versions[v["id"]] = v
+                    oid = v["id"]
+                    premiere[oid] = min(premiere.get(oid, v["vu_le"]), v["vu_le"])
+                    if oid not in versions or v["vu_le"] >= versions[oid]["vu_le"]:
+                        versions[oid] = v
 
     offres = []
     for oid, v in versions.items():
@@ -145,6 +152,8 @@ def offres_france_travail():
             "contrat": contrat_france_travail(o),
             "salaire": salaire_annuel(o),
             "teletravail": teletravail(texte),
+            "premiere_vue": premiere[oid],
+            "active": oid in ids_actifs,
         })
     return jours[-1].stem, offres
 
@@ -202,15 +211,24 @@ def collecter_jobicy(jour):
 
 
 def offres_jobicy():
-    """Dernière collecte Jobicy enregistrée (l'API renvoie les offres des 7 derniers jours)."""
+    """Toutes les offres Jobicy collectées jour après jour (l'API ne renvoie que les 7 derniers jours :
+    c'est l'empilement des collectes quotidiennes qui garde l'historique)."""
     fichiers = sorted(DOSSIER_JOBICY.glob("*.json")) if DOSSIER_JOBICY.exists() else []
     if not fichiers:
         return None, []
-    return fichiers[-1].stem, json.loads(fichiers[-1].read_text(encoding="utf-8"))
+    offres = {}
+    for fichier in fichiers:
+        for o in json.loads(fichier.read_text(encoding="utf-8")):
+            premiere = offres[o["id"]]["premiere_vue"] if o["id"] in offres else fichier.stem
+            offres[o["id"]] = {**o, "premiere_vue": premiere, "active": False}
+    for o in json.loads(fichiers[-1].read_text(encoding="utf-8")):
+        offres[o["id"]]["active"] = True
+    return fichiers[-1].stem, list(offres.values())
 
 
 # ----------------------------------------------------------------------------- agrégats
-def agreger(offres, contrats_publies=True):
+def agreger(offres, contrats_publies=True, jour=None):
+    jour = jour or max((o["premiere_vue"] for o in offres), default=None)
     salaires = [o["salaire"] for o in offres if o.get("salaire")]
     contrats = Counter(o["contrat"] for o in offres)
     nb_tele = sum(1 for o in offres if o.get("teletravail"))
@@ -223,6 +241,9 @@ def agreger(offres, contrats_publies=True):
 
     return {
         "nb_offres": len(offres),
+        "nouvelles": sum(1 for o in offres if o["premiere_vue"] == jour),
+        "actives": sum(1 for o in offres if o.get("active")),
+        "jour_nouvelles": jour,
         "salaires": {
             "min": round(min(salaires)) if salaires else None,
             "max": round(max(salaires)) if salaires else None,
@@ -261,12 +282,12 @@ def main(argv=None):
 
     sources = {
         "france_travail": {
-            **agreger(directes),
+            **agreger(directes, jour=jour),
             "libelle": "France Travail",
             "description": "Offres déposées directement sur francetravail.fr",
         },
         "partenaires": {
-            **agreger(partenaires),
+            **agreger(partenaires, jour=jour),
             "libelle": "Sites partenaires",
             "description": "Offres d'autres sites d'emploi rediffusées par l'API France Travail",
             "sites": [{"nom": n, "nb": c} for n, c in sites.most_common(12)],
@@ -274,7 +295,7 @@ def main(argv=None):
     }
     if jobicy:
         sources["jobicy"] = {
-            **agreger(jobicy, contrats_publies=False),
+            **agreger(jobicy, contrats_publies=False, jour=jour_jobicy),
             "libelle": "Jobicy",
             "description": "Offres en télétravail ouvertes depuis la France : marketing, contenu, communication, design",
             "date_collecte": jour_jobicy,
@@ -282,12 +303,20 @@ def main(argv=None):
         }
 
     toutes = directes + partenaires + jobicy
+    debut = min(o["premiere_vue"] for o in toutes)
+    par_jour = defaultdict(Counter)
+    for o in toutes:
+        par_jour[o["premiere_vue"]][o["source"]] += 1
     resume = {
         "date_maj": jour,
-        "perimetre": "Métiers du marketing et du digital : 23 codes ROME pour France Travail et ses "
+        "depuis": debut,
+        "historique": [{"date": d, "nouvelles": dict(c)} for d, c in sorted(par_jour.items())],
+        "perimetre": f"Toutes les offres vues depuis le {debut} (les offres retirées restent comptées). "
+                     "Métiers du marketing et du digital : 23 codes ROME pour France Travail et ses "
                      "partenaires ; pour Jobicy, offres en télétravail ouvertes depuis la France dont "
                      "l'intitulé relève du marketing, du contenu, de la communication ou du design.",
-        "global": agreger(toutes, contrats_publies=True),
+        "global": {**agreger(toutes, contrats_publies=True, jour=jour),
+                   "nouvelles": sum(1 for o in toutes if o["premiere_vue"] in (jour, jour_jobicy))},
         "sources": sources,
     }
     SORTIE.parent.mkdir(parents=True, exist_ok=True)
@@ -295,7 +324,8 @@ def main(argv=None):
     tmp.write_text(json.dumps(resume, ensure_ascii=False, indent=1), encoding="utf-8")
     tmp.replace(SORTIE)
 
-    print(f"Écrit : {SORTIE.relative_to(RACINE)} — {len(toutes)} offres : France Travail {len(directes)}, "
+    print(f"Écrit : {SORTIE.relative_to(RACINE)} — {len(toutes)} offres depuis le {debut} "
+          f"(+{resume['global']['nouvelles']} nouvelles) : France Travail {len(directes)}, "
           f"sites partenaires {len(partenaires)} ({', '.join(f'{n} {c}' for n, c in sites.most_common(4))}…), "
           f"Jobicy {len(jobicy)}")
 
