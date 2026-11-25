@@ -1,5 +1,6 @@
 {
- "date_maj": "2026-09-29",
+ "date_maj": "2026-11-25",
+ "date_france_travail": "2026-09-29",
  "depuis": "2026-09-22",
  "historique": [
   {
@@ -7,86 +8,263 @@
    "nouvelles": {
     "france_travail": 813,
     "partenaires": 2549
-   }
+   },
+   "cumul": 3362
   },
   {
    "date": "2026-09-23",
    "nouvelles": {
     "france_travail": 63,
     "partenaires": 161
-   }
+   },
+   "cumul": 3586
   },
   {
    "date": "2026-09-24",
    "nouvelles": {
     "france_travail": 59,
     "partenaires": 143
-   }
+   },
+   "cumul": 3788
   },
   {
    "date": "2026-09-25",
    "nouvelles": {
     "france_travail": 48,
     "partenaires": 147
-   }
+   },
+   "cumul": 3983
   },
   {
    "date": "2026-09-26",
    "nouvelles": {
     "france_travail": 24,
     "partenaires": 136
-   }
+   },
+   "cumul": 4143
   },
   {
    "date": "2026-09-27",
    "nouvelles": {
     "partenaires": 77
-   }
+   },
+   "cumul": 4220
   },
   {
    "date": "2026-09-28",
    "nouvelles": {
     "france_travail": 35,
     "partenaires": 23
-   }
+   },
+   "cumul": 4278
   },
   {
    "date": "2026-09-29",
    "nouvelles": {
     "france_travail": 52,
     "partenaires": 63
-   }
+   },
+   "cumul": 4393
   },
   {
    "date": "2026-11-25",
    "nouvelles": {
-    "jobicy": 7
-   }
+    "jobicy": 7,
+    "himalayas": 157,
+    "arbeitnow": 17,
+    "remotive": 2
+   },
+   "cumul": 4576
   }
  ],
- "perimetre": "Toutes les offres vues depuis le 2026-09-22 (les offres retirées restent comptées). Métiers du marketing et du digital : 23 codes ROME pour France Travail et ses partenaires ; pour Jobicy, offres en télétravail ouvertes depuis la France dont l'intitulé relève du marketing, du contenu, de la communication ou du design.",
+ "tests": [
+  {
+   "test": "Chi² d'indépendance",
+   "variables": "Origine de l'offre × type de contrat (CDI, CDD, alternance/stage)",
+   "n": 4028,
+   "statistique": "χ² = 193,2",
+   "ddl": 2,
+   "p": 1.1170580360572534e-42,
+   "effet": "V de Cramer = 0,22",
+   "effet_valeur": 0.219,
+   "effet_niveau": "petit",
+   "condition": "effectifs attendus ≥ 5 dans toutes les cases",
+   "tableau": {
+    "lignes": [
+     "France Travail",
+     "Sites partenaires"
+    ],
+    "colonnes": [
+     "Alternance/Stage",
+     "CDD",
+     "CDI"
+    ],
+    "valeurs": [
+     [
+      111,
+      363,
+      543
+     ],
+     [
+      710,
+      502,
+      1799
+     ]
+    ]
+   }
+  },
+  {
+   "test": "Chi² d'indépendance",
+   "variables": "Source × télétravail",
+   "n": 4576,
+   "statistique": "χ² = 1021,1",
+   "ddl": 5,
+   "p": 1.6397511409106983e-218,
+   "effet": "V de Cramer = 0,47",
+   "effet_valeur": 0.472,
+   "effet_niveau": "moyen",
+   "condition": "4 case(s) avec un effectif attendu < 5 : résultat à prendre avec prudence",
+   "tableau": {
+    "lignes": [
+     "Arbeitnow",
+     "France Travail",
+     "Himalayas",
+     "Jobicy",
+     "Remotive",
+     "Sites partenaires"
+    ],
+    "colonnes": [
+     "sur site",
+     "télétravail"
+    ],
+    "valeurs": [
+     [
+      16,
+      1
+     ],
+     [
+      978,
+      116
+     ],
+     [
+      0,
+      157
+     ],
+     [
+      0,
+      7
+     ],
+     [
+      0,
+      2
+     ],
+     [
+      2921,
+      378
+     ]
+    ]
+   }
+  },
+  {
+   "test": "ANOVA à un facteur",
+   "variables": "Source × salaire annuel brut (sources avec au moins 15 salaires)",
+   "n": 1329,
+   "statistique": "F(2 ; 1326) = 79,8",
+   "ddl": "2 ; 1326",
+   "p": 1.8962092557807756e-33,
+   "effet": "êta² = 0,107",
+   "effet_valeur": 0.1074,
+   "effet_niveau": "moyen",
+   "condition": "suppose des salaires proches de la loi normale dans chaque groupe (France Travail : 692, Sites partenaires : 619, Himalayas : 18) : ce n'est pas le cas (asymétrie positive), d'où le test de Kruskal-Wallis en contrôle"
+  },
+  {
+   "test": "Kruskal-Wallis",
+   "variables": "Source × salaire annuel brut (sources avec au moins 15 salaires)",
+   "n": 1329,
+   "statistique": "H = 117,1",
+   "ddl": 2,
+   "p": 3.806865318845183e-26,
+   "effet": "epsilon² = 0,088",
+   "effet_valeur": 0.0881,
+   "effet_niveau": "moyen",
+   "condition": "compare les rangs : ne suppose pas la normalité, adapté à des salaires asymétriques"
+  }
+ ],
+ "doublons_probables": 695,
+ "tranches_salaire": [
+  0,
+  5000,
+  10000,
+  15000,
+  20000,
+  25000,
+  30000,
+  35000,
+  40000,
+  45000,
+  50000,
+  55000,
+  60000,
+  65000,
+  70000,
+  75000,
+  80000,
+  85000,
+  90000,
+  95000,
+  100000
+ ],
+ "perimetre": "Toutes les offres vues depuis le 2026-09-22 (les offres retirées restent comptées). Métiers du marketing et du digital : 23 codes ROME pour France Travail et ses partenaires ; pour Jobicy, Himalayas, Arbeitnow et Remotive, offres ouvertes aux candidats en France dont l'intitulé relève du marketing, du contenu, de la communication ou du design.",
  "global": {
-  "nb_offres": 4400,
-  "nouvelles": 122,
-  "actives": 3188,
+  "nb_offres": 4576,
+  "nouvelles": 298,
+  "actives": 3364,
   "jour_nouvelles": "2026-09-29",
   "salaires": {
    "min": 4800,
-   "max": 125000,
+   "max": 160000,
    "mediane": 30000,
-   "moyenne": 33839,
-   "nb_renseignes": 1311
+   "moyenne": 34241,
+   "nb_renseignes": 1329,
+   "q1": 23500,
+   "q3": 42500,
+   "ecart_type": 15818,
+   "asymetrie": 1.66,
+   "aplatissement": 5.6,
+   "histogramme": [
+    2,
+    16,
+    52,
+    96,
+    247,
+    221,
+    170,
+    116,
+    107,
+    132,
+    50,
+    39,
+    17,
+    14,
+    16,
+    8,
+    5,
+    7,
+    5,
+    3,
+    6
+   ]
   },
   "contrats": {
-   "CDI": 2342,
-   "CDD": 865,
-   "Alternance/Stage": 821,
-   "Autre": 372
+   "CDI": 2347,
+   "CDD": 867,
+   "Alternance/Stage": 826,
+   "Autre": 536
   },
   "contrats_publies": true,
   "teletravail": {
-   "nb": 501,
-   "part": 0.1139
+   "nb": 661,
+   "part": 0.1444
   },
   "top_postes": [
    {
@@ -207,7 +385,35 @@
     "max": 125000,
     "mediane": 27000,
     "moyenne": 30141,
-    "nb_renseignes": 692
+    "nb_renseignes": 692,
+    "q1": 22646,
+    "q3": 34500,
+    "ecart_type": 12008,
+    "asymetrie": 2.3,
+    "aplatissement": 9.51,
+    "histogramme": [
+     0,
+     2,
+     17,
+     74,
+     175,
+     160,
+     94,
+     54,
+     53,
+     17,
+     13,
+     13,
+     5,
+     3,
+     5,
+     3,
+     0,
+     1,
+     1,
+     0,
+     2
+    ]
    },
    "contrats": {
     "CDI": 543,
@@ -340,7 +546,35 @@
     "max": 115000,
     "mediane": 37500,
     "moyenne": 37974,
-    "nb_renseignes": 619
+    "nb_renseignes": 619,
+    "q1": 25500,
+    "q3": 48500,
+    "ecart_type": 16699,
+    "asymetrie": 0.71,
+    "aplatissement": 1.19,
+    "histogramme": [
+     2,
+     14,
+     33,
+     22,
+     72,
+     59,
+     75,
+     62,
+     53,
+     113,
+     36,
+     26,
+     11,
+     11,
+     11,
+     4,
+     4,
+     4,
+     3,
+     2,
+     2
+    ]
    },
    "contrats": {
     "CDI": 1799,
@@ -523,7 +757,35 @@
     "max": null,
     "mediane": null,
     "moyenne": null,
-    "nb_renseignes": 0
+    "nb_renseignes": 0,
+    "q1": null,
+    "q3": null,
+    "ecart_type": null,
+    "asymetrie": null,
+    "aplatissement": null,
+    "histogramme": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
    },
    "contrats": {
     "CDI": 0,
@@ -593,6 +855,413 @@
    "credit": {
     "texte": "Offres en télétravail fournies par Jobicy",
     "url": "https://jobicy.com"
+   }
+  },
+  "himalayas": {
+   "nb_offres": 157,
+   "nouvelles": 157,
+   "actives": 157,
+   "jour_nouvelles": "2026-11-25",
+   "salaires": {
+    "min": 12000,
+    "max": 160000,
+    "mediane": 55000,
+    "moyenne": 63528,
+    "nb_renseignes": 18,
+    "q1": 33000,
+    "q3": 89500,
+    "ecart_type": 38052,
+    "asymetrie": 0.69,
+    "aplatissement": 0.28,
+    "histogramme": [
+     0,
+     0,
+     2,
+     0,
+     0,
+     2,
+     1,
+     0,
+     1,
+     2,
+     1,
+     0,
+     1,
+     0,
+     0,
+     1,
+     1,
+     2,
+     1,
+     1,
+     2
+    ]
+   },
+   "contrats": {
+    "CDI": 0,
+    "CDD": 2,
+    "Alternance/Stage": 3,
+    "Autre": 152
+   },
+   "contrats_publies": false,
+   "teletravail": {
+    "nb": 157,
+    "part": 1.0
+   },
+   "top_postes": [
+    {
+     "intitule": "Marketing Manager",
+     "nb": 3,
+     "salaire_median": null,
+     "source": "himalayas",
+     "site": "Himalayas"
+    },
+    {
+     "intitule": "Growth Marketing Manager",
+     "nb": 2,
+     "salaire_median": null,
+     "source": "himalayas",
+     "site": "Himalayas"
+    },
+    {
+     "intitule": "Content Manager & Digital Marketing Expert",
+     "nb": 2,
+     "salaire_median": null,
+     "source": "himalayas",
+     "site": "Himalayas"
+    },
+    {
+     "intitule": "Senior Product Marketing Manager",
+     "nb": 2,
+     "salaire_median": null,
+     "source": "himalayas",
+     "site": "Himalayas"
+    },
+    {
+     "intitule": "Director of Marketing, EMEA",
+     "nb": 2,
+     "salaire_median": 95000,
+     "source": "himalayas",
+     "site": "Himalayas"
+    },
+    {
+     "intitule": "Social Media Lead",
+     "nb": 2,
+     "salaire_median": null,
+     "source": "himalayas",
+     "site": "Himalayas"
+    },
+    {
+     "intitule": "Social Media Manager",
+     "nb": 2,
+     "salaire_median": null,
+     "source": "himalayas",
+     "site": "Himalayas"
+    },
+    {
+     "intitule": "Head of Marketing",
+     "nb": 2,
+     "salaire_median": null,
+     "source": "himalayas",
+     "site": "Himalayas"
+    },
+    {
+     "intitule": "Partner Marketing Manager",
+     "nb": 2,
+     "salaire_median": null,
+     "source": "himalayas",
+     "site": "Himalayas"
+    },
+    {
+     "intitule": "EMEA - Marketing Manager",
+     "nb": 1,
+     "salaire_median": null,
+     "source": "himalayas",
+     "site": "Himalayas"
+    },
+    {
+     "intitule": "Sr. Product Marketing Manager",
+     "nb": 1,
+     "salaire_median": null,
+     "source": "himalayas",
+     "site": "Himalayas"
+    },
+    {
+     "intitule": "Influencer Marketing Manager (m/f/d)",
+     "nb": 1,
+     "salaire_median": null,
+     "source": "himalayas",
+     "site": "Himalayas"
+    },
+    {
+     "intitule": "Marketing Manager - Market Data",
+     "nb": 1,
+     "salaire_median": null,
+     "source": "himalayas",
+     "site": "Himalayas"
+    },
+    {
+     "intitule": "Freelance Marketing Project Manager (Berlin, DE)",
+     "nb": 1,
+     "salaire_median": null,
+     "source": "himalayas",
+     "site": "Himalayas"
+    },
+    {
+     "intitule": "Senior Content Marketer, Campaigns/Enterprise",
+     "nb": 1,
+     "salaire_median": null,
+     "source": "himalayas",
+     "site": "Himalayas"
+    }
+   ],
+   "libelle": "Himalayas",
+   "description": "Offres en télétravail ouvertes aux candidats basés en France",
+   "date_collecte": "2026-11-25",
+   "credit": {
+    "texte": "Offres fournies par Himalayas",
+    "url": "https://himalayas.app"
+   }
+  },
+  "arbeitnow": {
+   "nb_offres": 17,
+   "nouvelles": 17,
+   "actives": 17,
+   "jour_nouvelles": "2026-11-25",
+   "salaires": {
+    "min": null,
+    "max": null,
+    "mediane": null,
+    "moyenne": null,
+    "nb_renseignes": 0,
+    "q1": null,
+    "q3": null,
+    "ecart_type": null,
+    "asymetrie": null,
+    "aplatissement": null,
+    "histogramme": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   "contrats": {
+    "CDI": 5,
+    "CDD": 0,
+    "Alternance/Stage": 2,
+    "Autre": 10
+   },
+   "contrats_publies": false,
+   "teletravail": {
+    "nb": 1,
+    "part": 0.0588
+   },
+   "top_postes": [
+    {
+     "intitule": "Account Executive, Ecommerce",
+     "nb": 1,
+     "salaire_median": null,
+     "source": "arbeitnow",
+     "site": "Arbeitnow"
+    },
+    {
+     "intitule": "Account Executive 🇫🇷 (Mid-market)",
+     "nb": 1,
+     "salaire_median": null,
+     "source": "arbeitnow",
+     "site": "Arbeitnow"
+    },
+    {
+     "intitule": "Alternance - Talent Acquisition Intern",
+     "nb": 1,
+     "salaire_median": null,
+     "source": "arbeitnow",
+     "site": "Arbeitnow"
+    },
+    {
+     "intitule": "Brand Designer",
+     "nb": 1,
+     "salaire_median": null,
+     "source": "arbeitnow",
+     "site": "Arbeitnow"
+    },
+    {
+     "intitule": "Cdi - designer junior jersey",
+     "nb": 1,
+     "salaire_median": null,
+     "source": "arbeitnow",
+     "site": "Arbeitnow"
+    },
+    {
+     "intitule": "Consultant(e) SEO confirmé(e) - Bordeaux",
+     "nb": 1,
+     "salaire_median": null,
+     "source": "arbeitnow",
+     "site": "Arbeitnow"
+    },
+    {
+     "intitule": "Digital Data AI Therapeutic Office Lead",
+     "nb": 1,
+     "salaire_median": null,
+     "source": "arbeitnow",
+     "site": "Arbeitnow"
+    },
+    {
+     "intitule": "Graphic Designer & Digital Content Creation Intern (H1/2027)",
+     "nb": 1,
+     "salaire_median": null,
+     "source": "arbeitnow",
+     "site": "Arbeitnow"
+    },
+    {
+     "intitule": "Marketing Coordinator Intern",
+     "nb": 1,
+     "salaire_median": null,
+     "source": "arbeitnow",
+     "site": "Arbeitnow"
+    },
+    {
+     "intitule": "SEO & Digital Marketing Specialist",
+     "nb": 1,
+     "salaire_median": null,
+     "source": "arbeitnow",
+     "site": "Arbeitnow"
+    },
+    {
+     "intitule": "Responsable Marketing Digital",
+     "nb": 1,
+     "salaire_median": null,
+     "source": "arbeitnow",
+     "site": "Arbeitnow"
+    },
+    {
+     "intitule": "Senior Brand Manager",
+     "nb": 1,
+     "salaire_median": null,
+     "source": "arbeitnow",
+     "site": "Arbeitnow"
+    },
+    {
+     "intitule": "Senior Data Analyst - Acquisition",
+     "nb": 1,
+     "salaire_median": null,
+     "source": "arbeitnow",
+     "site": "Arbeitnow"
+    },
+    {
+     "intitule": "Stage - Assistant(e) Chef(fe) de Projet Marketing - Projets Spéciaux",
+     "nb": 1,
+     "salaire_median": null,
+     "source": "arbeitnow",
+     "site": "Arbeitnow"
+    },
+    {
+     "intitule": "Talent Acquisition Specialist",
+     "nb": 1,
+     "salaire_median": null,
+     "source": "arbeitnow",
+     "site": "Arbeitnow"
+    }
+   ],
+   "libelle": "Arbeitnow",
+   "description": "Offres d'entreprises européennes situées en France",
+   "date_collecte": "2026-11-25",
+   "credit": {
+    "texte": "Offres fournies par Arbeitnow",
+    "url": "https://www.arbeitnow.com"
+   }
+  },
+  "remotive": {
+   "nb_offres": 2,
+   "nouvelles": 2,
+   "actives": 2,
+   "jour_nouvelles": "2026-11-25",
+   "salaires": {
+    "min": null,
+    "max": null,
+    "mediane": null,
+    "moyenne": null,
+    "nb_renseignes": 0,
+    "q1": null,
+    "q3": null,
+    "ecart_type": null,
+    "asymetrie": null,
+    "aplatissement": null,
+    "histogramme": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   "contrats": {
+    "CDI": 0,
+    "CDD": 0,
+    "Alternance/Stage": 0,
+    "Autre": 2
+   },
+   "contrats_publies": false,
+   "teletravail": {
+    "nb": 2,
+    "part": 1.0
+   },
+   "top_postes": [
+    {
+     "intitule": "Freelance Writer",
+     "nb": 1,
+     "salaire_median": null,
+     "source": "remotive",
+     "site": "Remotive"
+    },
+    {
+     "intitule": "Freelance Copywriter",
+     "nb": 1,
+     "salaire_median": null,
+     "source": "remotive",
+     "site": "Remotive"
+    }
+   ],
+   "libelle": "Remotive",
+   "description": "Offres marketing en télétravail ouvertes à la France ou à l'Europe",
+   "date_collecte": "2026-11-25",
+   "credit": {
+    "texte": "Offres fournies par Remotive",
+    "url": "https://remotive.com"
    }
   }
  }
