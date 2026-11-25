@@ -32,7 +32,12 @@ jobs:
         run: python scripts/extraire.py
 
       # Refait le résumé, collecte Jobicy, Himalayas, Arbeitnow et Remotive, et écrit data/observatoire.json
+      # Adzuna et Jooble ne sont collectés que si leurs clés sont dans les secrets du dépôt
       - name: Refaire les résumés et collecter les autres sites
+        env:
+          ADZUNA_APP_ID: ${{ secrets.ADZUNA_APP_ID }}
+          ADZUNA_APP_KEY: ${{ secrets.ADZUNA_APP_KEY }}
+          JOOBLE_KEY: ${{ secrets.JOOBLE_KEY }}
         run: python scripts/resumer.py
 
       - name: Enregistrer la donnée du jour (commit + push)
