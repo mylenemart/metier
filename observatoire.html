@@ -1,0 +1,1253 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Observatoire de l'emploi</title>
+  <meta name="description" content="Tableau de bord des offres d'emploi en marketing et digital : France Travail, sites d'emploi partenaires et Jobicy." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+
+  <style>
+    /* ==========================================================
+       1. Design tokens (clair / sombre)
+       ========================================================== */
+    :root {
+      color-scheme: light;
+      --bg:            #f5f5f3;
+      --surface:       #fcfcfb;
+      --surface-2:     #f0efec;
+      --border:        #e3e2de;
+      --text-primary:  #0b0b0b;
+      --text-secondary:#52514e;
+      --text-muted:    #8a8984;
+      --grid:          #ebeae6;
+      --accent:        #2a78d6;
+      --accent-soft:   #e3eefb;
+      --danger:        #c43c3b;
+      --danger-soft:   #fbeaea;
+      --shadow:        0 1px 2px rgba(0,0,0,.04), 0 2px 8px rgba(0,0,0,.04);
+
+      /* Identité des sources (ordre catégoriel fixe) */
+      --src-all:  #8a8984;
+      --src-ft:   #2a78d6;
+      --src-part: #eb6834;
+      --src-jobicy: #1baf7a;
+
+      /* Types de contrat (teintes distinctes des sources) */
+      --ct-cdi:   #4a3aa7;
+      --ct-cdd:   #e87ba4;
+      --ct-alt:   #eda100;
+      --ct-autre: #b5b4ae;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) {
+        color-scheme: dark;
+        --bg:            #111110;
+        --surface:       #1a1a19;
+        --surface-2:     #242422;
+        --border:        #2f2f2c;
+        --text-primary:  #ffffff;
+        --text-secondary:#c3c2b7;
+        --text-muted:    #8f8e86;
+        --grid:          #2a2a28;
+        --accent:        #3987e5;
+        --accent-soft:   #1c2b40;
+        --danger:        #e66767;
+        --danger-soft:   #3a1f1f;
+        --shadow:        0 1px 2px rgba(0,0,0,.3);
+        --src-all:  #8f8e86;
+        --src-ft:   #3987e5;
+        --src-part: #d95926;
+        --src-jobicy: #199e70;
+        --ct-cdi:   #9085e9;
+        --ct-cdd:   #d55181;
+        --ct-alt:   #c98500;
+        --ct-autre: #5e5d58;
+      }
+    }
+    :root[data-theme="dark"] {
+      color-scheme: dark;
+      --bg:            #111110;
+      --surface:       #1a1a19;
+      --surface-2:     #242422;
+      --border:        #2f2f2c;
+      --text-primary:  #ffffff;
+      --text-secondary:#c3c2b7;
+      --text-muted:    #8f8e86;
+      --grid:          #2a2a28;
+      --accent:        #3987e5;
+      --accent-soft:   #1c2b40;
+      --danger:        #e66767;
+      --danger-soft:   #3a1f1f;
+      --shadow:        0 1px 2px rgba(0,0,0,.3);
+      --src-all:  #8f8e86;
+      --src-ft:   #3987e5;
+      --src-part: #d95926;
+      --src-jobicy: #199e70;
+      --ct-cdi:   #9085e9;
+      --ct-cdd:   #d55181;
+      --ct-alt:   #c98500;
+      --ct-autre: #5e5d58;
+    }
+
+    /* ==========================================================
+       2. Base & layout
+       ========================================================== */
+    *, *::before, *::after { box-sizing: border-box; }
+    html, body { margin: 0; }
+    body {
+      background: var(--bg);
+      color: var(--text-primary);
+      font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+      font-size: 14px;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+    }
+    .container { max-width: 1240px; margin: 0 auto; padding: 24px 16px 48px; }
+
+    header.top {
+      display: flex; align-items: flex-start; justify-content: space-between;
+      gap: 16px; flex-wrap: wrap; margin-bottom: 20px;
+    }
+    header.top h1 { font-size: 22px; font-weight: 700; margin: 0; letter-spacing: -.01em; }
+    header.top p  { margin: 4px 0 0; color: var(--text-secondary); }
+    .meta { display: flex; align-items: center; gap: 10px; color: var(--text-muted); font-size: 13px; }
+
+    .icon-btn {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 36px; height: 36px; border-radius: 8px;
+      border: 1px solid var(--border); background: var(--surface);
+      color: var(--text-secondary); cursor: pointer;
+    }
+    .icon-btn:hover { color: var(--text-primary); }
+    .icon-btn svg { width: 18px; height: 18px; }
+
+    /* ---------- Filtres ---------- */
+    .filters {
+      display: flex; gap: 4px; flex-wrap: wrap;
+      padding: 4px; margin-bottom: 20px;
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 10px; width: fit-content; max-width: 100%;
+      box-shadow: var(--shadow);
+    }
+    .filter-btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 8px 14px; border: 0; border-radius: 7px;
+      background: transparent; color: var(--text-secondary);
+      font: inherit; font-weight: 500; cursor: pointer;
+      transition: background .15s, color .15s;
+    }
+    .filter-btn:hover { background: var(--surface-2); color: var(--text-primary); }
+    .filter-btn[aria-pressed="true"] { background: var(--accent-soft); color: var(--text-primary); font-weight: 600; }
+    .filter-btn:disabled { opacity: .5; cursor: not-allowed; }
+    .dot { width: 8px; height: 8px; border-radius: 50%; flex: none; }
+
+    /* ---------- KPI ---------- */
+    .kpis { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; margin-bottom: 16px; }
+    .card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 12px; box-shadow: var(--shadow);
+    }
+    .kpi { padding: 18px 20px; min-height: 118px; }
+    .kpi-label { color: var(--text-secondary); font-size: 13px; font-weight: 500; display: flex; align-items: center; gap: 8px; }
+    .kpi-label svg { width: 16px; height: 16px; color: var(--text-muted); }
+    .kpi-value { font-size: 30px; font-weight: 700; letter-spacing: -.02em; margin-top: 6px; font-variant-numeric: tabular-nums; }
+    .kpi-sub { color: var(--text-muted); font-size: 12.5px; margin-top: 2px; }
+    .delta { font-weight: 600; }
+    .delta.up   { color: var(--text-primary); }
+    .delta.down { color: var(--text-primary); }
+
+    /* ---------- Graphiques ---------- */
+    .charts { display: grid; grid-template-columns: 1.45fr 1fr; gap: 16px; margin-bottom: 16px; }
+    .panel { padding: 18px 20px 20px; min-width: 0; }
+    .panel-head { margin-bottom: 12px; }
+    .panel-head h2 { font-size: 15px; font-weight: 600; margin: 0; }
+    .panel-head p  { margin: 2px 0 0; color: var(--text-muted); font-size: 12.5px; }
+    .chart-box { position: relative; height: 300px; }
+    .legend { display: flex; flex-wrap: wrap; gap: 6px 16px; margin-top: 12px; font-size: 12.5px; color: var(--text-secondary); }
+    .legend span { display: inline-flex; align-items: center; gap: 6px; }
+    .swatch { display: inline-block; width: 14px; height: 8px; border-radius: 2px; }
+    .swatch.tick { width: 3px; height: 12px; border-radius: 1px; }
+
+    .donut-wrap { display: grid; grid-template-columns: 200px 1fr; gap: 20px; align-items: center; }
+    .donut-box { position: relative; height: 200px; }
+    .donut-center {
+      position: absolute; inset: 0; display: flex; flex-direction: column;
+      align-items: center; justify-content: center; pointer-events: none;
+    }
+    .donut-center strong { font-size: 24px; font-weight: 700; font-variant-numeric: tabular-nums; }
+    .donut-center small  { color: var(--text-muted); font-size: 12px; }
+    .ct-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+    .ct-list li { display: grid; grid-template-columns: 12px 1fr auto; gap: 10px; align-items: center; }
+    .ct-list .name { color: var(--text-secondary); }
+    .ct-list .val  { font-weight: 600; font-variant-numeric: tabular-nums; text-align: right; }
+    .ct-list .val small { color: var(--text-muted); font-weight: 400; margin-left: 6px; }
+    .ct-list .sw { width: 12px; height: 12px; border-radius: 3px; }
+
+    /* ---------- Tableau ---------- */
+    .table-wrap { overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; }
+    th, td { text-align: left; padding: 11px 12px; border-bottom: 1px solid var(--border); white-space: nowrap; }
+    th { color: var(--text-muted); font-size: 12px; font-weight: 500; text-transform: uppercase; letter-spacing: .04em; }
+    td.title { white-space: normal; font-weight: 500; min-width: 200px; }
+    td.num, th.num { text-align: right; }
+    tbody tr:hover { background: var(--surface-2); }
+    tbody tr:last-child td { border-bottom: 0; }
+    .rank { color: var(--text-muted); width: 32px; }
+    .badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 3px 9px; border-radius: 999px; font-size: 12px; font-weight: 500;
+      background: var(--surface-2); color: var(--text-secondary);
+    }
+    .sal-cell { display: flex; align-items: center; justify-content: flex-end; gap: 10px; }
+    .sal-bar { width: 80px; height: 6px; border-radius: 3px; background: var(--surface-2); overflow: hidden; }
+    .sal-bar i { display: block; height: 100%; border-radius: 3px; background: var(--text-muted); }
+    .level { font-size: 11.5px; color: var(--text-muted); min-width: 86px; text-align: left; }
+
+    /* ---------- États : chargement / erreur ---------- */
+    .skeleton {
+      position: relative; overflow: hidden; border-radius: 6px;
+      background: var(--surface-2); color: transparent !important;
+    }
+    .skeleton::after {
+      content: ""; position: absolute; inset: 0;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,.35), transparent);
+      transform: translateX(-100%); animation: shimmer 1.3s infinite;
+    }
+    :root[data-theme="dark"] .skeleton::after { background: linear-gradient(90deg, transparent, rgba(255,255,255,.06), transparent); }
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) .skeleton::after { background: linear-gradient(90deg, transparent, rgba(255,255,255,.06), transparent); }
+    }
+    @keyframes shimmer { to { transform: translateX(100%); } }
+    .sk-line { height: 12px; margin: 8px 0; }
+    .sk-big  { height: 32px; width: 60%; margin-top: 10px; }
+    .sk-box  { height: 100%; width: 100%; }
+
+    .notice {
+      display: none; align-items: center; gap: 10px;
+      padding: 10px 14px; margin-bottom: 16px; border-radius: 10px;
+      background: var(--surface); border: 1px solid var(--border); color: var(--text-secondary);
+    }
+    .notice.show { display: flex; }
+    .spinner {
+      width: 16px; height: 16px; border-radius: 50%;
+      border: 2px solid var(--border); border-top-color: var(--accent);
+      animation: spin .8s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .error-panel { display: none; padding: 32px; text-align: center; margin-bottom: 16px; }
+    .error-panel.show { display: block; }
+    .error-panel .err-icon {
+      width: 44px; height: 44px; margin: 0 auto 12px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      background: var(--danger-soft); color: var(--danger);
+    }
+    .error-panel h2 { margin: 0 0 6px; font-size: 17px; }
+    .error-panel p  { margin: 0 auto 6px; color: var(--text-secondary); max-width: 560px; }
+    .error-panel code {
+      background: var(--surface-2); padding: 2px 6px; border-radius: 4px; font-size: 12.5px;
+    }
+    .error-panel .err-detail { color: var(--text-muted); font-size: 12.5px; margin-top: 10px; }
+    .btn {
+      margin-top: 16px; padding: 9px 18px; border-radius: 8px; border: 0;
+      background: var(--accent); color: #fff; font: inherit; font-weight: 600; cursor: pointer;
+    }
+    .btn:hover { filter: brightness(1.08); }
+
+    .empty { color: var(--text-muted); text-align: center; padding: 24px; }
+
+    footer { color: var(--text-muted); font-size: 12px; margin-top: 24px; text-align: center; }
+    footer p { margin: 4px auto; max-width: 820px; }
+    footer a { color: var(--text-secondary); }
+
+    /* ---------- Responsive ---------- */
+    @media (max-width: 1024px) {
+      .kpis { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .charts { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 560px) {
+      .kpis { grid-template-columns: 1fr; }
+      .kpi-value { font-size: 26px; }
+      .donut-wrap { grid-template-columns: 1fr; }
+      .donut-box { max-width: 220px; margin: 0 auto; width: 100%; }
+      .filters { width: 100%; }
+      .filter-btn { flex: 1 1 auto; justify-content: center; padding: 8px 10px; }
+      .sal-bar, .level { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+
+    <!-- ===================== En-tête ===================== -->
+    <header class="top">
+      <div>
+        <h1>Observatoire du marché du travail</h1>
+        <p>Marketing et digital en France · France Travail, sites d'emploi partenaires et Jobicy</p>
+      </div>
+      <div class="meta">
+        <span id="updated">Chargement…</span>
+        <button class="icon-btn" id="themeToggle" type="button" aria-label="Changer de thème" title="Changer de thème">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+        </button>
+      </div>
+    </header>
+
+    <!-- ===================== Filtres ===================== -->
+    <nav class="filters" id="filters" aria-label="Filtrer par source">
+      <button class="filter-btn" data-source="all" aria-pressed="true" disabled>
+        <span class="dot" style="background:var(--src-all)"></span>Toutes les sources
+      </button>
+      <button class="filter-btn" data-source="ft" aria-pressed="false" disabled>
+        <span class="dot" style="background:var(--src-ft)"></span>France Travail
+      </button>
+      <button class="filter-btn" data-source="part" aria-pressed="false" disabled>
+        <span class="dot" style="background:var(--src-part)"></span>Sites partenaires
+      </button>
+      <button class="filter-btn" data-source="jobicy" aria-pressed="false" disabled>
+        <span class="dot" style="background:var(--src-jobicy)"></span>Jobicy · télétravail
+      </button>
+    </nav>
+
+    <!-- ===================== Notices / erreurs ===================== -->
+    <div class="notice" id="slowNotice" role="status">
+      <div class="spinner"></div>
+      <span>Le chargement des données prend plus de temps que prévu…</span>
+    </div>
+
+    <div class="notice" id="staleNotice" role="status">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" style="flex:none;color:var(--text-muted)"><circle cx="12" cy="12" r="9.5"/><path d="M12 7v5l3 2"/></svg>
+      <span></span>
+    </div>
+
+    <div class="notice" id="fallbackNotice" role="status">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" style="flex:none;color:var(--text-muted)"><circle cx="12" cy="12" r="9.5"/><path d="M12 11v6M12 7.5v.5"/></svg>
+      <span>La synthèse par source sera créée à la prochaine mise à jour automatique : en attendant, toutes les offres de l'API France Travail sont regroupées sous « France Travail ».</span>
+    </div>
+
+    <section class="card error-panel" id="errorPanel" role="alert">
+      <div class="err-icon">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 8v5M12 16.5v.5"/><circle cx="12" cy="12" r="9.5"/></svg>
+      </div>
+      <h2>Impossible de charger les données</h2>
+      <p id="errorMsg">Le fichier <code>data/resume.json</code> est introuvable ou invalide.</p>
+      <p id="errorHint"></p>
+      <div class="err-detail" id="errorDetail"></div>
+      <button class="btn" id="retryBtn" type="button">Réessayer</button>
+    </section>
+
+    <div id="dashboard">
+      <!-- ===================== KPI ===================== -->
+      <section class="kpis">
+        <article class="card kpi">
+          <div class="kpi-label">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+            Offres analysées
+          </div>
+          <div class="kpi-value" id="kpiOffres"><div class="skeleton sk-big">&nbsp;</div></div>
+          <div class="kpi-sub" id="kpiOffresSub"><div class="skeleton sk-line" style="width:70%">&nbsp;</div></div>
+        </article>
+        <article class="card kpi">
+          <div class="kpi-label">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M17 6.5A6.5 6.5 0 1 0 17 17.5M4 10h9M4 14h9"/></svg>
+            Salaire annuel brut médian
+          </div>
+          <div class="kpi-value" id="kpiSalaire"><div class="skeleton sk-big">&nbsp;</div></div>
+          <div class="kpi-sub" id="kpiSalaireSub"><div class="skeleton sk-line" style="width:70%">&nbsp;</div></div>
+        </article>
+        <article class="card kpi">
+          <div class="kpi-label">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 14l2 2 4-4"/></svg>
+            Taux de CDI
+          </div>
+          <div class="kpi-value" id="kpiCdi"><div class="skeleton sk-big">&nbsp;</div></div>
+          <div class="kpi-sub" id="kpiCdiSub"><div class="skeleton sk-line" style="width:70%">&nbsp;</div></div>
+        </article>
+        <article class="card kpi">
+          <div class="kpi-label">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10"/><rect x="9" y="13" width="6" height="4" rx="1"/></svg>
+            Ouverts au télétravail
+          </div>
+          <div class="kpi-value" id="kpiTele"><div class="skeleton sk-big">&nbsp;</div></div>
+          <div class="kpi-sub" id="kpiTeleSub"><div class="skeleton sk-line" style="width:70%">&nbsp;</div></div>
+        </article>
+      </section>
+
+      <!-- ===================== Graphiques ===================== -->
+      <section class="charts">
+        <article class="card panel">
+          <div class="panel-head">
+            <h2>Comparatif des salaires par source</h2>
+            <p>Salaire annuel brut harmonisé · fourchette min–max, médiane et moyenne</p>
+          </div>
+          <div class="chart-box" id="salaryBox">
+            <div class="skeleton sk-box">&nbsp;</div>
+            <canvas id="salaryChart" role="img" aria-label="Comparatif des salaires annuels bruts par source" hidden></canvas>
+          </div>
+          <div class="legend" id="salaryLegend"></div>
+        </article>
+
+        <article class="card panel">
+          <div class="panel-head">
+            <h2>Typologie des contrats</h2>
+            <p id="contractSubtitle">Répartition des offres par type de contrat</p>
+          </div>
+          <div class="donut-wrap">
+            <div class="donut-box" id="contractBox">
+              <div class="skeleton sk-box" style="border-radius:50%">&nbsp;</div>
+              <canvas id="contractChart" role="img" aria-label="Répartition des contrats" hidden></canvas>
+              <div class="donut-center" id="donutCenter" hidden>
+                <strong id="donutCenterVal">–</strong>
+                <small>offres</small>
+              </div>
+            </div>
+            <ul class="ct-list" id="contractList">
+              <li><div class="skeleton sk-line" style="grid-column:1/-1">&nbsp;</div></li>
+              <li><div class="skeleton sk-line" style="grid-column:1/-1">&nbsp;</div></li>
+              <li><div class="skeleton sk-line" style="grid-column:1/-1">&nbsp;</div></li>
+              <li><div class="skeleton sk-line" style="grid-column:1/-1">&nbsp;</div></li>
+            </ul>
+          </div>
+        </article>
+      </section>
+
+      <!-- ===================== Tableau ===================== -->
+      <section class="card panel">
+        <div class="panel-head">
+          <h2>Métiers les plus recherchés</h2>
+          <p id="tableSubtitle">Intitulés de postes les plus fréquents et salaire médian indicatif</p>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Intitulé du poste</th>
+                <th>Source</th>
+                <th class="num">Offres</th>
+                <th class="num">Salaire médian indicatif</th>
+              </tr>
+            </thead>
+            <tbody id="jobsBody">
+              <tr><td colspan="5"><div class="skeleton sk-line">&nbsp;</div></td></tr>
+              <tr><td colspan="5"><div class="skeleton sk-line">&nbsp;</div></td></tr>
+              <tr><td colspan="5"><div class="skeleton sk-line">&nbsp;</div></td></tr>
+              <tr><td colspan="5"><div class="skeleton sk-line">&nbsp;</div></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </div>
+
+    <footer>
+      <p id="perimetre"></p>
+      <p>Sources : <a href="https://francetravail.io/data/api/offres-emploi">API Offres d'emploi de France Travail</a>
+        (offres déposées sur francetravail.fr et offres de sites partenaires rediffusées par France Travail) ·
+        offres en télétravail fournies par <a href="https://jobicy.com">Jobicy</a>.
+        Mise à jour automatique chaque matin.</p>
+    </footer>
+  </div>
+
+  <script>
+  (() => {
+    "use strict";
+
+    /* ==========================================================
+       Configuration
+       ========================================================== */
+    // Données publiées chaque matin par l'Action GitHub « veille » du dépôt mylenemart/metier.
+    // Sur le site GitHub Pages, la page lit le fichier voisin ; ailleurs, la copie brute du dépôt.
+    const GITHUB_REPO    = "mylenemart/metier";
+    // Sur le site (ou en aperçu local), on lit d'abord le fichier voisin ; sinon la copie brute du dépôt.
+    const ON_PAGES       = location.hostname.endsWith("github.io") ||
+                           ["localhost", "127.0.0.1"].includes(location.hostname);
+    const RAW_BASE       = `https://raw.githubusercontent.com/${GITHUB_REPO}/main/`;
+    const DATA_FILES     = ["data/observatoire.json", "data/resume.json"];   // synthèse par source, sinon France Travail seul
+    const DATA_URLS      = DATA_FILES.flatMap((f) => (ON_PAGES ? [f, RAW_BASE + f] : [RAW_BASE + f]));
+    const STALE_AFTER_DAYS = 2;    // au-delà : bandeau « données anciennes »
+    const SLOW_AFTER_MS  = 3000;   // affiche le bandeau « chargement lent »
+    const TIMEOUT_MS     = 15000;  // abandonne la requête
+    const TOP_N          = 12;     // lignes du tableau
+
+    const SOURCES = [
+      { id: "ft",   label: "France Travail",        short: "France Travail", colorVar: "--src-ft",
+        aliases: ["france_travail", "francetravail", "france travail", "ft", "pole_emploi", "pôle emploi", "pole emploi"] },
+      { id: "part",   label: "Sites partenaires",     short: "Partenaire",     colorVar: "--src-part",
+        aliases: ["partenaires", "sites_partenaires", "sites partenaires", "partenaire"] },
+      { id: "jobicy", label: "Jobicy · télétravail",  short: "Jobicy",         colorVar: "--src-jobicy",
+        aliases: ["jobicy"] }
+    ];
+    const CONTRACTS = [
+      { key: "CDI",              label: "CDI",                colorVar: "--ct-cdi" },
+      { key: "CDD",              label: "CDD",                colorVar: "--ct-cdd" },
+      { key: "Alternance/Stage", label: "Alternance / Stage", colorVar: "--ct-alt" },
+      { key: "Autre",            label: "Autre",              colorVar: "--ct-autre" }
+    ];
+
+    /* ==========================================================
+       Utilitaires
+       ========================================================== */
+    const $  = (sel) => document.querySelector(sel);
+    const $$ = (sel) => Array.from(document.querySelectorAll(sel));
+    const fmtInt  = new Intl.NumberFormat("fr-FR", { maximumFractionDigits: 0 });
+    const fmtDec  = new Intl.NumberFormat("fr-FR", { maximumFractionDigits: 1 });
+    const fmtEur  = new Intl.NumberFormat("fr-FR", { style: "currency", currency: "EUR", maximumFractionDigits: 0 });
+    const fmtPct  = new Intl.NumberFormat("fr-FR", { style: "percent", maximumFractionDigits: 1 });
+    const euro    = (v) => (isNum(v) ? fmtEur.format(v) : "—");
+    const kEuro   = (v) => (isNum(v) ? fmtInt.format(Math.round(v / 1000)) + " k€" : "—");
+    const pct     = (v) => (isNum(v) ? fmtPct.format(v) : "—");
+    const isNum   = (v) => typeof v === "number" && Number.isFinite(v);
+    const num     = (v) => { const n = typeof v === "string" ? parseFloat(v.replace(/\s/g, "").replace(",", ".")) : v; return isNum(n) ? n : null; };
+    const firstNum = (...vals) => { for (const v of vals) { const n = num(v); if (n !== null) return n; } return null; };
+    const toRatio = (v) => { const n = num(v); return n === null ? null : (n > 1 ? n / 100 : n); };
+    const escapeHtml = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+    const norm = (s) => String(s ?? "").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "").trim();
+    const cssVar = (name) => getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+    const withAlpha = (hex, a) => {
+      const h = hex.replace("#", "");
+      const full = h.length === 3 ? h.split("").map((c) => c + c).join("") : h;
+      const n = parseInt(full, 16);
+      return `rgba(${(n >> 16) & 255}, ${(n >> 8) & 255}, ${n & 255}, ${a})`;
+    };
+    const sourceById = (id) => SOURCES.find((s) => s.id === id);
+
+    /* ==========================================================
+       Normalisation des données (tolérante aux variantes de schéma)
+       ========================================================== */
+    function contractBucket(key) {
+      const k = norm(key);
+      if (k.includes("cdi")) return "CDI";
+      if (k.includes("cdd") || k.includes("interim") || k.includes("mission")) return "CDD";
+      if (k.includes("altern") || k.includes("stage") || k.includes("apprenti") || k.includes("intern")) return "Alternance/Stage";
+      return "Autre";
+    }
+
+    function normalizeContracts(raw) {
+      const out = { "CDI": 0, "CDD": 0, "Alternance/Stage": 0, "Autre": 0 };
+      if (!raw) return out;
+      const entries = Array.isArray(raw)
+        ? raw.map((r) => [r.type ?? r.contrat ?? r.label ?? r.nom, r.nb ?? r.count ?? r.valeur ?? r.part])
+        : Object.entries(raw);
+      for (const [k, v] of entries) {
+        const n = num(v);
+        if (n !== null) out[contractBucket(k)] += n;
+      }
+      return out;
+    }
+
+    function normalizeTop(raw, sourceId) {
+      if (!Array.isArray(raw)) return [];
+      return raw.map((r) => {
+        if (typeof r === "string") return { intitule: r, nb: null, salaire: null, source: sourceId };
+        if (Array.isArray(r))      return { intitule: r[0], nb: num(r[1]), salaire: num(r[2]), source: sourceId };
+        return {
+          intitule: r.intitule ?? r.titre ?? r.poste ?? r.label ?? r.nom ?? "—",
+          nb: firstNum(r.nb, r.nb_offres, r.count, r.n, r.occurrences),
+          salaire: firstNum(r.salaire_median, r.salaire_mediane, r.mediane, r.salaire, r.salaire_moyen),
+          source: resolveSourceId(r.source) ?? sourceId,
+          site: r.site ?? null
+        };
+      }).filter((r) => r.intitule);
+    }
+
+    function normalizeAgg(raw, sourceId = null) {
+      if (!raw || typeof raw !== "object") return null;
+      const s = raw.salaires ?? raw.salaire ?? {};
+      const nb = firstNum(raw.nb_offres, raw.volume, raw.total, raw.nombre_offres, raw.count) ?? 0;
+      const tt = raw.teletravail ?? raw.remote ?? raw.part_teletravail;
+      let teleRatio = null, teleNb = null;
+      if (tt && typeof tt === "object") {
+        teleNb = firstNum(tt.nb, tt.count, tt.nombre);
+        teleRatio = toRatio(tt.part ?? tt.taux ?? tt.ratio ?? tt.pourcentage);
+        if (teleRatio === null && teleNb !== null && nb) teleRatio = teleNb / nb;
+      } else {
+        teleRatio = toRatio(tt);
+      }
+      if (teleNb === null && teleRatio !== null) teleNb = Math.round(teleRatio * nb);
+
+      const contrats = normalizeContracts(raw.contrats ?? raw.types_contrat ?? raw.contrat);
+      return {
+        nb,
+        salaires: {
+          min:     firstNum(s.min, s.minimum),
+          max:     firstNum(s.max, s.maximum),
+          mediane: firstNum(s.mediane, s.median, s.mediane_brut),
+          moyenne: firstNum(s.moyenne, s.mean, s.moyen),
+          nbRens:  firstNum(s.nb_renseignes, s.nb, s.count, s.n)
+        },
+        contrats,
+        teleRatio, teleNb,
+        top: normalizeTop(raw.top_postes ?? raw.postes ?? raw.intitules, sourceId),
+        contratsPublies: raw.contrats_publies !== false,
+        sites: Array.isArray(raw.sites) ? raw.sites : [],
+        dateCollecte: raw.date_collecte ?? null,
+        approx: false
+      };
+    }
+
+    function resolveSourceId(key) {
+      if (!key) return null;
+      const k = norm(key).replace(/[-\s]+/g, "_");
+      const kSpace = norm(key);
+      const hit = SOURCES.find((s) => s.aliases.some((a) => a === kSpace || a === k || a.replace(/\s+/g, "_") === k));
+      if (hit) return hit.id;
+      if (k.includes("france") || k.includes("pole")) return "ft";
+      if (k.includes("partenaire")) return "part";
+      if (k.includes("jobicy")) return "jobicy";
+      return null;
+    }
+
+    /** Agrège les sources lorsque le bloc global est absent ou incomplet. */
+    function aggregateFromSources(list) {
+      const valid = list.filter(Boolean);
+      if (!valid.length) return null;
+      const nb = valid.reduce((a, s) => a + s.nb, 0);
+      const contrats = { "CDI": 0, "CDD": 0, "Alternance/Stage": 0, "Autre": 0 };
+      valid.forEach((s) => CONTRACTS.forEach((c) => (contrats[c.key] += s.contrats[c.key] || 0)));
+      const teleNb = valid.reduce((a, s) => a + (s.teleNb ?? 0), 0);
+      const weighted = (field) => {
+        let w = 0, acc = 0;
+        valid.forEach((s) => {
+          const v = s.salaires[field];
+          const weight = s.salaires.nbRens ?? s.nb;
+          if (isNum(v) && weight) { acc += v * weight; w += weight; }
+        });
+        return w ? acc / w : null;
+      };
+      const mins = valid.map((s) => s.salaires.min).filter(isNum);
+      const maxs = valid.map((s) => s.salaires.max).filter(isNum);
+      return {
+        nb,
+        salaires: {
+          min: mins.length ? Math.min(...mins) : null,
+          max: maxs.length ? Math.max(...maxs) : null,
+          mediane: weighted("mediane"),
+          moyenne: weighted("moyenne"),
+          nbRens: valid.reduce((a, s) => a + (s.salaires.nbRens ?? 0), 0) || null
+        },
+        contrats,
+        teleRatio: nb ? teleNb / nb : null,
+        teleNb,
+        top: [],
+        approx: true
+      };
+    }
+
+    /* ---------- Format du dépôt « metier » : liste d'offres détaillées ---------- */
+    const SAL_MIN_PLAUSIBLE = 10000, SAL_MAX_PLAUSIBLE = 300000;
+
+    function offerSalary(o) {
+      const lo = num(o.smin), hi = num(o.smax);
+      const v = lo !== null && hi !== null ? (lo + hi) / 2 : (lo ?? hi);
+      return v !== null && v >= SAL_MIN_PLAUSIBLE && v <= SAL_MAX_PLAUSIBLE ? v : null;
+    }
+
+    function offerContract(o) {
+      if (o.alternance || /apprenti|professionnalisation/.test(norm(o.nature))) return "Alternance/Stage";
+      const c = String(o.contrat ?? "").toUpperCase();
+      if (c === "CDI") return "CDI";
+      if (["CDD", "MIS", "SAI"].includes(c)) return "CDD";
+      return contractBucket(c);
+    }
+
+    function cleanTitle(t) {
+      const s = String(t ?? "").replace(/\(?\b[hf]\s*\/\s*[fh]\b\)?/gi, "").replace(/\s{2,}/g, " ").replace(/^[\s\-–]+|[\s\-–]+$/g, "");
+      const lower = s.toLocaleLowerCase("fr-FR");
+      return lower.charAt(0).toLocaleUpperCase("fr-FR") + lower.slice(1);
+    }
+
+    const median = (arr) => {
+      if (!arr.length) return null;
+      const s = [...arr].sort((a, b) => a - b), m = s.length >> 1;
+      return s.length % 2 ? s[m] : (s[m - 1] + s[m]) / 2;
+    };
+
+    function aggFromOffers(offres, sourceId) {
+      const sal = offres.map(offerSalary).filter(isNum);
+      const contrats = { "CDI": 0, "CDD": 0, "Alternance/Stage": 0, "Autre": 0 };
+      offres.forEach((o) => contrats[offerContract(o)]++);
+      const teleNb = offres.filter((o) => o.teletravail === true).length;
+
+      const groups = new Map();
+      offres.forEach((o) => {
+        const label = cleanTitle(o.intitule);
+        if (!label) return;
+        const key = norm(label);
+        if (!groups.has(key)) groups.set(key, { intitule: label, nb: 0, sal: [], src: new Counter() });
+        const g = groups.get(key);
+        g.nb++;
+        const v = offerSalary(o);
+        if (isNum(v)) g.sal.push(v);
+        g.src.add(o.$source ?? sourceId);
+      });
+      const top = [...groups.values()]
+        .sort((a, b) => b.nb - a.nb)
+        .slice(0, 30)
+        .map((g) => ({ intitule: g.intitule, nb: g.nb, salaire: median(g.sal), source: g.src.top() }));
+
+      return {
+        nb: offres.length,
+        salaires: {
+          min: sal.length ? Math.min(...sal) : null,
+          max: sal.length ? Math.max(...sal) : null,
+          mediane: median(sal),
+          moyenne: sal.length ? sal.reduce((a, b) => a + b, 0) / sal.length : null,
+          nbRens: sal.length
+        },
+        contrats, teleNb,
+        teleRatio: offres.length ? teleNb / offres.length : null,
+        top, approx: false
+      };
+    }
+
+    class Counter {
+      constructor() { this.m = new Map(); }
+      add(k) { this.m.set(k, (this.m.get(k) || 0) + 1); }
+      top() { let best = null, n = -1; this.m.forEach((v, k) => { if (v > n) { n = v; best = k; } }); return best; }
+    }
+
+    /** Bloc « comparaison_sources » (agrégats sans détail par offre), si un résumé en contient. */
+    function aggFromComparison(b) {
+      const contrats = { "CDI": 0, "CDD": 0, "Alternance/Stage": 0, "Autre": 0 };
+      Object.entries(b.contrats ?? {}).forEach(([k, v]) => {
+        const n = firstNum(v?.effectif, v);
+        if (n !== null) contrats[contractBucket(k)] += n;
+      });
+      const nb = firstNum(b.effectif) ?? 0;
+      const counted = Object.values(contrats).reduce((a, c) => a + c, 0);
+      if (nb > counted) contrats.Autre += nb - counted;
+      const s = b.salaires ?? {};
+      return {
+        nb,
+        salaires: { min: firstNum(s.min), max: firstNum(s.max), mediane: firstNum(s.mediane), moyenne: firstNum(s.moyenne), nbRens: firstNum(s.effectif) },
+        contrats, teleRatio: null, teleNb: null, top: [], approx: false
+      };
+    }
+
+    function normalizeMetier(raw) {
+      const bySource = {};
+      const tagged = raw.offres.map((o) => ({ ...o, $source: resolveSourceId(o.source) ?? "ft" }));
+      SOURCES.forEach((s) => {
+        const list = tagged.filter((o) => o.$source === s.id);
+        if (list.length) bySource[s.id] = aggFromOffers(list, s.id);
+      });
+      Object.entries(raw.comparaison_sources ?? {}).forEach(([k, b]) => {
+        const id = resolveSourceId(k);
+        if (id && !bySource[id] && b?.disponible && firstNum(b.effectif)) bySource[id] = aggFromComparison(b);
+      });
+      const global = Object.keys(bySource).length > 1
+        ? (() => {
+            // Médiane exacte sur les offres détaillées, complétée par les blocs agrégés
+            const g = aggFromOffers(tagged, "ft");
+            const extra = Object.entries(bySource).filter(([id]) => !tagged.some((o) => o.$source === id));
+            if (!extra.length) return g;
+            const merged = aggregateFromSources([g, ...extra.map(([, a]) => a)]);
+            merged.top = g.top;
+            return merged;
+          })()
+        : aggFromOffers(tagged, "ft");
+      return {
+        updatedAt: raw.date ?? null,
+        global,
+        sources: bySource,
+        meta: { metiers: Array.isArray(raw.metiers) ? raw.metiers.length : null }
+      };
+    }
+
+    function normalizeData(raw) {
+      if (!raw || typeof raw !== "object") throw new Error("Le JSON ne contient pas d'objet racine.");
+      if (Array.isArray(raw.offres) && raw.offres.length) return normalizeMetier(raw);
+      const bySource = {};
+      const rawSources = raw.sources ?? raw.par_source ?? raw.plateformes ?? {};
+      if (Array.isArray(rawSources)) {
+        rawSources.forEach((s) => {
+          const id = resolveSourceId(s.source ?? s.nom ?? s.id ?? s.name);
+          if (id) bySource[id] = normalizeAgg(s, id);
+        });
+      } else {
+        Object.entries(rawSources).forEach(([k, v]) => {
+          const id = resolveSourceId(k);
+          if (id) bySource[id] = normalizeAgg(v, id);
+        });
+      }
+
+      const rawGlobal = raw.global ?? raw.total ?? raw.ensemble ?? (raw.nb_offres !== undefined ? raw : null);
+      let global = normalizeAgg(rawGlobal);
+      const fallback = aggregateFromSources(SOURCES.map((s) => bySource[s.id]));
+      if (!global || !global.nb) {
+        global = fallback;
+      } else if (fallback) {
+        // Complète les champs manquants du bloc global à partir des sources
+        for (const f of ["min", "max", "mediane", "moyenne", "nbRens"]) {
+          if (!isNum(global.salaires[f])) global.salaires[f] = fallback.salaires[f];
+        }
+        if (global.teleRatio === null) { global.teleRatio = fallback.teleRatio; global.teleNb = fallback.teleNb; }
+        if (!Object.values(global.contrats).some((v) => v > 0)) global.contrats = fallback.contrats;
+      }
+      if (!global) throw new Error("Aucun agrégat exploitable (ni bloc « global », ni « sources »).");
+
+      return {
+        updatedAt: raw.date_maj ?? raw.date_mise_a_jour ?? raw.updated_at ?? raw.date ?? null,
+        perimetre: raw.perimetre ?? null,
+        global,
+        sources: bySource
+      };
+    }
+
+    /* ==========================================================
+       État & chargement
+       ========================================================== */
+    const state = { data: null, active: "all", charts: { salary: null, contract: null } };
+    let slowTimer = null;
+
+    async function loadData() {
+      showLoading();
+      const ctrl = new AbortController();
+      const timeout = setTimeout(() => ctrl.abort(), TIMEOUT_MS);
+      slowTimer = setTimeout(() => $("#slowNotice").classList.add("show"), SLOW_AFTER_MS);
+
+      try {
+        // Aperçu autonome : données intégrées à la page, sans téléchargement
+        let json = window.OBSERVATOIRE_DATA ?? null;
+        if (json) { state.origin = "intégrées à l'aperçu"; state.fallback = false; }
+        const errors = [];
+        for (const url of json ? [] : DATA_URLS) {
+          try {
+            const res = await fetch(url, { cache: "no-store", signal: ctrl.signal });
+            if (!res.ok) throw new Error(`HTTP ${res.status}`);
+            const text = await res.text();
+            try { json = JSON.parse(text); }
+            catch (e) { throw new Error("JSON invalide : " + e.message); }
+            state.origin = url.startsWith("http") ? `GitHub · ${GITHUB_REPO}` : "du site";
+            state.fallback = url.endsWith("resume.json");
+            break;
+          } catch (e) {
+            if (e.name === "AbortError") throw e;
+            errors.push(`${url.startsWith("http") ? "GitHub" : url} → ${e.message}`);
+          }
+        }
+        if (!json) throw new Error(errors.join(" · "));
+        state.data = normalizeData(json);
+        if (typeof Chart === "undefined") throw new Error("La librairie Chart.js n'a pas pu être chargée (CDN inaccessible).");
+        hideLoading();
+        enableFilters();
+        renderAll();
+      } catch (err) {
+        const msg = err.name === "AbortError"
+          ? `Délai dépassé : aucune réponse après ${TIMEOUT_MS / 1000} secondes.`
+          : err.message;
+        showError(msg);
+      } finally {
+        clearTimeout(timeout);
+        clearTimeout(slowTimer);
+        $("#slowNotice").classList.remove("show");
+      }
+    }
+
+    function showLoading() {
+      $("#errorPanel").classList.remove("show");
+      $("#dashboard").hidden = false;
+      $("#updated").textContent = "Chargement…";
+    }
+
+    function hideLoading() {
+      $$("#salaryBox .skeleton, #contractBox .skeleton").forEach((el) => el.remove());
+      $("#salaryChart").hidden = false;
+      $("#contractChart").hidden = false;
+      $("#donutCenter").hidden = false;
+    }
+
+    function showError(message) {
+      $("#dashboard").hidden = true;
+      $("#errorPanel").classList.add("show");
+      $("#updated").textContent = "Données indisponibles";
+      $("#errorDetail").textContent = "Détail : " + message;
+      $("#errorHint").innerHTML = ON_PAGES
+        ? "Vérifiez que l'Action « veille » du dépôt a bien produit <code>data/resume.json</code>."
+        : `Vérifiez votre connexion Internet et que le dépôt <code>${GITHUB_REPO}</code> est public. ` +
+          "Si la page est ouverte depuis le disque et que le navigateur bloque la requête, lancez <code>python3 -m http.server 8000</code> dans ce dossier puis ouvrez <code>http://localhost:8000</code>.";
+    }
+
+    function enableFilters() {
+      $$(".filter-btn").forEach((btn) => {
+        const id = btn.dataset.source;
+        const available = id === "all" || !!state.data.sources[id];
+        btn.disabled = !available;
+        btn.title = available ? "" : "Aucune donnée pour cette source";
+      });
+    }
+
+    /* ==========================================================
+       Rendu
+       ========================================================== */
+    function currentAgg() {
+      return state.active === "all" ? state.data.global : state.data.sources[state.active];
+    }
+
+    function renderAll() {
+      const d = state.data;
+      if (d.updatedAt) {
+        const dateOnly = /^\d{4}-\d{2}-\d{2}$/.test(d.updatedAt);
+        const dt = new Date(dateOnly ? d.updatedAt + "T12:00:00" : d.updatedAt);
+        $("#updated").textContent = "Mis à jour le " + (isNaN(dt) ? d.updatedAt :
+          dt.toLocaleDateString("fr-FR", { day: "numeric", month: "long", year: "numeric" }) +
+          (dateOnly ? "" : " à " + dt.toLocaleTimeString("fr-FR", { hour: "2-digit", minute: "2-digit" })));
+      } else {
+        $("#updated").textContent = "";
+      }
+      if (state.origin) $("#updated").textContent += ` · données ${state.origin}`;
+
+      // Bandeau si la veille quotidienne ne tourne plus
+      const notice = $("#staleNotice");
+      const ref = d.updatedAt ? new Date(/^\d{4}-\d{2}-\d{2}$/.test(d.updatedAt) ? d.updatedAt + "T12:00:00" : d.updatedAt) : null;
+      const days = ref && !isNaN(ref) ? Math.floor((Date.now() - ref) / 86400000) : null;
+      if (days !== null && days > STALE_AFTER_DAYS) {
+        notice.querySelector("span").textContent =
+          `Données datant de ${days} jours : la mise à jour automatique du dépôt ne semble plus fonctionner (onglet Actions sur GitHub).`;
+        notice.classList.add("show");
+      } else {
+        notice.classList.remove("show");
+      }
+      // Bandeau si la synthèse par source n'existe pas encore (premier passage de la veille à venir)
+      $("#fallbackNotice").classList.toggle("show", !!state.fallback);
+      $("#perimetre").textContent = d.perimetre ? "Périmètre : " + d.perimetre : "";
+      renderKpis();
+      renderSalaryChart();
+      renderContractChart();
+      renderTable();
+    }
+
+    function deltaHtml(value, ref, kind) {
+      if (state.active === "all" || !isNum(value) || !isNum(ref)) return "";
+      const diff = value - ref;
+      // Arrondi d'abord : un écart affiché « 0 » ne doit pas porter de signe
+      const abs = kind === "pts" ? Math.round(Math.abs(diff) * 1000) / 10 : Math.round(Math.abs(diff));
+      const sign = abs === 0 ? "±" : diff > 0 ? "+" : "−";
+      const txt = kind === "pts"
+        ? `${sign}${fmtDec.format(abs)} pts`
+        : `${sign}${fmtEur.format(abs)}`;
+      return `<span class="delta">${txt}</span> vs ensemble`;
+    }
+
+    function renderKpis() {
+      const a = currentAgg();
+      const g = state.data.global;
+      const totalContracts = Object.values(a.contrats).reduce((x, y) => x + y, 0);
+      const cdiRatio = totalContracts ? a.contrats.CDI / totalContracts : null;
+      const gTotal = Object.values(g.contrats).reduce((x, y) => x + y, 0);
+      const gCdi = gTotal ? g.contrats.CDI / gTotal : null;
+
+      // Offres
+      $("#kpiOffres").textContent = fmtInt.format(a.nb);
+      $("#kpiOffresSub").innerHTML = state.active === "all"
+        ? (() => {
+            const n = Object.keys(state.data.sources).length;
+            const m = state.data.meta?.metiers;
+            return (n > 1 ? `${n} sources consolidées` : `1 source disponible`) + (m ? ` · ${m} métiers suivis` : "");
+          })()
+        : state.active === "part" && a.sites?.length
+          ? a.sites.slice(0, 3).map((x) => `${escapeHtml(x.nom)} ${fmtInt.format(x.nb)}`).join(" · ")
+          : `${pct(g.nb ? a.nb / g.nb : null)} du volume total` +
+            (a.dateCollecte ? ` · annonces des 7 derniers jours` : "");
+
+      // Salaire médian
+      $("#kpiSalaire").textContent = euro(a.salaires.mediane);
+      const salBits = [];
+      const delta = deltaHtml(a.salaires.mediane, g.salaires.mediane, "eur");
+      if (delta) salBits.push(delta);
+      else if (isNum(a.salaires.moyenne)) salBits.push(`Moyenne : ${euro(a.salaires.moyenne)}`);
+      if (isNum(a.salaires.nbRens)) salBits.push(`${fmtInt.format(a.salaires.nbRens)} salaires renseignés`);
+      if (a.approx) salBits.push("estimation pondérée");
+      if (!a.salaires.nbRens && !isNum(a.salaires.mediane)) salBits.splice(0, salBits.length, "aucun salaire publié par cette source");
+      $("#kpiSalaireSub").innerHTML = salBits.join(" · ") || "&nbsp;";
+
+      // CDI
+      $("#kpiCdi").textContent = a.contratsPublies !== false ? pct(cdiRatio) : "—";
+      $("#kpiCdiSub").innerHTML = a.contratsPublies === false
+        ? "type de contrat non publié par cette source"
+        : deltaHtml(cdiRatio, gCdi, "pts") || `${fmtInt.format(a.contrats.CDI)} offres en CDI`;
+
+      // Télétravail
+      $("#kpiTele").textContent = pct(a.teleRatio);
+      $("#kpiTeleSub").innerHTML = deltaHtml(a.teleRatio, g.teleRatio, "pts") ||
+        (isNum(a.teleNb) ? `${fmtInt.format(a.teleNb)} offres avec télétravail` : "&nbsp;");
+    }
+
+    /* ---------- Graphique salaires : fourchette + médiane + moyenne ---------- */
+    function salaryRows() {
+      const rows = [{ id: "all", label: "Toutes sources", agg: state.data.global, color: cssVar("--src-all") }];
+      SOURCES.forEach((s) => {
+        const agg = state.data.sources[s.id];
+        if (agg) rows.push({ id: s.id, label: isNum(agg.salaires.mediane) ? s.label : `${s.label} (n.c.)`, agg, color: cssVar(s.colorVar) });
+      });
+      return rows;
+    }
+
+    function salaryDatasets(rows) {
+      const allVals = rows.flatMap((r) => [r.agg.salaires.min, r.agg.salaires.max]).filter(isNum);
+      const span = allVals.length ? Math.max(...allVals) - Math.min(...allVals) : 10000;
+      const half = Math.max(span * 0.004, 150);  // demi-largeur des marqueurs
+      const textColor = cssVar("--text-primary");
+      const isOn = (r) => state.active === "all" || r.id === state.active;
+      const marker = (v) => (isNum(v) ? [v - half, v + half] : null);
+
+      return [
+        {
+          label: "Médiane",
+          data: rows.map((r) => marker(r.agg.salaires.mediane)),
+          backgroundColor: rows.map((r) => withAlpha(r.color, isOn(r) ? 1 : 0.25)),
+          borderSkipped: false, borderRadius: 1,
+          barPercentage: 0.8, categoryPercentage: 0.9, grouped: false, order: 1
+        },
+        {
+          label: "Moyenne",
+          data: rows.map((r) => marker(r.agg.salaires.moyenne)),
+          backgroundColor: rows.map((r) => withAlpha(textColor, isOn(r) ? 0.85 : 0.2)),
+          borderSkipped: false, borderRadius: 1,
+          barPercentage: 0.45, categoryPercentage: 0.9, grouped: false, order: 2
+        },
+        {
+          label: "Fourchette",
+          data: rows.map((r) => (isNum(r.agg.salaires.min) && isNum(r.agg.salaires.max) ? [r.agg.salaires.min, r.agg.salaires.max] : null)),
+          backgroundColor: rows.map((r) => withAlpha(r.color, isOn(r) ? 0.32 : 0.1)),
+          borderSkipped: false, borderRadius: 4,
+          barPercentage: 0.55, categoryPercentage: 0.9, grouped: false, order: 3
+        }
+      ];
+    }
+
+    function renderSalaryChart() {
+      const rows = salaryRows();
+      const chart = state.charts.salary;
+      if (chart) {
+        chart.data.labels = rows.map((r) => r.label);
+        chart.data.datasets = salaryDatasets(rows);
+        chart.$rows = rows;
+        chart.update();
+        return;
+      }
+      const grid = cssVar("--grid"), muted = cssVar("--text-muted"), secondary = cssVar("--text-secondary");
+      state.charts.salary = new Chart($("#salaryChart"), {
+        type: "bar",
+        data: { labels: rows.map((r) => r.label), datasets: salaryDatasets(rows) },
+        options: {
+          indexAxis: "y",
+          responsive: true, maintainAspectRatio: false,
+          animation: { duration: 350 },
+          interaction: { mode: "index", axis: "y", intersect: false },
+          scales: {
+            x: {
+              grid: { color: grid, drawTicks: false }, border: { display: false },
+              ticks: { color: muted, padding: 8, callback: (v) => kEuro(v), maxTicksLimit: 7 }
+            },
+            y: {
+              grid: { display: false }, border: { color: grid },
+              ticks: { color: secondary, font: { size: 12.5, weight: 500 } }
+            }
+          },
+          plugins: {
+            legend: { display: false },
+            tooltip: {
+              filter: (item) => item.datasetIndex === 0,
+              backgroundColor: cssVar("--surface"),
+              titleColor: cssVar("--text-primary"),
+              bodyColor: secondary,
+              borderColor: cssVar("--border"), borderWidth: 1,
+              padding: 12, displayColors: false,
+              callbacks: {
+                label: (ctx) => {
+                  const r = ctx.chart.$rows[ctx.dataIndex];
+                  const s = r.agg.salaires;
+                  const lines = [
+                    `Médiane : ${euro(s.mediane)}`,
+                    `Moyenne : ${euro(s.moyenne)}`,
+                    `Min – max : ${euro(s.min)} – ${euro(s.max)}`
+                  ];
+                  if (isNum(s.nbRens)) lines.push(`${fmtInt.format(s.nbRens)} salaires renseignés`);
+                  return lines;
+                }
+              }
+            }
+          }
+        }
+      });
+      state.charts.salary.$rows = rows;
+
+      const textColor = cssVar("--text-primary");
+      $("#salaryLegend").innerHTML = `
+        <span><i class="swatch" style="background:${withAlpha(cssVar("--src-ft"), 0.32)}"></i>Fourchette min – max</span>
+        <span><i class="swatch tick" style="background:${cssVar("--src-ft")}"></i>Médiane</span>
+        <span><i class="swatch tick" style="background:${withAlpha(textColor, 0.85)}"></i>Moyenne</span>`;
+    }
+
+    /* ---------- Graphique contrats : donut ---------- */
+    function renderContractChart() {
+      const a = currentAgg();
+      const values = CONTRACTS.map((c) => a.contrats[c.key] || 0);
+      const total = values.reduce((x, y) => x + y, 0);
+      const colors = CONTRACTS.map((c) => cssVar(c.colorVar));
+      const scopeLabel = state.active === "all" ? "toutes sources confondues" : sourceById(state.active).label;
+
+      $("#contractSubtitle").textContent = `Répartition des offres par type de contrat · ${scopeLabel}` +
+        (a.contratsPublies === false ? " · contrat non publié (« Autre »)" : "");
+      $("#donutCenterVal").textContent = fmtInt.format(total);
+
+      // Légende directe avec valeurs
+      $("#contractList").innerHTML = CONTRACTS.map((c, i) => `
+        <li>
+          <span class="sw" style="background:${colors[i]}"></span>
+          <span class="name">${c.label}</span>
+          <span class="val">${pct(total ? values[i] / total : null)}<small>${fmtInt.format(values[i])}</small></span>
+        </li>`).join("");
+
+      const chart = state.charts.contract;
+      if (chart) {
+        chart.data.datasets[0].data = values;
+        chart.update();
+        return;
+      }
+      state.charts.contract = new Chart($("#contractChart"), {
+        type: "doughnut",
+        data: {
+          labels: CONTRACTS.map((c) => c.label),
+          datasets: [{
+            data: values,
+            backgroundColor: colors,
+            borderColor: cssVar("--surface"),
+            borderWidth: 2,
+            hoverOffset: 4
+          }]
+        },
+        options: {
+          responsive: true, maintainAspectRatio: false,
+          cutout: "68%",
+          animation: { duration: 400 },
+          plugins: {
+            legend: { display: false },
+            tooltip: {
+              backgroundColor: cssVar("--surface"),
+              titleColor: cssVar("--text-primary"),
+              bodyColor: cssVar("--text-secondary"),
+              borderColor: cssVar("--border"), borderWidth: 1, padding: 10,
+              callbacks: {
+                label: (ctx) => {
+                  const t = ctx.dataset.data.reduce((x, y) => x + y, 0);
+                  return ` ${ctx.label} : ${pct(t ? ctx.raw / t : null)} (${fmtInt.format(ctx.raw)} offres)`;
+                }
+              }
+            }
+          }
+        }
+      });
+    }
+
+    /* ---------- Tableau des métiers ---------- */
+    function salaryLevel(v) {
+      if (!isNum(v)) return "";
+      if (v < 30000) return "Modéré";
+      if (v < 45000) return "Intermédiaire";
+      if (v < 60000) return "Élevé";
+      return "Très élevé";
+    }
+
+    function renderTable() {
+      let rows;
+      if (state.active === "all") {
+        const fromGlobal = state.data.global.top;
+        const fromSources = SOURCES.flatMap((s) => state.data.sources[s.id]?.top ?? []);
+        rows = fromSources.length ? fromSources : fromGlobal;
+      } else {
+        rows = state.data.sources[state.active]?.top ?? [];
+      }
+      rows = [...rows].sort((a, b) => (b.nb ?? 0) - (a.nb ?? 0)).slice(0, TOP_N);
+
+      const scopeLabel = state.active === "all" ? "toutes sources" : sourceById(state.active).label;
+      $("#tableSubtitle").textContent = `Intitulés de postes les plus fréquents et salaire médian indicatif · ${scopeLabel}`;
+
+      if (!rows.length) {
+        $("#jobsBody").innerHTML = `<tr><td colspan="5" class="empty">Aucun intitulé de poste disponible pour cette sélection.</td></tr>`;
+        return;
+      }
+      const maxSal = Math.max(...rows.map((r) => r.salaire).filter(isNum), 1);
+      $("#jobsBody").innerHTML = rows.map((r, i) => {
+        const src = sourceById(r.source);
+        const badge = src
+          ? `<span class="badge" title="${escapeHtml(src.label)}"><span class="dot" style="background:var(${src.colorVar})"></span>${escapeHtml(r.site || src.short)}</span>`
+          : `<span class="badge">—</span>`;
+        const w = isNum(r.salaire) ? Math.round((r.salaire / maxSal) * 100) : 0;
+        return `
+          <tr>
+            <td class="rank">${i + 1}</td>
+            <td class="title">${escapeHtml(r.intitule)}</td>
+            <td>${badge}</td>
+            <td class="num">${isNum(r.nb) ? fmtInt.format(r.nb) : "—"}</td>
+            <td class="num">
+              <div class="sal-cell">
+                <span class="level">${salaryLevel(r.salaire)}</span>
+                <span class="sal-bar" aria-hidden="true"><i style="width:${w}%"></i></span>
+                <span>${euro(r.salaire)}</span>
+              </div>
+            </td>
+          </tr>`;
+      }).join("");
+    }
+
+    /* ==========================================================
+       Interactions
+       ========================================================== */
+    $("#filters").addEventListener("click", (e) => {
+      const btn = e.target.closest(".filter-btn");
+      if (!btn || btn.disabled || !state.data) return;
+      state.active = btn.dataset.source;
+      $$(".filter-btn").forEach((b) => b.setAttribute("aria-pressed", String(b === btn)));
+      renderKpis();
+      renderSalaryChart();
+      renderContractChart();
+      renderTable();
+    });
+
+    $("#retryBtn").addEventListener("click", loadData);
+
+    /* ---------- Thème clair / sombre ---------- */
+    const THEME_KEY = "observatoire-theme";
+    function applyTheme(theme) {
+      if (theme) document.documentElement.setAttribute("data-theme", theme);
+      else document.documentElement.removeAttribute("data-theme");
+      rebuildCharts();
+    }
+    function effectiveTheme() {
+      const t = document.documentElement.getAttribute("data-theme");
+      if (t) return t;
+      return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+    }
+    function rebuildCharts() {
+      if (!state.data) return;
+      Object.values(state.charts).forEach((c) => c && c.destroy());
+      state.charts = { salary: null, contract: null };
+      renderSalaryChart();
+      renderContractChart();
+    }
+    try { const saved = localStorage.getItem(THEME_KEY); if (saved) document.documentElement.setAttribute("data-theme", saved); } catch (_) {}
+    $("#themeToggle").addEventListener("click", () => {
+      const next = effectiveTheme() === "dark" ? "light" : "dark";
+      try { localStorage.setItem(THEME_KEY, next); } catch (_) {}
+      applyTheme(next);
+    });
+    window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", () => {
+      if (!document.documentElement.getAttribute("data-theme")) rebuildCharts();
+    });
+
+    if (typeof Chart !== "undefined") {
+      Chart.defaults.font.family = getComputedStyle(document.body).fontFamily;
+      Chart.defaults.font.size = 12;
+    }
+
+    loadData();
+  })();
+  </script>
+</body>
+</html>
