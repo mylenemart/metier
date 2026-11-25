@@ -69,13 +69,13 @@
   {
    "date": "2026-11-25",
    "nouvelles": {
-    "jobicy": 7,
+    "jobicy": 8,
     "himalayas": 157,
     "arbeitnow": 17,
     "remotive": 2,
-    "adzuna": 175
+    "adzuna": 176
    },
-   "cumul": 4751
+   "cumul": 4753
   }
  ],
  "tests": [
@@ -117,12 +117,12 @@
   {
    "test": "Chi² d'indépendance",
    "variables": "Source × télétravail",
-   "n": 4751,
-   "statistique": "χ² = 1079,3",
+   "n": 4753,
+   "statistique": "χ² = 1084,6",
    "ddl": 6,
-   "p": 6.289745496857679e-230,
+   "p": 4.3823489712659007e-231,
    "effet": "V de Cramer = 0,48",
-   "effet_valeur": 0.477,
+   "effet_valeur": 0.478,
    "effet_niveau": "moyen",
    "condition": "4 case(s) avec un effectif attendu < 5 : résultat à prendre avec prudence",
    "tableau": {
@@ -141,7 +141,7 @@
     ],
     "valeurs": [
      [
-      174,
+      175,
       1
      ],
      [
@@ -158,7 +158,7 @@
      ],
      [
       0,
-      7
+      8
      ],
      [
       0,
@@ -222,9 +222,9 @@
  ],
  "perimetre": "Toutes les offres vues depuis le 2026-09-22 (les offres retirées restent comptées). Métiers du marketing et du digital : 23 codes ROME pour France Travail et ses partenaires ; pour Adzuna et Jooble, recherches par mots-clés en France ; pour Jobicy, Himalayas, Arbeitnow et Remotive, offres ouvertes aux candidats en France dont l'intitulé relève du marketing, du contenu, de la communication ou du design.",
  "global": {
-  "nb_offres": 4751,
-  "nouvelles": 473,
-  "actives": 3539,
+  "nb_offres": 4753,
+  "nouvelles": 475,
+  "actives": 3541,
   "jour_nouvelles": "2026-09-29",
   "salaires": {
    "min": 4800,
@@ -263,14 +263,14 @@
   },
   "contrats": {
    "CDI": 2396,
-   "CDD": 926,
+   "CDD": 927,
    "Alternance/Stage": 855,
-   "Autre": 574
+   "Autre": 575
   },
   "contrats_publies": true,
   "teletravail": {
-   "nb": 662,
-   "part": 0.1393
+   "nb": 663,
+   "part": 0.1395
   },
   "top_postes": [
    {
@@ -754,9 +754,9 @@
    ]
   },
   "jobicy": {
-   "nb_offres": 7,
-   "nouvelles": 7,
-   "actives": 7,
+   "nb_offres": 8,
+   "nouvelles": 8,
+   "actives": 8,
    "jour_nouvelles": "2026-11-25",
    "salaires": {
     "min": null,
@@ -797,11 +797,11 @@
     "CDI": 0,
     "CDD": 0,
     "Alternance/Stage": 0,
-    "Autre": 7
+    "Autre": 8
    },
    "contrats_publies": false,
    "teletravail": {
-    "nb": 7,
+    "nb": 8,
     "part": 1.0
    },
    "top_postes": [
@@ -849,6 +849,13 @@
     },
     {
      "intitule": "Lead Brand Designer",
+     "nb": 1,
+     "salaire_median": null,
+     "source": "jobicy",
+     "site": "Jobicy"
+    },
+    {
+     "intitule": "Community Lead & Talent Acquisition Advisor - DACH",
      "nb": 1,
      "salaire_median": null,
      "source": "jobicy",
@@ -1271,9 +1278,9 @@
    }
   },
   "adzuna": {
-   "nb_offres": 175,
-   "nouvelles": 175,
-   "actives": 175,
+   "nb_offres": 176,
+   "nouvelles": 176,
+   "actives": 176,
    "jour_nouvelles": "2026-11-25",
    "salaires": {
     "min": 15000,
@@ -1312,7 +1319,7 @@
    },
    "contrats": {
     "CDI": 49,
-    "CDD": 59,
+    "CDD": 60,
     "Alternance/Stage": 29,
     "Autre": 38
    },
@@ -1326,6 +1333,13 @@
      "intitule": "Stage Marketing et communication",
      "nb": 6,
      "salaire_median": null,
+     "source": "adzuna",
+     "site": "Adzuna"
+    },
+    {
+     "intitule": "Responsable Marketing",
+     "nb": 4,
+     "salaire_median": 56250,
      "source": "adzuna",
      "site": "Adzuna"
     },
@@ -1347,13 +1361,6 @@
      "intitule": "Assistant marketing",
      "nb": 3,
      "salaire_median": 26000,
-     "source": "adzuna",
-     "site": "Adzuna"
-    },
-    {
-     "intitule": "Responsable Marketing",
-     "nb": 3,
-     "salaire_median": 56250,
      "source": "adzuna",
      "site": "Adzuna"
     },
