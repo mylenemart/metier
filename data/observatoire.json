@@ -72,9 +72,10 @@
     "jobicy": 7,
     "himalayas": 157,
     "arbeitnow": 17,
-    "remotive": 2
+    "remotive": 2,
+    "adzuna": 175
    },
-   "cumul": 4576
+   "cumul": 4751
   }
  ],
  "tests": [
@@ -116,16 +117,17 @@
   {
    "test": "Chi² d'indépendance",
    "variables": "Source × télétravail",
-   "n": 4576,
-   "statistique": "χ² = 1021,1",
-   "ddl": 5,
-   "p": 1.6397511409106983e-218,
-   "effet": "V de Cramer = 0,47",
-   "effet_valeur": 0.472,
+   "n": 4751,
+   "statistique": "χ² = 1079,3",
+   "ddl": 6,
+   "p": 6.289745496857679e-230,
+   "effet": "V de Cramer = 0,48",
+   "effet_valeur": 0.477,
    "effet_niveau": "moyen",
    "condition": "4 case(s) avec un effectif attendu < 5 : résultat à prendre avec prudence",
    "tableau": {
     "lignes": [
+     "Adzuna",
      "Arbeitnow",
      "France Travail",
      "Himalayas",
@@ -138,6 +140,10 @@
      "télétravail"
     ],
     "valeurs": [
+     [
+      174,
+      1
+     ],
      [
       16,
       1
@@ -168,29 +174,29 @@
   {
    "test": "ANOVA à un facteur",
    "variables": "Source × salaire annuel brut (sources avec au moins 15 salaires)",
-   "n": 1329,
-   "statistique": "F(2 ; 1326) = 79,8",
-   "ddl": "2 ; 1326",
-   "p": 1.8962092557807756e-33,
-   "effet": "êta² = 0,107",
-   "effet_valeur": 0.1074,
+   "n": 1357,
+   "statistique": "F(3 ; 1353) = 55,5",
+   "ddl": "3 ; 1353",
+   "p": 8.217750819315052e-34,
+   "effet": "êta² = 0,110",
+   "effet_valeur": 0.1095,
    "effet_niveau": "moyen",
-   "condition": "suppose des salaires proches de la loi normale dans chaque groupe (France Travail : 692, Sites partenaires : 619, Himalayas : 18) : ce n'est pas le cas (asymétrie positive), d'où le test de Kruskal-Wallis en contrôle"
+   "condition": "suppose des salaires proches de la loi normale dans chaque groupe (France Travail : 692, Sites partenaires : 619, Himalayas : 18, Adzuna : 28) : ce n'est pas le cas (asymétrie positive), d'où le test de Kruskal-Wallis en contrôle"
   },
   {
    "test": "Kruskal-Wallis",
    "variables": "Source × salaire annuel brut (sources avec au moins 15 salaires)",
-   "n": 1329,
-   "statistique": "H = 117,1",
-   "ddl": 2,
-   "p": 3.806865318845183e-26,
-   "effet": "epsilon² = 0,088",
-   "effet_valeur": 0.0881,
+   "n": 1357,
+   "statistique": "H = 128,4",
+   "ddl": 3,
+   "p": 1.2074860262658832e-27,
+   "effet": "epsilon² = 0,095",
+   "effet_valeur": 0.0947,
    "effet_niveau": "moyen",
    "condition": "compare les rangs : ne suppose pas la normalité, adapté à des salaires asymétriques"
   }
  ],
- "doublons_probables": 695,
+ "doublons_probables": 718,
  "tranches_salaire": [
   0,
   5000,
@@ -214,39 +220,39 @@
   95000,
   100000
  ],
- "perimetre": "Toutes les offres vues depuis le 2026-09-22 (les offres retirées restent comptées). Métiers du marketing et du digital : 23 codes ROME pour France Travail et ses partenaires ; pour Jobicy, Himalayas, Arbeitnow et Remotive, offres ouvertes aux candidats en France dont l'intitulé relève du marketing, du contenu, de la communication ou du design.",
+ "perimetre": "Toutes les offres vues depuis le 2026-09-22 (les offres retirées restent comptées). Métiers du marketing et du digital : 23 codes ROME pour France Travail et ses partenaires ; pour Adzuna et Jooble, recherches par mots-clés en France ; pour Jobicy, Himalayas, Arbeitnow et Remotive, offres ouvertes aux candidats en France dont l'intitulé relève du marketing, du contenu, de la communication ou du design.",
  "global": {
-  "nb_offres": 4576,
-  "nouvelles": 298,
-  "actives": 3364,
+  "nb_offres": 4751,
+  "nouvelles": 473,
+  "actives": 3539,
   "jour_nouvelles": "2026-09-29",
   "salaires": {
    "min": 4800,
    "max": 160000,
    "mediane": 30000,
-   "moyenne": 34241,
-   "nb_renseignes": 1329,
-   "q1": 23500,
+   "moyenne": 34387,
+   "nb_renseignes": 1357,
+   "q1": 23550,
    "q3": 42500,
-   "ecart_type": 15818,
-   "asymetrie": 1.66,
-   "aplatissement": 5.6,
+   "ecart_type": 15797,
+   "asymetrie": 1.63,
+   "aplatissement": 5.46,
    "histogramme": [
     2,
     16,
     52,
-    96,
+    98,
     247,
-    221,
-    170,
-    116,
-    107,
-    132,
-    50,
+    222,
+    176,
+    119,
+    113,
+    134,
+    54,
     39,
+    19,
+    15,
     17,
-    14,
-    16,
     8,
     5,
     7,
@@ -256,15 +262,15 @@
    ]
   },
   "contrats": {
-   "CDI": 2347,
-   "CDD": 867,
-   "Alternance/Stage": 826,
-   "Autre": 536
+   "CDI": 2396,
+   "CDD": 926,
+   "Alternance/Stage": 855,
+   "Autre": 574
   },
   "contrats_publies": true,
   "teletravail": {
-   "nb": 661,
-   "part": 0.1444
+   "nb": 662,
+   "part": 0.1393
   },
   "top_postes": [
    {
@@ -1262,6 +1268,172 @@
    "credit": {
     "texte": "Offres fournies par Remotive",
     "url": "https://remotive.com"
+   }
+  },
+  "adzuna": {
+   "nb_offres": 175,
+   "nouvelles": 175,
+   "actives": 175,
+   "jour_nouvelles": "2026-11-25",
+   "salaires": {
+    "min": 15000,
+    "max": 70000,
+    "mediane": 40000,
+    "moyenne": 41286,
+    "nb_renseignes": 28,
+    "q1": 33625,
+    "q3": 50000,
+    "ecart_type": 13252,
+    "asymetrie": 0.28,
+    "aplatissement": -0.15,
+    "histogramme": [
+     0,
+     0,
+     0,
+     2,
+     0,
+     1,
+     6,
+     3,
+     6,
+     2,
+     4,
+     0,
+     2,
+     1,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   "contrats": {
+    "CDI": 49,
+    "CDD": 59,
+    "Alternance/Stage": 29,
+    "Autre": 38
+   },
+   "contrats_publies": true,
+   "teletravail": {
+    "nb": 1,
+    "part": 0.0057
+   },
+   "top_postes": [
+    {
+     "intitule": "Stage Marketing et communication",
+     "nb": 6,
+     "salaire_median": null,
+     "source": "adzuna",
+     "site": "Adzuna"
+    },
+    {
+     "intitule": "Alternance – Chargé(e) de Communication Digitale – Bachelor Chargé.e de Marketing Digital et E-Commerce",
+     "nb": 4,
+     "salaire_median": null,
+     "source": "adzuna",
+     "site": "Adzuna"
+    },
+    {
+     "intitule": "Assistant commercial et marketing",
+     "nb": 3,
+     "salaire_median": 35000,
+     "source": "adzuna",
+     "site": "Adzuna"
+    },
+    {
+     "intitule": "Assistant marketing",
+     "nb": 3,
+     "salaire_median": 26000,
+     "source": "adzuna",
+     "site": "Adzuna"
+    },
+    {
+     "intitule": "Responsable Marketing",
+     "nb": 3,
+     "salaire_median": 56250,
+     "source": "adzuna",
+     "site": "Adzuna"
+    },
+    {
+     "intitule": "Responsable Trade Marketing",
+     "nb": 2,
+     "salaire_median": null,
+     "source": "adzuna",
+     "site": "Adzuna"
+    },
+    {
+     "intitule": "Chef de projet Marketing & Développement Filières Durables",
+     "nb": 2,
+     "salaire_median": null,
+     "source": "adzuna",
+     "site": "Adzuna"
+    },
+    {
+     "intitule": "Alternance Assistant Assistant chef de projet Marketing Client & CRM - Paris",
+     "nb": 2,
+     "salaire_median": null,
+     "source": "adzuna",
+     "site": "Adzuna"
+    },
+    {
+     "intitule": "Alternance Chargé(e) commercial et marketing - Paris",
+     "nb": 2,
+     "salaire_median": null,
+     "source": "adzuna",
+     "site": "Adzuna"
+    },
+    {
+     "intitule": "Alternance Assistant Commercial et Marketing/Réseaux - Saint-Clément-de-Rivière",
+     "nb": 2,
+     "salaire_median": null,
+     "source": "adzuna",
+     "site": "Adzuna"
+    },
+    {
+     "intitule": "Chargé(e) d'acquisition",
+     "nb": 2,
+     "salaire_median": 17518,
+     "source": "adzuna",
+     "site": "Adzuna"
+    },
+    {
+     "intitule": "Community manager",
+     "nb": 2,
+     "salaire_median": null,
+     "source": "adzuna",
+     "site": "Adzuna"
+    },
+    {
+     "intitule": "Growth Hacker",
+     "nb": 2,
+     "salaire_median": 35250,
+     "source": "adzuna",
+     "site": "Adzuna"
+    },
+    {
+     "intitule": "Assistant Chef de Projet Digital - Alternance",
+     "nb": 2,
+     "salaire_median": null,
+     "source": "adzuna",
+     "site": "Adzuna"
+    },
+    {
+     "intitule": "Chef de projet marketing digital / Campaign owner",
+     "nb": 2,
+     "salaire_median": 52500,
+     "source": "adzuna",
+     "site": "Adzuna"
+    }
+   ],
+   "libelle": "Adzuna",
+   "description": "Agrégateur d'offres françaises (nombreux sites d'emploi), via son API officielle",
+   "date_collecte": "2026-11-25",
+   "credit": {
+    "texte": "Offres fournies par Adzuna",
+    "url": "https://www.adzuna.fr"
    }
   }
  }
