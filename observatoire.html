@@ -35,6 +35,9 @@
       --src-ft:   #2a78d6;
       --src-part: #eb6834;
       --src-jobicy: #1baf7a;
+      --src-himalayas: #008300;
+      --src-arbeitnow: #e34948;
+      --src-remotive: #8a5a00;
 
       /* Types de contrat (teintes distinctes des sources) */
       --ct-cdi:   #4a3aa7;
@@ -62,6 +65,9 @@
         --src-ft:   #3987e5;
         --src-part: #d95926;
         --src-jobicy: #199e70;
+        --src-himalayas: #2f9e2f;
+        --src-arbeitnow: #e66767;
+        --src-remotive: #c08a2a;
         --ct-cdi:   #9085e9;
         --ct-cdd:   #d55181;
         --ct-alt:   #c98500;
@@ -87,6 +93,9 @@
       --src-ft:   #3987e5;
       --src-part: #d95926;
       --src-jobicy: #199e70;
+      --src-himalayas: #2f9e2f;
+      --src-arbeitnow: #e66767;
+      --src-remotive: #c08a2a;
       --ct-cdi:   #9085e9;
       --ct-cdd:   #d55181;
       --ct-alt:   #c98500;
@@ -167,6 +176,19 @@
     .panel-head h2 { font-size: 15px; font-weight: 600; margin: 0; }
     .panel-head p  { margin: 2px 0 0; color: var(--text-muted); font-size: 12.5px; }
     .chart-box { position: relative; height: 300px; }
+    .lecture { margin: 10px 0 0; font-size: 12.5px; color: var(--text-secondary); line-height: 1.5; }
+    .lecture b { color: var(--text-primary); font-weight: 600; }
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+    .section-gap { margin-top: 16px; }
+    .prose { max-width: 820px; color: var(--text-secondary); line-height: 1.6; }
+    .prose h3 { color: var(--text-primary); font-size: 14px; margin: 18px 0 6px; }
+    .prose ul { margin: 6px 0; padding-left: 20px; }
+    .prose li { margin: 3px 0; }
+    .tag { display: inline-block; padding: 2px 8px; border-radius: 999px; font-size: 11.5px; font-weight: 600; background: var(--surface-2); color: var(--text-secondary); }
+    .tag.fort, .tag.moyen { background: var(--accent-soft); color: var(--text-primary); }
+    .todo { border: 1px dashed var(--border); border-radius: 10px; padding: 12px 14px; color: var(--text-muted); background: var(--surface-2); }
+    td.wrap { white-space: normal; min-width: 220px; }
+    @media (max-width: 1024px) { .grid-2 { grid-template-columns: 1fr; } }
     .legend { display: flex; flex-wrap: wrap; gap: 6px 16px; margin-top: 12px; font-size: 12.5px; color: var(--text-secondary); }
     .legend span { display: inline-flex; align-items: center; gap: 6px; }
     .swatch { display: inline-block; width: 14px; height: 8px; border-radius: 2px; }
@@ -311,6 +333,15 @@
       <button class="filter-btn" data-source="jobicy" aria-pressed="false" disabled>
         <span class="dot" style="background:var(--src-jobicy)"></span>Jobicy · télétravail
       </button>
+      <button class="filter-btn" data-source="himalayas" aria-pressed="false" disabled>
+        <span class="dot" style="background:var(--src-himalayas)"></span>Himalayas
+      </button>
+      <button class="filter-btn" data-source="arbeitnow" aria-pressed="false" disabled>
+        <span class="dot" style="background:var(--src-arbeitnow)"></span>Arbeitnow
+      </button>
+      <button class="filter-btn" data-source="remotive" aria-pressed="false" disabled>
+        <span class="dot" style="background:var(--src-remotive)"></span>Remotive
+      </button>
     </nav>
 
     <!-- ===================== Notices / erreurs ===================== -->
@@ -382,13 +413,14 @@
         <article class="card panel">
           <div class="panel-head">
             <h2>Comparatif des salaires par source</h2>
-            <p>Salaire annuel brut harmonisé · fourchette min–max, médiane et moyenne</p>
+            <p>Boîte à moustaches du salaire annuel brut harmonisé : quartiles, médiane, moyenne, min–max</p>
           </div>
           <div class="chart-box" id="salaryBox">
             <div class="skeleton sk-box">&nbsp;</div>
             <canvas id="salaryChart" role="img" aria-label="Comparatif des salaires annuels bruts par source" hidden></canvas>
           </div>
           <div class="legend" id="salaryLegend"></div>
+          <p class="lecture" id="salaryLecture"></p>
         </article>
 
         <article class="card panel">
@@ -412,7 +444,42 @@
               <li><div class="skeleton sk-line" style="grid-column:1/-1">&nbsp;</div></li>
             </ul>
           </div>
+          <p class="lecture" id="contractLecture"></p>
         </article>
+      </section>
+
+      <!-- ===================== Distribution et évolution ===================== -->
+      <section class="grid-2">
+        <article class="card panel">
+          <div class="panel-head">
+            <h2>Distribution des salaires</h2>
+            <p id="histoSubtitle">Part des offres par tranche de 5 000 € de salaire annuel brut</p>
+          </div>
+          <div class="chart-box" style="height:260px"><canvas id="histoChart" role="img" aria-label="Histogramme des salaires"></canvas></div>
+          <p class="lecture" id="histoLecture"></p>
+        </article>
+        <article class="card panel">
+          <div class="panel-head">
+            <h2>Nouvelles offres par jour de collecte</h2>
+            <p id="timeSubtitle">Offres vues pour la première fois, jour après jour</p>
+          </div>
+          <div class="chart-box" style="height:260px"><canvas id="timeChart" role="img" aria-label="Nouvelles offres par jour"></canvas></div>
+          <p class="lecture" id="timeLecture"></p>
+        </article>
+      </section>
+
+      <!-- ===================== Tests ===================== -->
+      <section class="card panel" style="margin-bottom:16px">
+        <div class="panel-head">
+          <h2>Tests statistiques</h2>
+          <p>Le test dépend de la nature des deux variables ; chaque résultat se lit avec sa taille d'effet et sa condition d'application. Calculés sur toutes les sources, quel que soit le filtre.</p>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Test</th><th>Variables</th><th class="num">n</th><th>Statistique</th><th class="num">p</th><th>Taille d'effet</th><th>Lecture</th></tr></thead>
+            <tbody id="testsBody"><tr><td colspan="7" class="empty">Chargement…</td></tr></tbody>
+          </table>
+        </div>
       </section>
 
       <!-- ===================== Tableau ===================== -->
@@ -440,6 +507,67 @@
             </tbody>
           </table>
         </div>
+        <p class="lecture" id="tableLecture"></p>
+      </section>
+
+      <!-- ===================== Données et méthode ===================== -->
+      <section class="card panel section-gap" id="methode">
+        <div class="panel-head"><h2>Données et méthode</h2><p>Comment la base est constituée, nettoyée et mise à jour</p></div>
+        <div class="prose">
+          <h3>Les sources</h3>
+          <div class="table-wrap"><table>
+            <thead><tr><th>Source</th><th>Ce qu'elle apporte</th><th class="num">Offres</th><th>Dernière collecte</th></tr></thead>
+            <tbody id="sourcesBody"></tbody>
+          </table></div>
+          <h3>La collecte</h3>
+          <ul>
+            <li>Chaque matin, une Action GitHub interroge l'API France Travail (23 codes ROME du marketing et du digital) et les API publiques de Jobicy, Himalayas, Arbeitnow et Remotive, puis republie ce site.</li>
+            <li>La base est <b>cumulative</b> : une offre vue une fois reste comptée, même après son retrait. La date de première observation permet de suivre les nouvelles offres jour après jour.</li>
+            <li>Les offres des « sites partenaires » viennent de l'API France Travail, qui rediffuse des annonces d'Indeed, Meteojob, DirectEmploi, PMEJob… avec le nom du site d'origine.</li>
+            <li>Welcome to the Jungle et l'Apec ne sont pas collectés : leurs conditions d'utilisation interdisent la collecte automatique.</li>
+          </ul>
+          <h3>Le nettoyage</h3>
+          <ul>
+            <li><b>Salaire</b> : ramené en brut annuel (mensuel × 12, horaire × 1 607 h) ; pour une fourchette, le milieu ; hors de 4 000 – 250 000 € la valeur est écartée (saisie erronée). Seuls les salaires en euros sont gardés.</li>
+            <li><b>Contrat</b> : CDI ; CDD (y compris intérim et saisonnier) ; alternance/stage (apprentissage, professionnalisation, stage) ; autre. Les sites internationaux ne publient pas de contrat de droit français.</li>
+            <li><b>Télétravail</b> : mention du télétravail dans l'annonce, hors formulations négatives (« pas de télétravail ») ; 100 % pour les sites d'offres à distance.</li>
+            <li><b>Intitulés</b> : mentions (H/F) retirées, casse harmonisée, pour regrouper les mêmes postes.</li>
+            <li><b>Doublons</b> : <span id="doublonsTxt">—</span></li>
+            <li><b>Périmètre des sites internationaux</b> : seules les offres dont l'intitulé relève du marketing, du contenu, de la communication ou du design sont gardées.</li>
+          </ul>
+          <h3>Les variables et leur nature</h3>
+          <div class="table-wrap"><table>
+            <thead><tr><th>Variable</th><th>Nature</th><th>Résumé et graphique adaptés</th></tr></thead>
+            <tbody>
+              <tr><td>Source de l'offre</td><td>Qualitative nominale</td><td>Effectifs, fréquences · barres</td></tr>
+              <tr><td>Type de contrat</td><td>Qualitative nominale</td><td>Effectifs, fréquences · barres ou anneau</td></tr>
+              <tr><td>Télétravail (oui / non)</td><td>Qualitative nominale (binaire)</td><td>Fréquence · barres</td></tr>
+              <tr><td>Intitulé du poste</td><td>Qualitative nominale</td><td>Effectifs des modalités les plus fréquentes · tableau</td></tr>
+              <tr><td>Salaire annuel brut</td><td>Quantitative continue</td><td>Médiane, moyenne, quartiles, écart-type · histogramme, boîte à moustaches</td></tr>
+              <tr><td>Date de première observation</td><td>Date</td><td>Effectifs par jour · barres ou courbe</td></tr>
+            </tbody>
+          </table></div>
+          <h3>Les limites</h3>
+          <ul>
+            <li>Environ un salaire sur trois seulement est affiché dans les annonces : les salaires décrits ici sont ceux des offres qui en publient un, pas ceux de tout le marché.</li>
+            <li>Les sites internationaux apportent peu d'offres et presque aucun salaire en euros : leurs résultats reposent sur de petits effectifs.</li>
+            <li>Avec plusieurs milliers d'offres, presque tous les tests sont significatifs : c'est la taille d'effet qui dit si un écart compte.</li>
+            <li id="limiteFT"></li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- ===================== Dossier ===================== -->
+      <section class="card panel section-gap" id="dossier">
+        <div class="panel-head"><h2>Question, hypothèses et recommandations</h2><p>La partie que le groupe rédige : le site fournit les chiffres, le dossier leur donne un sens</p></div>
+        <div class="prose">
+          <h3>Notre question</h3>
+          <p class="todo">À rédiger par le groupe : la question que vous posez à ce marché (par exemple, sur le métier que vous visez).</p>
+          <h3>Nos hypothèses</h3>
+          <p class="todo">À rédiger : H1, H2… chacune reliée à un test du tableau ci-dessus ou à un test à ajouter.</p>
+          <h3>Ce que les résultats permettent de recommander</h3>
+          <p class="todo">À rédiger : les décisions que ces chiffres justifient, et ce qu'ils ne permettent pas de conclure.</p>
+        </div>
       </section>
     </div>
 
@@ -447,7 +575,8 @@
       <p id="perimetre"></p>
       <p>Sources : <a href="https://francetravail.io/data/api/offres-emploi">API Offres d'emploi de France Travail</a>
         (offres déposées sur francetravail.fr et offres de sites partenaires rediffusées par France Travail) ·
-        offres en télétravail fournies par <a href="https://jobicy.com">Jobicy</a>.
+        offres fournies par <a href="https://jobicy.com">Jobicy</a>, <a href="https://himalayas.app">Himalayas</a>,
+        <a href="https://www.arbeitnow.com">Arbeitnow</a> et <a href="https://remotive.com">Remotive</a>.
         Mise à jour automatique chaque matin.</p>
     </footer>
   </div>
@@ -479,7 +608,10 @@
       { id: "part",   label: "Sites partenaires",     short: "Partenaire",     colorVar: "--src-part",
         aliases: ["partenaires", "sites_partenaires", "sites partenaires", "partenaire"] },
       { id: "jobicy", label: "Jobicy · télétravail",  short: "Jobicy",         colorVar: "--src-jobicy",
-        aliases: ["jobicy"] }
+        aliases: ["jobicy"] },
+      { id: "himalayas", label: "Himalayas", short: "Himalayas", colorVar: "--src-himalayas", aliases: ["himalayas"] },
+      { id: "arbeitnow", label: "Arbeitnow", short: "Arbeitnow", colorVar: "--src-arbeitnow", aliases: ["arbeitnow"] },
+      { id: "remotive",  label: "Remotive",  short: "Remotive",  colorVar: "--src-remotive",  aliases: ["remotive"] }
     ];
     const CONTRACTS = [
       { key: "CDI",              label: "CDI",                colorVar: "--ct-cdi" },
@@ -577,8 +709,14 @@
           max:     firstNum(s.max, s.maximum),
           mediane: firstNum(s.mediane, s.median, s.mediane_brut),
           moyenne: firstNum(s.moyenne, s.mean, s.moyen),
-          nbRens:  firstNum(s.nb_renseignes, s.nb, s.count, s.n)
+          nbRens:  firstNum(s.nb_renseignes, s.nb, s.count, s.n),
+          q1: firstNum(s.q1), q3: firstNum(s.q3), ecartType: firstNum(s.ecart_type),
+          asymetrie: firstNum(s.asymetrie), aplatissement: firstNum(s.aplatissement),
+          histo: Array.isArray(s.histogramme) ? s.histogramme : null
         },
+        libelle: raw.libelle ?? null,
+        description: raw.description ?? null,
+        credit: raw.credit ?? null,
         contrats,
         teleRatio, teleNb,
         top: normalizeTop(raw.top_postes ?? raw.postes ?? raw.intitules, sourceId),
@@ -600,6 +738,9 @@
       if (k.includes("france") || k.includes("pole")) return "ft";
       if (k.includes("partenaire")) return "part";
       if (k.includes("jobicy")) return "jobicy";
+      if (k.includes("himalayas")) return "himalayas";
+      if (k.includes("arbeitnow")) return "arbeitnow";
+      if (k.includes("remotive")) return "remotive";
       return null;
     }
 
@@ -795,6 +936,12 @@
       return {
         updatedAt: raw.date_maj ?? raw.date_mise_a_jour ?? raw.updated_at ?? raw.date ?? null,
         perimetre: raw.perimetre ?? null,
+        depuis: raw.depuis ?? null,
+        dateFT: raw.date_france_travail ?? null,
+        historique: Array.isArray(raw.historique) ? raw.historique : [],
+        tests: Array.isArray(raw.tests) ? raw.tests : [],
+        doublons: firstNum(raw.doublons_probables),
+        tranches: Array.isArray(raw.tranches_salaire) ? raw.tranches_salaire : null,
         global,
         sources: bySource
       };
@@ -803,7 +950,7 @@
     /* ==========================================================
        État & chargement
        ========================================================== */
-    const state = { data: null, active: "all", charts: { salary: null, contract: null } };
+    const state = { data: null, active: "all", charts: { salary: null, contract: null, histo: null, time: null } };
     let slowTimer = null;
 
     async function loadData() {
@@ -921,6 +1068,7 @@
       renderSalaryChart();
       renderContractChart();
       renderTable();
+      renderExtras();
     }
 
     function deltaHtml(value, ref, kind) {
@@ -1018,11 +1166,18 @@
           barPercentage: 0.45, categoryPercentage: 0.9, grouped: false, order: 2
         },
         {
-          label: "Fourchette",
-          data: rows.map((r) => (isNum(r.agg.salaires.min) && isNum(r.agg.salaires.max) ? [r.agg.salaires.min, r.agg.salaires.max] : null)),
-          backgroundColor: rows.map((r) => withAlpha(r.color, isOn(r) ? 0.32 : 0.1)),
+          label: "Quartiles",
+          data: rows.map((r) => (isNum(r.agg.salaires.q1) && isNum(r.agg.salaires.q3) ? [r.agg.salaires.q1, r.agg.salaires.q3] : null)),
+          backgroundColor: rows.map((r) => withAlpha(r.color, isOn(r) ? 0.38 : 0.1)),
           borderSkipped: false, borderRadius: 4,
           barPercentage: 0.55, categoryPercentage: 0.9, grouped: false, order: 3
+        },
+        {
+          label: "Fourchette",
+          data: rows.map((r) => (isNum(r.agg.salaires.min) && isNum(r.agg.salaires.max) ? [r.agg.salaires.min, r.agg.salaires.max] : null)),
+          backgroundColor: rows.map((r) => withAlpha(r.color, isOn(r) ? 0.5 : 0.12)),
+          borderSkipped: false, borderRadius: 1,
+          barPercentage: 0.08, categoryPercentage: 0.9, grouped: false, order: 4
         }
       ];
     }
@@ -1072,7 +1227,9 @@
                   const lines = [
                     `Médiane : ${euro(s.mediane)}`,
                     `Moyenne : ${euro(s.moyenne)}`,
-                    `Min – max : ${euro(s.min)} – ${euro(s.max)}`
+                    `Quartiles : ${euro(s.q1)} – ${euro(s.q3)}`,
+                    `Min – max : ${euro(s.min)} – ${euro(s.max)}`,
+                    `Écart-type : ${euro(s.ecartType)}`
                   ];
                   if (isNum(s.nbRens)) lines.push(`${fmtInt.format(s.nbRens)} salaires renseignés`);
                   return lines;
@@ -1086,7 +1243,8 @@
 
       const textColor = cssVar("--text-primary");
       $("#salaryLegend").innerHTML = `
-        <span><i class="swatch" style="background:${withAlpha(cssVar("--src-ft"), 0.32)}"></i>Fourchette min – max</span>
+        <span><i class="swatch" style="background:${withAlpha(cssVar("--src-ft"), 0.38)}"></i>Boîte : 1er – 3e quartile</span>
+        <span><i class="swatch" style="height:2px;background:${withAlpha(cssVar("--src-ft"), 0.5)}"></i>Moustache : min – max</span>
         <span><i class="swatch tick" style="background:${cssVar("--src-ft")}"></i>Médiane</span>
         <span><i class="swatch tick" style="background:${withAlpha(textColor, 0.85)}"></i>Moyenne</span>`;
     }
@@ -1203,6 +1361,135 @@
       }).join("");
     }
 
+
+    /* ---------- Sections d'analyse : phrases de lecture, histogramme, évolution, tests, méthode ---------- */
+    const fmtDate = (d) => {
+      if (!d) return "—";
+      const dt = new Date(/^\d{4}-\d{2}-\d{2}$/.test(d) ? d + "T12:00:00" : d);
+      return isNaN(dt) ? d : dt.toLocaleDateString("fr-FR", { day: "numeric", month: "long", year: "numeric" });
+    };
+    const fmtP = (p) => !isNum(p) ? "—" : p < 0.001 ? "< 0,001" : fmtDec.format(Math.round(p * 1000) / 1000);
+    const scopeName = () => state.active === "all" ? "toutes sources" : sourceById(state.active).label;
+
+    function chartBase(kind, labels, datasets, extra = {}) {
+      const grid = cssVar("--grid"), muted = cssVar("--text-muted");
+      return {
+        type: kind,
+        data: { labels, datasets },
+        options: {
+          responsive: true, maintainAspectRatio: false, animation: { duration: 300 },
+          plugins: {
+            legend: { display: false },
+            tooltip: { backgroundColor: cssVar("--surface"), titleColor: cssVar("--text-primary"),
+                       bodyColor: cssVar("--text-secondary"), borderColor: cssVar("--border"), borderWidth: 1, padding: 10,
+                       ...(extra.tooltip || {}) }
+          },
+          scales: {
+            x: { grid: { display: false }, border: { color: grid }, ticks: { color: muted, maxRotation: 0, autoSkip: true, maxTicksLimit: 8 } },
+            y: { beginAtZero: true, grid: { color: grid }, border: { display: false }, ticks: { color: muted, precision: 0, ...(extra.yTicks || {}) } }
+          }
+        }
+      };
+    }
+
+    function upsertChart(key, canvasId, config) {
+      const c = state.charts[key];
+      if (c) { c.data = config.data; c.options = config.options; c.update(); return; }
+      state.charts[key] = new Chart($(canvasId), config);
+    }
+
+    function renderExtras() {
+      const d = state.data, a = currentAgg(), s = a.salaires, scope = scopeName();
+      const dateRef = fmtDate(d.updatedAt);
+
+      // Salaires
+      $("#salaryLecture").innerHTML = isNum(s.mediane)
+        ? `<b>Lecture :</b> sur ${fmtInt.format(s.nbRens)} offres affichant un salaire (${scope}), la moitié propose moins de <b>${euro(s.mediane)}</b> brut par an ; `
+          + `la moitié centrale se situe entre ${euro(s.q1)} et ${euro(s.q3)}. `
+          + (s.moyenne > s.mediane * 1.03
+              ? `La moyenne (${euro(s.moyenne)}) dépasse la médiane : quelques hauts salaires la tirent vers le haut` + (isNum(s.asymetrie) ? ` (asymétrie ${fmtDec.format(s.asymetrie)})` : "") + ". "
+              : `La moyenne (${euro(s.moyenne)}) est proche de la médiane. `)
+          + (s.nbRens < 30 ? `Effectif faible : à lire avec prudence. ` : "") + `Données au ${dateRef}.`
+        : `<b>Lecture :</b> ${scope} ne publie pas de salaire en euros exploitable.`;
+
+      // Contrats
+      const tot = Object.values(a.contrats).reduce((x, y) => x + y, 0);
+      $("#contractLecture").innerHTML = a.contratsPublies === false
+        ? `<b>Lecture :</b> ${scope} ne publie pas de type de contrat de droit français ; ses ${fmtInt.format(tot)} offres sont classées « Autre ».`
+        : `<b>Lecture :</b> ${fmtInt.format(a.contrats.CDI)} offres sur ${fmtInt.format(tot)} sont en CDI (${pct(tot ? a.contrats.CDI / tot : null)}), `
+          + `${fmtInt.format(a.contrats["Alternance/Stage"])} en alternance ou stage. Base : ${scope}, cumul au ${dateRef}.`;
+
+      // Histogramme
+      const tr = d.tranches || [];
+      if (s.histo && tr.length) {
+        const n = s.histo.reduce((x, y) => x + y, 0);
+        const labels = tr.map((t, i) => i === tr.length - 1 ? `${t / 1000} k€ +` : `${t / 1000}–${(t + 5000) / 1000} k€`);
+        const color = state.active === "all" ? cssVar("--src-ft") : cssVar(sourceById(state.active).colorVar);
+        upsertChart("histo", "#histoChart", chartBase("bar", labels, [{
+          data: s.histo.map((c) => n ? Math.round(1000 * c / n) / 10 : 0),
+          backgroundColor: withAlpha(color, 0.75), borderRadius: 3, barPercentage: 0.96, categoryPercentage: 1
+        }], { yTicks: { callback: (v) => v + " %" }, tooltip: { callbacks: { label: (c) => ` ${fmtDec.format(c.raw)} % des offres (${fmtInt.format(s.histo[c.dataIndex])})` } } }));
+        const mode = s.histo.indexOf(Math.max(...s.histo));
+        $("#histoLecture").innerHTML = n
+          ? `<b>Lecture :</b> sur ${fmtInt.format(n)} salaires (${scope}), la tranche la plus fréquente est <b>${labels[mode]}</b> (${pct(s.histo[mode] / n)} des offres). `
+            + `Écart-type : ${euro(s.ecartType)}. `
+            + (s.asymetrie > 0.5 ? `La distribution s'étire vers les hauts salaires (asymétrie ${fmtDec.format(s.asymetrie)}), loin d'une courbe symétrique : la médiane la résume mieux que la moyenne.`
+               : `La distribution est à peu près symétrique.`)
+            + (n < 30 ? ` Seulement ${fmtInt.format(n)} salaires : à lire avec prudence.` : "")
+          : `<b>Lecture :</b> aucun salaire publié pour ${scope}.`;
+        $("#histoSubtitle").textContent = `Part des offres par tranche de 5 000 € de salaire annuel brut · ${scope}`;
+      }
+
+      // Évolution
+      const h = d.historique || [];
+      if (h.length) {
+        const key = { ft: "france_travail", part: "partenaires" }[state.active] || state.active;
+        const vals = h.map((j) => state.active === "all" ? Object.values(j.nouvelles).reduce((x, y) => x + y, 0) : (j.nouvelles[key] || 0));
+        const color = state.active === "all" ? cssVar("--text-secondary") : cssVar(sourceById(state.active).colorVar);
+        upsertChart("time", "#timeChart", chartBase("bar", h.map((j) => fmtDate(j.date).replace(/ \d{4}$/, "")), [{
+          data: vals, backgroundColor: withAlpha(color, 0.75), borderRadius: 3, barPercentage: 0.7
+        }], { tooltip: { callbacks: { label: (c) => ` ${fmtInt.format(c.raw)} nouvelles offres` } } }));
+        const debut = vals.findIndex((v) => v > 0);
+        const cumul = vals.reduce((x, y) => x + y, 0);
+        const suite = debut >= 0 ? vals.slice(debut + 1) : [];
+        $("#timeLecture").innerHTML = debut < 0 ? `<b>Lecture :</b> aucune offre collectée pour ${scope}.`
+          : `<b>Lecture :</b> la première collecte de ${scope} (${fmtDate(h[debut].date)}) compte ${fmtInt.format(vals[debut])} offres déjà en ligne ; `
+            + (suite.length ? `ensuite, ${fmtInt.format(Math.round(suite.reduce((x, y) => x + y, 0) / suite.length))} nouvelles offres en moyenne par jour de collecte. `
+                            : `c'est sa seule collecte pour l'instant. `)
+            + `Cumul : ${fmtInt.format(cumul)} offres. Seuls les jours où la collecte a réussi apparaissent.`;
+      }
+
+      // Tableau des métiers
+      $("#tableLecture").innerHTML = `<b>Lecture :</b> nombre d'offres portant exactement le même intitulé (après retrait des mentions H/F), ${scope}, cumul au ${dateRef}. `
+        + `Un intitulé très fréquent chez un seul recruteur peut venir d'annonces publiées en série : voir les doublons dans « Données et méthode ».`;
+
+      // Tests
+      const lireTest = (t) => {
+        const sig = t.p < 0.05;
+        return `${sig ? "Lien significatif" : "Pas de lien significatif"} (p ${fmtP(t.p).startsWith("<") ? "" : "= "}${escapeHtml(fmtP(t.p))})`
+          + (sig ? `, effet <span class="tag ${t.effet_niveau}">${t.effet_niveau}</span>` : "") + `. ${t.condition}.`;
+      };
+      $("#testsBody").innerHTML = (d.tests || []).length
+        ? d.tests.map((t) => `<tr><td>${escapeHtml(t.test)}</td><td class="wrap">${escapeHtml(t.variables)}</td><td class="num">${fmtInt.format(t.n)}</td>`
+            + `<td>${escapeHtml(t.statistique)}</td><td class="num">${escapeHtml(fmtP(t.p))}</td><td>${escapeHtml(t.effet)}</td><td class="wrap">${lireTest(t)}</td></tr>`).join("")
+        : `<tr><td colspan="7" class="empty">Tests disponibles après la prochaine mise à jour.</td></tr>`;
+
+      // Méthode : sources, doublons, limite France Travail
+      $("#sourcesBody").innerHTML = SOURCES.filter((x) => d.sources[x.id]).map((x) => {
+        const g = d.sources[x.id];
+        const nom = g.credit?.url ? `<a href="${escapeHtml(g.credit.url)}">${escapeHtml(x.label)}</a>` : escapeHtml(x.label);
+        const date = g.dateCollecte || d.dateFT || d.updatedAt;
+        return `<tr><td><span class="dot" style="display:inline-block;margin-right:6px;background:var(${x.colorVar})"></span>${nom}</td>`
+          + `<td class="wrap">${escapeHtml(g.description || "")}</td><td class="num">${fmtInt.format(g.nb)}</td><td>${fmtDate(date)}</td></tr>`;
+      }).join("");
+      $("#doublonsTxt").textContent = isNum(d.doublons)
+        ? `${fmtInt.format(d.doublons)} annonces partagent l'intitulé, l'entreprise et la source d'une autre (publications en série). Elles sont signalées, pas retirées : à écarter selon la question posée.`
+        : "non calculé.";
+      $("#limiteFT").textContent = d.dateFT && d.dateFT < d.updatedAt
+        ? `Les offres France Travail s'arrêtent au ${fmtDate(d.dateFT)} : la collecte France Travail est en panne depuis (identifiants refusés par l'API), les autres sources continuent.`
+        : "Les offres France Travail sont mises à jour chaque matin.";
+    }
+
     /* ==========================================================
        Interactions
        ========================================================== */
@@ -1211,10 +1498,7 @@
       if (!btn || btn.disabled || !state.data) return;
       state.active = btn.dataset.source;
       $$(".filter-btn").forEach((b) => b.setAttribute("aria-pressed", String(b === btn)));
-      renderKpis();
-      renderSalaryChart();
-      renderContractChart();
-      renderTable();
+      renderAll();
     });
 
     $("#retryBtn").addEventListener("click", loadData);
@@ -1234,9 +1518,8 @@
     function rebuildCharts() {
       if (!state.data) return;
       Object.values(state.charts).forEach((c) => c && c.destroy());
-      state.charts = { salary: null, contract: null };
-      renderSalaryChart();
-      renderContractChart();
+      state.charts = { salary: null, contract: null, histo: null, time: null };
+      renderAll();
     }
     try { const saved = localStorage.getItem(THEME_KEY); if (saved) document.documentElement.setAttribute("data-theme", saved); } catch (_) {}
     $("#themeToggle").addEventListener("click", () => {
