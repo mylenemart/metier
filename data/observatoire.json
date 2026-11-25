@@ -1,40 +1,114 @@
 {
  "date_maj": "2026-09-29",
- "perimetre": "Métiers du marketing et du digital : 23 codes ROME pour France Travail et ses partenaires ; pour Jobicy, offres en télétravail ouvertes depuis la France dont l'intitulé relève du marketing, du contenu, de la communication ou du design.",
+ "depuis": "2026-09-22",
+ "historique": [
+  {
+   "date": "2026-09-22",
+   "nouvelles": {
+    "france_travail": 813,
+    "partenaires": 2549
+   }
+  },
+  {
+   "date": "2026-09-23",
+   "nouvelles": {
+    "france_travail": 63,
+    "partenaires": 161
+   }
+  },
+  {
+   "date": "2026-09-24",
+   "nouvelles": {
+    "france_travail": 59,
+    "partenaires": 143
+   }
+  },
+  {
+   "date": "2026-09-25",
+   "nouvelles": {
+    "france_travail": 48,
+    "partenaires": 147
+   }
+  },
+  {
+   "date": "2026-09-26",
+   "nouvelles": {
+    "france_travail": 24,
+    "partenaires": 136
+   }
+  },
+  {
+   "date": "2026-09-27",
+   "nouvelles": {
+    "partenaires": 77
+   }
+  },
+  {
+   "date": "2026-09-28",
+   "nouvelles": {
+    "france_travail": 35,
+    "partenaires": 23
+   }
+  },
+  {
+   "date": "2026-09-29",
+   "nouvelles": {
+    "france_travail": 52,
+    "partenaires": 63
+   }
+  },
+  {
+   "date": "2026-11-25",
+   "nouvelles": {
+    "jobicy": 7
+   }
+  }
+ ],
+ "perimetre": "Toutes les offres vues depuis le 2026-09-22 (les offres retirées restent comptées). Métiers du marketing et du digital : 23 codes ROME pour France Travail et ses partenaires ; pour Jobicy, offres en télétravail ouvertes depuis la France dont l'intitulé relève du marketing, du contenu, de la communication ou du design.",
  "global": {
-  "nb_offres": 3188,
+  "nb_offres": 4400,
+  "nouvelles": 122,
+  "actives": 3188,
+  "jour_nouvelles": "2026-09-29",
   "salaires": {
    "min": 4800,
    "max": 125000,
-   "mediane": 29400,
-   "moyenne": 33308,
-   "nb_renseignes": 891
+   "mediane": 30000,
+   "moyenne": 33839,
+   "nb_renseignes": 1311
   },
   "contrats": {
-   "CDI": 1636,
-   "CDD": 602,
-   "Alternance/Stage": 644,
-   "Autre": 306
+   "CDI": 2342,
+   "CDD": 865,
+   "Alternance/Stage": 821,
+   "Autre": 372
   },
   "contrats_publies": true,
   "teletravail": {
-   "nb": 334,
-   "part": 0.1048
+   "nb": 501,
+   "part": 0.1139
   },
   "top_postes": [
    {
     "intitule": "Directeur / directrice communication et marketing digital",
-    "nb": 149,
+    "nb": 191,
     "salaire_median": null,
     "source": "partenaires",
     "site": "PMEJob"
    },
    {
     "intitule": "Conseiller de vente",
-    "nb": 90,
+    "nb": 98,
     "salaire_median": 13722,
     "source": "partenaires",
     "site": "Meteojob"
+   },
+   {
+    "intitule": "Chargé / Chargée de communication digitale",
+    "nb": 47,
+    "salaire_median": null,
+    "source": "partenaires",
+    "site": "La bonne alternance"
    },
    {
     "intitule": "Agent commercial indépendant",
@@ -44,111 +118,107 @@
     "site": "France Travail"
    },
    {
-    "intitule": "Assistant / Assistante marketing",
-    "nb": 32,
-    "salaire_median": 14050,
-    "source": "partenaires",
-    "site": "Meteojob"
-   },
-   {
-    "intitule": "Chargé / Chargée de communication digitale",
-    "nb": 30,
-    "salaire_median": null,
-    "source": "partenaires",
-    "site": "La bonne alternance"
-   },
-   {
     "intitule": "Chargé / Chargée de mission événementiel",
-    "nb": 20,
+    "nb": 40,
     "salaire_median": null,
     "source": "partenaires",
     "site": "Ouest-France Emploi"
    },
    {
-    "intitule": "Charge de clientele",
-    "nb": 19,
+    "intitule": "Assistant / Assistante marketing",
+    "nb": 40,
+    "salaire_median": 15600,
+    "source": "partenaires",
+    "site": "Meteojob"
+   },
+   {
+    "intitule": "Chef de mission",
+    "nb": 35,
     "salaire_median": null,
     "source": "partenaires",
     "site": "DirectEmploi"
    },
    {
-    "intitule": "Chef de mission",
-    "nb": 19,
+    "intitule": "Commercial",
+    "nb": 29,
+    "salaire_median": 48500,
+    "source": "partenaires",
+    "site": "Beetween"
+   },
+   {
+    "intitule": "Charge de clientele",
+    "nb": 26,
     "salaire_median": null,
     "source": "partenaires",
     "site": "DirectEmploi"
    },
    {
     "intitule": "Community manager",
-    "nb": 17,
+    "nb": 23,
     "salaire_median": 23944,
     "source": "france_travail",
     "site": "France Travail"
    },
    {
+    "intitule": "Opérateur sur presse",
+    "nb": 22,
+    "salaire_median": null,
+    "source": "partenaires",
+    "site": "DirectEmploi"
+   },
+   {
     "intitule": "Chargé d'Études VRD",
-    "nb": 17,
+    "nb": 21,
     "salaire_median": null,
     "source": "partenaires",
     "site": "PMEJob"
    },
    {
-    "intitule": "Opérateur sur presse",
-    "nb": 16,
-    "salaire_median": null,
+    "intitule": "Assistant d'agence",
+    "nb": 20,
+    "salaire_median": 28200,
     "source": "partenaires",
     "site": "DirectEmploi"
    },
    {
     "intitule": "Responsable marketing",
-    "nb": 15,
+    "nb": 19,
     "salaire_median": 55000,
     "source": "partenaires",
     "site": "Meteojob"
    },
    {
-    "intitule": "Employé(e) commercial(e)",
-    "nb": 14,
-    "salaire_median": null,
+    "intitule": "Community manager",
+    "nb": 18,
+    "salaire_median": 20000,
     "source": "partenaires",
-    "site": "Distrijob"
-   },
-   {
-    "intitule": "DIRECTEUR / DIRECteur(trice) COMMUNICATION ET MARKETING DIGITAL",
-    "nb": 14,
-    "salaire_median": null,
-    "source": "partenaires",
-    "site": "DirectEmploi"
-   },
-   {
-    "intitule": "Assistant d'agence",
-    "nb": 13,
-    "salaire_median": 30000,
-    "source": "partenaires",
-    "site": "DirectEmploi"
+    "site": "Meteojob"
    }
   ]
  },
  "sources": {
   "france_travail": {
-   "nb_offres": 816,
+   "nb_offres": 1094,
+   "nouvelles": 52,
+   "actives": 816,
+   "jour_nouvelles": "2026-09-29",
    "salaires": {
     "min": 6078,
     "max": 125000,
-    "mediane": 27141,
-    "moyenne": 30415,
-    "nb_renseignes": 516
+    "mediane": 27000,
+    "moyenne": 30141,
+    "nb_renseignes": 692
    },
    "contrats": {
-    "CDI": 414,
-    "CDD": 257,
-    "Alternance/Stage": 69,
-    "Autre": 76
+    "CDI": 543,
+    "CDD": 363,
+    "Alternance/Stage": 111,
+    "Autre": 77
    },
    "contrats_publies": true,
    "teletravail": {
-    "nb": 80,
-    "part": 0.098
+    "nb": 116,
+    "part": 0.106
    },
    "top_postes": [
     {
@@ -160,22 +230,78 @@
     },
     {
      "intitule": "Community manager",
-     "nb": 17,
+     "nb": 23,
      "salaire_median": 23944,
      "source": "france_travail",
      "site": "France Travail"
     },
     {
      "intitule": "Chargé de clientèle",
-     "nb": 11,
+     "nb": 16,
      "salaire_median": 25800,
      "source": "france_travail",
      "site": "France Travail"
     },
     {
      "intitule": "Chargé d'affaires",
-     "nb": 11,
+     "nb": 15,
      "salaire_median": 40000,
+     "source": "france_travail",
+     "site": "France Travail"
+    },
+    {
+     "intitule": "Chargé / Chargée de communication",
+     "nb": 14,
+     "salaire_median": 36048,
+     "source": "france_travail",
+     "site": "France Travail"
+    },
+    {
+     "intitule": "Chargé / Chargée marketing digital",
+     "nb": 13,
+     "salaire_median": 30500,
+     "source": "france_travail",
+     "site": "France Travail"
+    },
+    {
+     "intitule": "Chargé de communication",
+     "nb": 12,
+     "salaire_median": 25981,
+     "source": "france_travail",
+     "site": "France Travail"
+    },
+    {
+     "intitule": "Chargé(e) de communication",
+     "nb": 11,
+     "salaire_median": 27000,
+     "source": "france_travail",
+     "site": "France Travail"
+    },
+    {
+     "intitule": "Chargé / Chargée de relation client",
+     "nb": 10,
+     "salaire_median": 23760,
+     "source": "france_travail",
+     "site": "France Travail"
+    },
+    {
+     "intitule": "Assistant(e) d'agence",
+     "nb": 9,
+     "salaire_median": 22405,
+     "source": "france_travail",
+     "site": "France Travail"
+    },
+    {
+     "intitule": "Assistant Marketing",
+     "nb": 9,
+     "salaire_median": 26757,
+     "source": "france_travail",
+     "site": "France Travail"
+    },
+    {
+     "intitule": "Chef de produit",
+     "nb": 9,
+     "salaire_median": 40500,
      "source": "france_travail",
      "site": "France Travail"
     },
@@ -187,72 +313,16 @@
      "site": "France Travail"
     },
     {
-     "intitule": "Chargé(e) de communication",
-     "nb": 8,
-     "salaire_median": 29500,
-     "source": "france_travail",
-     "site": "France Travail"
-    },
-    {
-     "intitule": "Assistant(e) d'agence",
-     "nb": 8,
-     "salaire_median": 23685,
-     "source": "france_travail",
-     "site": "France Travail"
-    },
-    {
-     "intitule": "Chargé / Chargée marketing digital",
-     "nb": 8,
-     "salaire_median": 30500,
-     "source": "france_travail",
-     "site": "France Travail"
-    },
-    {
-     "intitule": "Chargé / Chargée de relation client",
-     "nb": 7,
-     "salaire_median": 23760,
-     "source": "france_travail",
-     "site": "France Travail"
-    },
-    {
      "intitule": "Merchandiser",
-     "nb": 6,
-     "salaire_median": 22980,
+     "nb": 8,
+     "salaire_median": 25578,
      "source": "france_travail",
      "site": "France Travail"
     },
     {
-     "intitule": "Hôte / Hôtesse d'animation",
+     "intitule": "Chargé(e) de relation client",
      "nb": 6,
-     "salaire_median": null,
-     "source": "france_travail",
-     "site": "France Travail"
-    },
-    {
-     "intitule": "Chargé / Chargée de communication",
-     "nb": 6,
-     "salaire_median": 22096,
-     "source": "france_travail",
-     "site": "France Travail"
-    },
-    {
-     "intitule": "Chargé de communication",
-     "nb": 6,
-     "salaire_median": 24642,
-     "source": "france_travail",
-     "site": "France Travail"
-    },
-    {
-     "intitule": "Chef de produit",
-     "nb": 6,
-     "salaire_median": 35500,
-     "source": "france_travail",
-     "site": "France Travail"
-    },
-    {
-     "intitule": "Assistant(e) Plannings",
-     "nb": 5,
-     "salaire_median": 23100,
+     "salaire_median": 23802,
      "source": "france_travail",
      "site": "France Travail"
     }
@@ -261,130 +331,133 @@
    "description": "Offres déposées directement sur francetravail.fr"
   },
   "partenaires": {
-   "nb_offres": 2365,
+   "nb_offres": 3299,
+   "nouvelles": 63,
+   "actives": 2365,
+   "jour_nouvelles": "2026-09-29",
    "salaires": {
     "min": 4800,
     "max": 115000,
-    "mediane": 36000,
-    "moyenne": 37289,
-    "nb_renseignes": 375
+    "mediane": 37500,
+    "moyenne": 37974,
+    "nb_renseignes": 619
    },
    "contrats": {
-    "CDI": 1222,
-    "CDD": 345,
-    "Alternance/Stage": 575,
-    "Autre": 223
+    "CDI": 1799,
+    "CDD": 502,
+    "Alternance/Stage": 710,
+    "Autre": 288
    },
    "contrats_publies": true,
    "teletravail": {
-    "nb": 247,
-    "part": 0.1044
+    "nb": 378,
+    "part": 0.1146
    },
    "top_postes": [
     {
      "intitule": "Directeur / directrice communication et marketing digital",
-     "nb": 149,
+     "nb": 191,
      "salaire_median": null,
      "source": "partenaires",
      "site": "PMEJob"
     },
     {
      "intitule": "Conseiller de vente",
-     "nb": 90,
+     "nb": 98,
      "salaire_median": 13722,
      "source": "partenaires",
      "site": "Meteojob"
     },
     {
-     "intitule": "Assistant / Assistante marketing",
-     "nb": 32,
-     "salaire_median": 14050,
-     "source": "partenaires",
-     "site": "Meteojob"
-    },
-    {
      "intitule": "Chargé / Chargée de communication digitale",
-     "nb": 30,
+     "nb": 47,
      "salaire_median": null,
      "source": "partenaires",
      "site": "La bonne alternance"
     },
     {
      "intitule": "Chargé / Chargée de mission événementiel",
-     "nb": 20,
+     "nb": 40,
      "salaire_median": null,
      "source": "partenaires",
      "site": "Ouest-France Emploi"
     },
     {
-     "intitule": "Charge de clientele",
-     "nb": 19,
+     "intitule": "Assistant / Assistante marketing",
+     "nb": 40,
+     "salaire_median": 15600,
+     "source": "partenaires",
+     "site": "Meteojob"
+    },
+    {
+     "intitule": "Chef de mission",
+     "nb": 35,
      "salaire_median": null,
      "source": "partenaires",
      "site": "DirectEmploi"
     },
     {
-     "intitule": "Chef de mission",
-     "nb": 19,
+     "intitule": "Commercial",
+     "nb": 29,
+     "salaire_median": 48500,
+     "source": "partenaires",
+     "site": "Beetween"
+    },
+    {
+     "intitule": "Charge de clientele",
+     "nb": 26,
+     "salaire_median": null,
+     "source": "partenaires",
+     "site": "DirectEmploi"
+    },
+    {
+     "intitule": "Opérateur sur presse",
+     "nb": 22,
      "salaire_median": null,
      "source": "partenaires",
      "site": "DirectEmploi"
     },
     {
      "intitule": "Chargé d'Études VRD",
-     "nb": 17,
+     "nb": 21,
      "salaire_median": null,
      "source": "partenaires",
      "site": "PMEJob"
     },
     {
-     "intitule": "Opérateur sur presse",
-     "nb": 16,
-     "salaire_median": null,
+     "intitule": "Assistant d'agence",
+     "nb": 20,
+     "salaire_median": 28200,
      "source": "partenaires",
      "site": "DirectEmploi"
     },
     {
      "intitule": "Responsable marketing",
-     "nb": 15,
+     "nb": 19,
      "salaire_median": 55000,
      "source": "partenaires",
      "site": "Meteojob"
     },
     {
-     "intitule": "Employé(e) commercial(e)",
-     "nb": 14,
-     "salaire_median": null,
+     "intitule": "Community manager",
+     "nb": 18,
+     "salaire_median": 20000,
      "source": "partenaires",
-     "site": "Distrijob"
-    },
-    {
-     "intitule": "DIRECTEUR / DIRECteur(trice) COMMUNICATION ET MARKETING DIGITAL",
-     "nb": 14,
-     "salaire_median": null,
-     "source": "partenaires",
-     "site": "DirectEmploi"
-    },
-    {
-     "intitule": "Assistant d'agence",
-     "nb": 13,
-     "salaire_median": 30000,
-     "source": "partenaires",
-     "site": "DirectEmploi"
-    },
-    {
-     "intitule": "Assistant / Assistante de communication",
-     "nb": 11,
-     "salaire_median": 19250,
-     "source": "partenaires",
-     "site": "La bonne alternance"
+     "site": "Meteojob"
     },
     {
      "intitule": "Chargé / Chargée de relation client",
-     "nb": 10,
-     "salaire_median": 33300,
+     "nb": 17,
+     "salaire_median": 28500,
      "source": "partenaires",
      "site": "Ouest-France Emploi"
+    },
+    {
+     "intitule": "Chef de Projet / Bureau d'Études IRVE",
+     "nb": 16,
+     "salaire_median": null,
+     "source": "partenaires",
+     "site": "PMEJob"
     }
    ],
    "libelle": "Sites partenaires",
@@ -392,56 +465,59 @@
    "sites": [
     {
      "nom": "PMEJob",
-     "nb": 508
+     "nb": 673
     },
     {
      "nom": "DirectEmploi",
-     "nb": 462
+     "nb": 618
     },
     {
      "nom": "Meteojob",
-     "nb": 286
+     "nb": 374
     },
     {
      "nom": "Beetween",
-     "nb": 150
+     "nb": 282
     },
     {
      "nom": "La bonne alternance",
-     "nb": 124
+     "nb": 170
     },
     {
      "nom": "Distrijob",
-     "nb": 120
+     "nb": 131
     },
     {
      "nom": "Xtramile",
-     "nb": 83
-    },
-    {
-     "nom": "TalentPlug",
-     "nb": 72
-    },
-    {
-     "nom": "We Recruit",
-     "nb": 71
+     "nb": 106
     },
     {
      "nom": "Ouest-France Emploi",
-     "nb": 48
+     "nb": 92
+    },
+    {
+     "nom": "TalentPlug",
+     "nb": 91
     },
     {
      "nom": "Handicap Job",
-     "nb": 46
+     "nb": 73
     },
     {
-     "nom": "Aerocontact",
-     "nb": 30
+     "nom": "We Recruit",
+     "nb": 73
+    },
+    {
+     "nom": "Indeed",
+     "nb": 69
     }
    ]
   },
   "jobicy": {
    "nb_offres": 7,
+   "nouvelles": 7,
+   "actives": 7,
+   "jour_nouvelles": "2026-11-25",
    "salaires": {
     "min": null,
     "max": null,
