@@ -374,3 +374,10 @@ def main():
 
 if __name__ == "__main__":
     main()
+    # Synthèse par source pour observatoire.html (France Travail, sites partenaires, Jobicy).
+    # Un échec ici ne doit pas empêcher l'enregistrement du résumé principal.
+    try:
+        import observatoire
+        observatoire.main([])
+    except (Exception, SystemExit) as e:  # noqa: BLE001
+        print(f"Observatoire non mis à jour : {e}")
