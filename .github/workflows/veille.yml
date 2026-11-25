@@ -23,13 +23,17 @@ jobs:
 
       - run: pip install -r requirements.txt
 
-      - name: Extraire les offres et refaire le résumé
+      # Si France Travail refuse la connexion, on continue : les autres sources sont collectées quand même.
+      - name: Extraire les offres France Travail
+        continue-on-error: true
         env:
           FT_CLIENT_ID: ${{ secrets.FT_CLIENT_ID }}
           FT_CLIENT_SECRET: ${{ secrets.FT_CLIENT_SECRET }}
-        run: |
-          python scripts/extraire.py
-          python scripts/resumer.py
+        run: python scripts/extraire.py
+
+      # Refait le résumé, collecte Jobicy, Himalayas, Arbeitnow et Remotive, et écrit data/observatoire.json
+      - name: Refaire les résumés et collecter les autres sites
+        run: python scripts/resumer.py
 
       - name: Enregistrer la donnée du jour (commit + push)
         run: |
