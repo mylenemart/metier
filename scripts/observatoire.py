@@ -41,6 +41,7 @@ from pathlib import Path
 RACINE = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(RACINE / "scripts"))
 from resumer import salaire_min_max  # noqa: E402  (même lecture des salaires que la page principale)
+import labonnealternance  # noqa: E402
 
 SORTIE = RACINE / "data" / "observatoire.json"
 DOSSIER_JOBICY = RACINE / "data" / "jobicy"
@@ -221,6 +222,9 @@ SITES_LIBRES = {
                   "description": "Offres d'entreprises européennes situées en France"},
     "remotive": {"libelle": "Remotive", "url": "https://remotive.com",
                  "description": "Offres marketing en télétravail ouvertes à la France ou à l'Europe"},
+    # Avec clé (LBA_API_KEY) ; déjà filtrée par code ROME, donc pas de filtre sur l'intitulé.
+    "lba": {"libelle": "La bonne alternance", "url": "https://labonnealternance.apprentissage.beta.gouv.fr",
+            "description": "Offres en alternance, hors France Travail", "contrats": True, "par_rome": True},
 }
 HIMALAYAS_RECHERCHES = {"marketing": 5, "seo": 1, "content": 1, "social media": 1, "e-commerce": 1}
 ZONES_FRANCE = re.compile(r"france|europe|emea|worldwide|anywhere|partout|paris", re.IGNORECASE)
@@ -341,7 +345,15 @@ def collecter_remotive():
     return offres
 
 
-COLLECTEURS = {"himalayas": collecter_himalayas, "arbeitnow": collecter_arbeitnow, "remotive": collecter_remotive}
+def collecter_lba():
+    deja = {labonnealternance.cle_doublon(o["intitule"], o["entreprise"]) for o in offres_france_travail()[1]}
+    return {oid: offre_libre("lba", o["id"], o["intitule"], o["entreprise"], "Alternance/Stage", None,
+                             o["teletravail"], o["date"], o["url"], o["zone"])
+            for oid, o in labonnealternance.collecter(deja - {None}).items()}
+
+
+COLLECTEURS = {"himalayas": collecter_himalayas, "arbeitnow": collecter_arbeitnow, "remotive": collecter_remotive,
+               "lba": collecter_lba}
 
 
 def offres_collectees(slug):
@@ -631,7 +643,8 @@ def main(argv=None):
     libres, jours_collecte = [], [jour, jour_jobicy]
     for slug, info in SITES_LIBRES.items():
         jour_site, offres = offres_collectees(slug)
-        offres = [o for o in offres if JOBICY_INTITULES.search(o["intitule"] or "")]
+        if not info.get("par_rome"):
+            offres = [o for o in offres if JOBICY_INTITULES.search(o["intitule"] or "")]
         if not offres:
             continue
         sources[slug] = {
