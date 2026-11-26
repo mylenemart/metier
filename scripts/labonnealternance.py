@@ -15,6 +15,7 @@ import urllib.parse
 import urllib.request
 
 from extraire import METIERS
+from zone import region_adresse
 
 URL = "https://api.apprentissage.beta.gouv.fr/api/job/v1/search"
 
@@ -57,6 +58,8 @@ def collecter(deja_vues=()):
             oid = ident.get("id") or f"{partenaire}-{ident.get('partner_job_id')}"
             entreprise = (j.get("workplace") or {}).get("name") or (j.get("workplace") or {}).get("brand") or ""
             if re.search(r"france[\s_-]*travail", partenaire, re.IGNORECASE) or offre.get("status", "Active") != "Active":
+                continue
+            if not region_adresse(((j.get("workplace") or {}).get("location") or {}).get("address")):
                 continue
             if cle_doublon(offre.get("title"), entreprise) in deja_vues:
                 doublons.add(oid)
