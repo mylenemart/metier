@@ -659,7 +659,8 @@ def main(argv=None):
     args = ap.parse_args(argv)
 
     jour, ft = offres_france_travail()
-    if not args.sans_jobicy:
+    # OBSERVATOIRE_SANS_COLLECTE=1 : on ne collecte que France Travail (test sans consommer les quotas)
+    if not args.sans_jobicy and not os.getenv("OBSERVATOIRE_SANS_COLLECTE"):
         fichier = collecter_jobicy(f"{date.today():%Y-%m-%d}")
         print(f"Jobicy : {'collecte enregistrée dans ' + str(fichier.relative_to(RACINE)) if fichier else 'aucune offre récupérée, on garde la dernière collecte'}")
         aujourdhui = f"{date.today():%Y-%m-%d}"
