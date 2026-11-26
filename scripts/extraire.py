@@ -96,8 +96,14 @@ def chercher(token, params, pas=150, maximum=1150):
     offres, total, debut = [], None, 0
     while debut < maximum:
         fin = min(debut + pas - 1, maximum - 1)
-        r = requests.get(SEARCH_URL, params=dict(params, range=f"{debut}-{fin}"),
-                         headers={"Authorization": f"Bearer {token}"}, timeout=30)
+        for essai in range(6):  # 429 = trop de requêtes : on attend de plus en plus, puis on réessaie
+            r = requests.get(SEARCH_URL, params=dict(params, range=f"{debut}-{fin}"),
+                             headers={"Authorization": f"Bearer {token}"}, timeout=30)
+            if r.status_code != 429:
+                break
+            attente = float(r.headers.get("Retry-After") or 0) or 2 ** (essai + 1)
+            print(f"  France Travail demande de ralentir : pause de {attente:.0f} s")
+            time.sleep(attente)
         if r.status_code == 204:                     # aucune offre
             break
         if r.status_code not in (200, 206):
@@ -173,7 +179,7 @@ def main():
         lignes_serie.append([aujourdhui, code, total if total is not None else len(offres),
                              len(offres), nouvelles, modifiees])
         print(f"{code}  {METIERS[code][0]:<48} {len(offres):5d} offres, {nouvelles:4d} nouvelles, {modifiees:3d} modifiées")
-        time.sleep(0.5)
+        time.sleep(1.5)  # on reste sous la limite de débit de l'API
 
     # Même logique pour les actives du jour : on remplace les codes relancés, on garde les autres.
     fichier_actives = RACINE / "data" / "actives" / f"{aujourdhui}.csv"
