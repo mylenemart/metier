@@ -38,6 +38,7 @@
       --src-himalayas: #008300;
       --src-arbeitnow: #e34948;
       --src-remotive: #8a5a00;
+      --src-lba: #7b3fc4;
 
       /* Types de contrat (teintes distinctes des sources) */
       --ct-cdi:   #4a3aa7;
@@ -68,6 +69,7 @@
         --src-himalayas: #2f9e2f;
         --src-arbeitnow: #e66767;
         --src-remotive: #c08a2a;
+        --src-lba: #a875e8;
         --ct-cdi:   #9085e9;
         --ct-cdd:   #d55181;
         --ct-alt:   #c98500;
@@ -96,6 +98,7 @@
       --src-himalayas: #2f9e2f;
       --src-arbeitnow: #e66767;
       --src-remotive: #c08a2a;
+      --src-lba: #a875e8;
       --ct-cdi:   #9085e9;
       --ct-cdd:   #d55181;
       --ct-alt:   #c98500;
@@ -309,7 +312,7 @@
     <header class="top">
       <div>
         <h1>Observatoire du marché du travail</h1>
-        <p>Marketing et digital en France · France Travail, sites d'emploi partenaires et Jobicy</p>
+        <p>Marketing et digital en France · France Travail, sites d'emploi partenaires, La bonne alternance et sites en accès libre</p>
       </div>
       <div class="meta">
         <span id="updated">Chargement…</span>
@@ -341,6 +344,9 @@
       </button>
       <button class="filter-btn" data-source="remotive" aria-pressed="false" disabled>
         <span class="dot" style="background:var(--src-remotive)"></span>Remotive
+      </button>
+      <button class="filter-btn" data-source="lba" aria-pressed="false" disabled>
+        <span class="dot" style="background:var(--src-lba)"></span>La bonne alternance
       </button>
     </nav>
 
@@ -521,7 +527,7 @@
           </table></div>
           <h3>La collecte</h3>
           <ul>
-            <li>Chaque matin, une Action GitHub interroge l'API France Travail (23 codes ROME du marketing et du digital) et les API publiques de Jobicy, Himalayas, Arbeitnow et Remotive, puis republie ce site.</li>
+            <li>Chaque matin, une Action GitHub interroge l'API France Travail (23 codes ROME du marketing et du digital) et les API de La bonne alternance, Jobicy, Himalayas, Arbeitnow et Remotive, puis republie ce site.</li>
             <li>La base est <b>cumulative</b> : une offre vue une fois reste comptée, même après son retrait. La date de première observation permet de suivre les nouvelles offres jour après jour.</li>
             <li>Les offres des « sites partenaires » viennent de l'API France Travail, qui rediffuse des annonces d'Indeed, Meteojob, DirectEmploi, PMEJob… avec le nom du site d'origine.</li>
             <li>Welcome to the Jungle et l'Apec ne sont pas collectés : leurs conditions d'utilisation interdisent la collecte automatique.</li>
@@ -576,7 +582,7 @@
       <p>Sources : <a href="https://francetravail.io/data/api/offres-emploi">API Offres d'emploi de France Travail</a>
         (offres déposées sur francetravail.fr et offres de sites partenaires rediffusées par France Travail) ·
         offres fournies par <a href="https://jobicy.com">Jobicy</a>, <a href="https://himalayas.app">Himalayas</a>,
-        <a href="https://www.arbeitnow.com">Arbeitnow</a> et <a href="https://remotive.com">Remotive</a>.
+        <a href="https://www.arbeitnow.com">Arbeitnow</a>, <a href="https://remotive.com">Remotive</a> et <a href="https://labonnealternance.apprentissage.beta.gouv.fr">La bonne alternance</a>.
         Mise à jour automatique chaque matin.</p>
     </footer>
   </div>
@@ -611,7 +617,8 @@
         aliases: ["jobicy"] },
       { id: "himalayas", label: "Himalayas", short: "Himalayas", colorVar: "--src-himalayas", aliases: ["himalayas"] },
       { id: "arbeitnow", label: "Arbeitnow", short: "Arbeitnow", colorVar: "--src-arbeitnow", aliases: ["arbeitnow"] },
-      { id: "remotive",  label: "Remotive",  short: "Remotive",  colorVar: "--src-remotive",  aliases: ["remotive"] }
+      { id: "remotive",  label: "Remotive",  short: "Remotive",  colorVar: "--src-remotive",  aliases: ["remotive"] },
+      { id: "lba", label: "La bonne alternance", short: "Alternance", colorVar: "--src-lba", aliases: ["lba"] }
     ];
     const CONTRACTS = [
       { key: "CDI",              label: "CDI",                colorVar: "--ct-cdi" },
@@ -741,6 +748,7 @@
       if (k.includes("himalayas")) return "himalayas";
       if (k.includes("arbeitnow")) return "arbeitnow";
       if (k.includes("remotive")) return "remotive";
+      if (k.includes("lba")) return "lba";
       return null;
     }
 
