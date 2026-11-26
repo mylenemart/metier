@@ -6,98 +6,86 @@
   {
    "date": "2026-09-22",
    "nouvelles": {
-    "france_travail": 813,
-    "partenaires": 2549
+    "france_travail": 210,
+    "partenaires": 461
    },
-   "cumul": 3362
+   "cumul": 671
   },
   {
    "date": "2026-09-23",
    "nouvelles": {
-    "france_travail": 63,
-    "partenaires": 161
+    "france_travail": 17,
+    "partenaires": 51
    },
-   "cumul": 3586
+   "cumul": 739
   },
   {
    "date": "2026-09-24",
    "nouvelles": {
-    "france_travail": 59,
-    "partenaires": 143
+    "france_travail": 10,
+    "partenaires": 21
    },
-   "cumul": 3788
+   "cumul": 770
   },
   {
    "date": "2026-09-25",
    "nouvelles": {
-    "france_travail": 48,
-    "partenaires": 147
+    "france_travail": 12,
+    "partenaires": 30
    },
-   "cumul": 3983
+   "cumul": 812
   },
   {
    "date": "2026-09-26",
    "nouvelles": {
-    "france_travail": 24,
-    "partenaires": 136
+    "france_travail": 4,
+    "partenaires": 28
    },
-   "cumul": 4143
+   "cumul": 844
   },
   {
    "date": "2026-09-27",
    "nouvelles": {
-    "partenaires": 77
+    "partenaires": 13
    },
-   "cumul": 4220
+   "cumul": 857
   },
   {
    "date": "2026-09-28",
    "nouvelles": {
-    "france_travail": 35,
-    "partenaires": 23
+    "france_travail": 9,
+    "partenaires": 1
    },
-   "cumul": 4278
+   "cumul": 867
   },
   {
    "date": "2026-09-29",
    "nouvelles": {
-    "france_travail": 52,
-    "partenaires": 63
+    "france_travail": 18,
+    "partenaires": 19
    },
-   "cumul": 4393
-  },
-  {
-   "date": "2026-11-25",
-   "nouvelles": {
-    "jobicy": 8,
-    "himalayas": 157,
-    "arbeitnow": 17,
-    "remotive": 2
-   },
-   "cumul": 4577
+   "cumul": 904
   },
   {
    "date": "2026-11-26",
    "nouvelles": {
-    "france_travail": 733,
-    "partenaires": 1999,
-    "jobicy": 1,
-    "himalayas": 5,
-    "arbeitnow": 5
+    "france_travail": 728,
+    "partenaires": 1599,
+    "lba": 52
    },
-   "cumul": 7320
+   "cumul": 3283
   }
  ],
  "tests": [
   {
    "test": "Chi² d'indépendance",
    "variables": "Origine de l'offre × type de contrat (CDI, CDD, alternance/stage)",
-   "n": 6492,
-   "statistique": "χ² = 321,7",
+   "n": 2863,
+   "statistique": "χ² = 106,0",
    "ddl": 2,
-   "p": 1.4258355750191839e-70,
-   "effet": "V de Cramer = 0,22",
-   "effet_valeur": 0.223,
+   "p": 9.427874449547275e-24,
+   "effet": "V de Cramer = 0,19",
+   "effet_valeur": 0.192,
    "effet_niveau": "petit",
    "condition": "effectifs attendus ≥ 5 dans toutes les cases",
    "tableau": {
@@ -112,14 +100,14 @@
     ],
     "valeurs": [
      [
-      148,
-      652,
-      926
+      45,
+      231,
+      633
      ],
      [
-      998,
-      878,
-      2890
+      234,
+      231,
+      1489
      ]
     ]
    }
@@ -127,21 +115,18 @@
   {
    "test": "Chi² d'indépendance",
    "variables": "Source × télétravail",
-   "n": 7320,
-   "statistique": "χ² = 1146,8",
-   "ddl": 5,
-   "p": 9.764235078887288e-246,
-   "effet": "V de Cramer = 0,40",
-   "effet_valeur": 0.396,
-   "effet_niveau": "moyen",
-   "condition": "4 case(s) avec un effectif attendu < 5 : résultat à prendre avec prudence",
+   "n": 3283,
+   "statistique": "χ² = 13,9",
+   "ddl": 2,
+   "p": 0.0009582998867254724,
+   "effet": "V de Cramer = 0,07",
+   "effet_valeur": 0.065,
+   "effet_niveau": "négligeable",
+   "condition": "1 case(s) avec un effectif attendu < 5 : résultat à prendre avec prudence",
    "tableau": {
     "lignes": [
-     "Arbeitnow",
      "France Travail",
-     "Himalayas",
-     "Jobicy",
-     "Remotive",
+     "La bonne alternance",
      "Sites partenaires"
     ],
     "colonnes": [
@@ -150,28 +135,16 @@
     ],
     "valeurs": [
      [
-      21,
-      1
+      925,
+      83
      ],
      [
-      1639,
-      188
-     ],
-     [
-      0,
-      162
-     ],
-     [
-      0,
+      43,
       9
      ],
      [
-      0,
-      2
-     ],
-     [
-      4678,
-      620
+      2088,
+      135
      ]
     ]
    }
@@ -179,29 +152,29 @@
   {
    "test": "ANOVA à un facteur",
    "variables": "Source × salaire annuel brut (sources avec au moins 15 salaires)",
-   "n": 2234,
-   "statistique": "F(2 ; 2231) = 131,0",
-   "ddl": "2 ; 2231",
-   "p": 1.6084069349816154e-54,
-   "effet": "êta² = 0,105",
-   "effet_valeur": 0.1051,
+   "n": 1344,
+   "statistique": "F(1 ; 1342) = 171,8",
+   "ddl": "1 ; 1342",
+   "p": 5.078916032243128e-37,
+   "effet": "êta² = 0,113",
+   "effet_valeur": 0.1135,
    "effet_niveau": "moyen",
-   "condition": "suppose des salaires proches de la loi normale dans chaque groupe (France Travail : 1189, Sites partenaires : 1027, Himalayas : 18) : ce n'est pas le cas (asymétrie positive), d'où le test de Kruskal-Wallis en contrôle"
+   "condition": "suppose des salaires proches de la loi normale dans chaque groupe (France Travail : 653, Sites partenaires : 691) : ce n'est pas le cas (asymétrie positive), d'où le test de Kruskal-Wallis en contrôle"
   },
   {
    "test": "Kruskal-Wallis",
    "variables": "Source × salaire annuel brut (sources avec au moins 15 salaires)",
-   "n": 2234,
-   "statistique": "H = 227,0",
-   "ddl": 2,
-   "p": 5.035796767770707e-50,
-   "effet": "epsilon² = 0,102",
-   "effet_valeur": 0.1017,
-   "effet_niveau": "moyen",
+   "n": 1344,
+   "statistique": "H = 207,5",
+   "ddl": 1,
+   "p": 4.743331475576526e-47,
+   "effet": "epsilon² = 0,155",
+   "effet_valeur": 0.1545,
+   "effet_niveau": "fort",
    "condition": "compare les rangs : ne suppose pas la normalité, adapté à des salaires asymétriques"
   }
  ],
- "doublons_probables": 1417,
+ "doublons_probables": 793,
  "tranches_salaire": [
   0,
   5000,
@@ -225,321 +198,321 @@
   95000,
   100000
  ],
- "perimetre": "Toutes les offres vues depuis le 2026-09-22 (les offres retirées restent comptées). Métiers du marketing et du digital : 23 codes ROME pour France Travail et ses partenaires ; pour Jobicy, Himalayas, Arbeitnow et Remotive, offres ouvertes aux candidats en France dont l'intitulé relève du marketing, du contenu, de la communication ou du design.",
+ "perimetre": "Toutes les offres vues depuis le 2026-09-22 dans la zone suivie (les offres retirées restent comptées). 11 codes ROME du marketing, du digital et du commerce ; Île-de-France, Auvergne-Rhône-Alpes, Centre-Val de Loire, Occitanie, Loire-Atlantique, Nouvelle-Aquitaine et Hauts-de-France. Sources : France Travail, ses partenaires et La bonne alternance.",
  "global": {
-  "nb_offres": 7320,
-  "nouvelles": 2743,
-  "actives": 3043,
+  "nb_offres": 3283,
+  "nouvelles": 2379,
+  "actives": 2402,
   "jour_nouvelles": "2026-11-26",
   "salaires": {
    "min": 4800,
-   "max": 160000,
-   "mediane": 30000,
-   "moyenne": 34206,
-   "nb_renseignes": 2234,
-   "q1": 23516,
-   "q3": 42500,
-   "ecart_type": 15182,
-   "asymetrie": 1.64,
-   "aplatissement": 5.59,
+   "max": 167292,
+   "mediane": 31399,
+   "moyenne": 35012,
+   "nb_renseignes": 1344,
+   "q1": 25500,
+   "q3": 41588,
+   "ecart_type": 14925,
+   "asymetrie": 2.06,
+   "aplatissement": 9.12,
    "histogramme": [
     2,
-    23,
-    61,
-    208,
-    372,
-    375,
-    306,
-    201,
-    199,
-    190,
-    103,
-    65,
-    35,
-    24,
-    22,
-    15,
-    5,
-    7,
     8,
-    4,
-    9
+    19,
+    100,
+    180,
+    265,
+    248,
+    143,
+    70,
+    128,
+    57,
+    41,
+    23,
+    11,
+    18,
+    13,
+    6,
+    0,
+    5,
+    2,
+    5
    ]
   },
   "contrats": {
-   "CDI": 3823,
-   "CDD": 1532,
-   "Alternance/Stage": 1152,
-   "Autre": 813
+   "CDI": 2122,
+   "CDD": 462,
+   "Alternance/Stage": 331,
+   "Autre": 368
   },
   "contrats_publies": true,
   "teletravail": {
-   "nb": 982,
-   "part": 0.1342
+   "nb": 227,
+   "part": 0.0691
   },
   "top_postes": [
    {
-    "intitule": "Directeur / directrice communication et marketing digital",
-    "nb": 325,
-    "salaire_median": null,
+    "intitule": "Responsable de magasin de détail",
+    "nb": 96,
+    "salaire_median": 29496,
     "source": "partenaires",
-    "site": "PMEJob"
+    "site": "Meteojob"
    },
    {
     "intitule": "Conseiller de vente",
-    "nb": 119,
+    "nb": 89,
     "salaire_median": 13722,
     "source": "partenaires",
     "site": "Meteojob"
    },
    {
-    "intitule": "Chef de mission",
-    "nb": 78,
-    "salaire_median": null,
-    "source": "partenaires",
-    "site": "DirectEmploi"
-   },
-   {
-    "intitule": "Chargé / Chargée de mission événementiel",
-    "nb": 68,
-    "salaire_median": null,
-    "source": "partenaires",
-    "site": "Ouest-France Emploi"
-   },
-   {
-    "intitule": "Chargé / Chargée de communication digitale",
+    "intitule": "Responsable de Magasin",
     "nb": 51,
-    "salaire_median": null,
+    "salaire_median": 30900,
     "source": "partenaires",
-    "site": "La bonne alternance"
+    "site": "Beetween"
    },
    {
-    "intitule": "Assistant / Assistante marketing",
-    "nb": 47,
-    "salaire_median": 19050,
+    "intitule": "Responsable commercial cabinet de recrutement",
+    "nb": 49,
+    "salaire_median": 32700,
     "source": "partenaires",
     "site": "Meteojob"
    },
    {
-    "intitule": "Agent commercial indépendant",
-    "nb": 43,
-    "salaire_median": null,
+    "intitule": "Responsable de magasin",
+    "nb": 44,
+    "salaire_median": 32000,
     "source": "france_travail",
     "site": "France Travail"
    },
    {
-    "intitule": "Chargé d'Études VRD",
+    "intitule": "Directeur / Directrice de magasin de détail",
+    "nb": 44,
+    "salaire_median": 36000,
+    "source": "partenaires",
+    "site": "Meteojob"
+   },
+   {
+    "intitule": "Gérant de magasin franchisé",
     "nb": 43,
+    "salaire_median": null,
+    "source": "partenaires",
+    "site": "Meteojob"
+   },
+   {
+    "intitule": "Directeur / directrice strategie et developpement de franchise",
+    "nb": 39,
     "salaire_median": null,
     "source": "partenaires",
     "site": "PMEJob"
    },
    {
-    "intitule": "Charge de clientele",
-    "nb": 38,
-    "salaire_median": null,
+    "intitule": "Directeur de magasin",
+    "nb": 37,
+    "salaire_median": 42000,
     "source": "partenaires",
-    "site": "DirectEmploi"
+    "site": "Distrijob"
    },
    {
-    "intitule": "Chargé d'affaires",
-    "nb": 36,
-    "salaire_median": 40000,
-    "source": "france_travail",
-    "site": "France Travail"
-   },
-   {
-    "intitule": "Commercial",
-    "nb": 35,
-    "salaire_median": 48500,
-    "source": "partenaires",
-    "site": "Beetween"
-   },
-   {
-    "intitule": "Opérateur sur presse",
-    "nb": 30,
-    "salaire_median": null,
-    "source": "partenaires",
-    "site": "DirectEmploi"
-   },
-   {
-    "intitule": "Community manager",
-    "nb": 29,
-    "salaire_median": 25089,
-    "source": "france_travail",
-    "site": "France Travail"
-   },
-   {
-    "intitule": "Community manager",
-    "nb": 29,
-    "salaire_median": 20000,
+    "intitule": "Gérant de magasin",
+    "nb": 34,
+    "salaire_median": 30000,
     "source": "partenaires",
     "site": "Meteojob"
    },
    {
-    "intitule": "Chargé / Chargée de relation client",
-    "nb": 27,
-    "salaire_median": 28500,
+    "intitule": "Agent commercial indépendant",
+    "nb": 26,
+    "salaire_median": null,
+    "source": "france_travail",
+    "site": "France Travail"
+   },
+   {
+    "intitule": "Responsable adjoint de magasin",
+    "nb": 25,
+    "salaire_median": 33490,
     "source": "partenaires",
-    "site": "Ouest-France Emploi"
+    "site": "Meteojob"
+   },
+   {
+    "intitule": "Directeur agence - Franchise Camif Habitat",
+    "nb": 25,
+    "salaire_median": null,
+    "source": "partenaires",
+    "site": "We Recruit"
+   },
+   {
+    "intitule": "Responsable de boutique",
+    "nb": 22,
+    "salaire_median": 28800,
+    "source": "partenaires",
+    "site": "Meteojob"
+   },
+   {
+    "intitule": "Responsable commercial / commerciale",
+    "nb": 22,
+    "salaire_median": 48750,
+    "source": "partenaires",
+    "site": "Uptoo"
    }
   ]
  },
  "sources": {
   "france_travail": {
-   "nb_offres": 1827,
-   "nouvelles": 733,
-   "actives": 765,
+   "nb_offres": 1008,
+   "nouvelles": 728,
+   "actives": 731,
    "jour_nouvelles": "2026-11-26",
    "salaires": {
-    "min": 6078,
+    "min": 10800,
     "max": 125000,
-    "mediane": 26917,
-    "moyenne": 30095,
-    "nb_renseignes": 1189,
-    "q1": 22416,
-    "q3": 35000,
-    "ecart_type": 11623,
-    "asymetrie": 1.96,
-    "aplatissement": 7.02,
+    "mediane": 27500,
+    "moyenne": 29842,
+    "nb_renseignes": 653,
+    "q1": 22945,
+    "q3": 33000,
+    "ecart_type": 10808,
+    "asymetrie": 2.55,
+    "aplatissement": 12.62,
     "histogramme": [
      0,
-     3,
-     21,
-     166,
-     277,
-     259,
-     162,
-     89,
-     96,
-     31,
-     32,
-     23,
-     9,
-     4,
-     7,
+     0,
+     8,
+     88,
+     134,
+     163,
+     125,
+     53,
+     24,
+     19,
+     15,
+     10,
      6,
+     1,
+     2,
+     2,
+     1,
      0,
      1,
-     1,
      0,
-     2
+     1
     ]
    },
    "contrats": {
-    "CDI": 926,
-    "CDD": 652,
-    "Alternance/Stage": 148,
-    "Autre": 101
+    "CDI": 633,
+    "CDD": 231,
+    "Alternance/Stage": 45,
+    "Autre": 99
    },
    "contrats_publies": true,
    "teletravail": {
-    "nb": 188,
-    "part": 0.1029
+    "nb": 83,
+    "part": 0.0823
    },
    "top_postes": [
     {
+     "intitule": "Responsable de magasin",
+     "nb": 44,
+     "salaire_median": 32000,
+     "source": "france_travail",
+     "site": "France Travail"
+    },
+    {
      "intitule": "Agent commercial indépendant",
-     "nb": 43,
+     "nb": 26,
      "salaire_median": null,
      "source": "france_travail",
      "site": "France Travail"
     },
     {
-     "intitule": "Chargé d'affaires",
-     "nb": 36,
-     "salaire_median": 40000,
+     "intitule": "Franchisé (e) animalerie",
+     "nb": 21,
+     "salaire_median": null,
      "source": "france_travail",
      "site": "France Travail"
     },
     {
-     "intitule": "Community manager",
-     "nb": 29,
-     "salaire_median": 25089,
+     "intitule": "Responsable commercial",
+     "nb": 17,
+     "salaire_median": 38640,
      "source": "france_travail",
      "site": "France Travail"
     },
     {
      "intitule": "Chargé de clientèle",
-     "nb": 22,
+     "nb": 16,
      "salaire_median": 25800,
      "source": "france_travail",
      "site": "France Travail"
     },
     {
-     "intitule": "Chargé / Chargée de communication",
-     "nb": 22,
-     "salaire_median": 26028,
-     "source": "france_travail",
-     "site": "France Travail"
-    },
-    {
-     "intitule": "Chargé de communication",
-     "nb": 21,
-     "salaire_median": 30900,
-     "source": "france_travail",
-     "site": "France Travail"
-    },
-    {
-     "intitule": "Chargé(e) de communication",
-     "nb": 19,
-     "salaire_median": 28250,
-     "source": "france_travail",
-     "site": "France Travail"
-    },
-    {
-     "intitule": "Promoteur des Ventes",
-     "nb": 17,
-     "salaire_median": 23958,
-     "source": "france_travail",
-     "site": "France Travail"
-    },
-    {
-     "intitule": "Merchandiser",
-     "nb": 16,
-     "salaire_median": 21093,
-     "source": "france_travail",
-     "site": "France Travail"
-    },
-    {
-     "intitule": "Chargé / Chargée de relation client",
+     "intitule": "Responsable magasin",
      "nb": 15,
-     "salaire_median": 23680,
+     "salaire_median": 27600,
      "source": "france_travail",
      "site": "France Travail"
     },
     {
-     "intitule": "Assistant(e) d'agence",
-     "nb": 14,
-     "salaire_median": 22405,
-     "source": "france_travail",
-     "site": "France Travail"
-    },
-    {
-     "intitule": "Merchandiseur en gms",
+     "intitule": "Chef d'entreprise franchisé",
      "nb": 13,
-     "salaire_median": 20248,
-     "source": "france_travail",
-     "site": "France Travail"
-    },
-    {
-     "intitule": "Assistant Marketing",
-     "nb": 13,
-     "salaire_median": 26757,
-     "source": "france_travail",
-     "site": "France Travail"
-    },
-    {
-     "intitule": "Chargé / Chargée marketing digital",
-     "nb": 12,
-     "salaire_median": 30500,
+     "salaire_median": null,
      "source": "france_travail",
      "site": "France Travail"
     },
     {
      "intitule": "Chargé de Relation Client",
-     "nb": 11,
-     "salaire_median": 24900,
+     "nb": 10,
+     "salaire_median": 23670,
+     "source": "france_travail",
+     "site": "France Travail"
+    },
+    {
+     "intitule": "Chargé / Chargée de relation client",
+     "nb": 10,
+     "salaire_median": 24702,
+     "source": "france_travail",
+     "site": "France Travail"
+    },
+    {
+     "intitule": "Chargé / Chargée marketing digital",
+     "nb": 10,
+     "salaire_median": 31250,
+     "source": "france_travail",
+     "site": "France Travail"
+    },
+    {
+     "intitule": "Adjoint Manager de Supermarché - Parcours Certifiant",
+     "nb": 10,
+     "salaire_median": 33336,
+     "source": "france_travail",
+     "site": "France Travail"
+    },
+    {
+     "intitule": "Merchandiseur en gms",
+     "nb": 8,
+     "salaire_median": 20248,
+     "source": "france_travail",
+     "site": "France Travail"
+    },
+    {
+     "intitule": "Adjoint / Adjointe responsable de magasin de détail",
+     "nb": 8,
+     "salaire_median": 27798,
+     "source": "france_travail",
+     "site": "France Travail"
+    },
+    {
+     "intitule": "Responsable de boutique",
+     "nb": 8,
+     "salaire_median": 27852,
+     "source": "france_travail",
+     "site": "France Travail"
+    },
+    {
+     "intitule": "Business Developer",
+     "nb": 8,
+     "salaire_median": 40000,
      "source": "france_travail",
      "site": "France Travail"
     }
@@ -548,159 +521,159 @@
    "description": "Offres déposées directement sur francetravail.fr"
   },
   "partenaires": {
-   "nb_offres": 5298,
-   "nouvelles": 1999,
-   "actives": 2094,
+   "nb_offres": 2223,
+   "nouvelles": 1599,
+   "actives": 1619,
    "jour_nouvelles": "2026-11-26",
    "salaires": {
     "min": 4800,
-    "max": 130000,
-    "mediane": 37500,
-    "moyenne": 38452,
-    "nb_renseignes": 1027,
-    "q1": 27500,
+    "max": 167292,
+    "mediane": 35544,
+    "moyenne": 39898,
+    "nb_renseignes": 691,
+    "q1": 29130,
     "q3": 48500,
-    "ecart_type": 16386,
-    "asymetrie": 0.97,
-    "aplatissement": 2.64,
+    "ecart_type": 16553,
+    "asymetrie": 1.77,
+    "aplatissement": 7.9,
     "histogramme": [
      2,
-     20,
-     38,
-     42,
-     95,
-     114,
-     143,
-     112,
-     102,
-     157,
-     70,
-     42,
-     25,
-     20,
-     15,
      8,
+     11,
+     12,
+     46,
+     102,
+     123,
+     90,
+     46,
+     109,
+     42,
+     31,
+     17,
+     10,
+     16,
+     11,
+     5,
+     0,
      4,
-     4,
-     6,
-     3,
-     5
+     2,
+     4
     ]
    },
    "contrats": {
-    "CDI": 2890,
-    "CDD": 878,
-    "Alternance/Stage": 998,
-    "Autre": 532
+    "CDI": 1489,
+    "CDD": 231,
+    "Alternance/Stage": 234,
+    "Autre": 269
    },
    "contrats_publies": true,
    "teletravail": {
-    "nb": 620,
-    "part": 0.117
+    "nb": 135,
+    "part": 0.0607
    },
    "top_postes": [
     {
-     "intitule": "Directeur / directrice communication et marketing digital",
-     "nb": 325,
-     "salaire_median": null,
+     "intitule": "Responsable de magasin de détail",
+     "nb": 96,
+     "salaire_median": 29496,
      "source": "partenaires",
-     "site": "PMEJob"
+     "site": "Meteojob"
     },
     {
      "intitule": "Conseiller de vente",
-     "nb": 119,
+     "nb": 89,
      "salaire_median": 13722,
      "source": "partenaires",
      "site": "Meteojob"
     },
     {
-     "intitule": "Chef de mission",
-     "nb": 78,
-     "salaire_median": null,
-     "source": "partenaires",
-     "site": "DirectEmploi"
-    },
-    {
-     "intitule": "Chargé / Chargée de mission événementiel",
-     "nb": 68,
-     "salaire_median": null,
-     "source": "partenaires",
-     "site": "Ouest-France Emploi"
-    },
-    {
-     "intitule": "Chargé / Chargée de communication digitale",
+     "intitule": "Responsable de Magasin",
      "nb": 51,
-     "salaire_median": null,
+     "salaire_median": 30900,
      "source": "partenaires",
-     "site": "La bonne alternance"
+     "site": "Beetween"
     },
     {
-     "intitule": "Assistant / Assistante marketing",
-     "nb": 47,
-     "salaire_median": 19050,
+     "intitule": "Responsable commercial cabinet de recrutement",
+     "nb": 49,
+     "salaire_median": 32700,
      "source": "partenaires",
      "site": "Meteojob"
     },
     {
-     "intitule": "Chargé d'Études VRD",
+     "intitule": "Directeur / Directrice de magasin de détail",
+     "nb": 44,
+     "salaire_median": 36000,
+     "source": "partenaires",
+     "site": "Meteojob"
+    },
+    {
+     "intitule": "Gérant de magasin franchisé",
      "nb": 43,
+     "salaire_median": null,
+     "source": "partenaires",
+     "site": "Meteojob"
+    },
+    {
+     "intitule": "Directeur / directrice strategie et developpement de franchise",
+     "nb": 39,
      "salaire_median": null,
      "source": "partenaires",
      "site": "PMEJob"
     },
     {
-     "intitule": "Charge de clientele",
-     "nb": 38,
+     "intitule": "Directeur de magasin",
+     "nb": 37,
+     "salaire_median": 42000,
+     "source": "partenaires",
+     "site": "Distrijob"
+    },
+    {
+     "intitule": "Gérant de magasin",
+     "nb": 34,
+     "salaire_median": 30000,
+     "source": "partenaires",
+     "site": "Meteojob"
+    },
+    {
+     "intitule": "Responsable adjoint de magasin",
+     "nb": 25,
+     "salaire_median": 33490,
+     "source": "partenaires",
+     "site": "Meteojob"
+    },
+    {
+     "intitule": "Directeur agence - Franchise Camif Habitat",
+     "nb": 25,
      "salaire_median": null,
      "source": "partenaires",
-     "site": "DirectEmploi"
+     "site": "We Recruit"
+    },
+    {
+     "intitule": "Responsable de boutique",
+     "nb": 22,
+     "salaire_median": 28800,
+     "source": "partenaires",
+     "site": "Meteojob"
+    },
+    {
+     "intitule": "Responsable commercial / commerciale",
+     "nb": 22,
+     "salaire_median": 48750,
+     "source": "partenaires",
+     "site": "Uptoo"
     },
     {
      "intitule": "Commercial",
-     "nb": 35,
+     "nb": 21,
      "salaire_median": 48500,
      "source": "partenaires",
      "site": "Beetween"
     },
     {
-     "intitule": "Opérateur sur presse",
-     "nb": 30,
+     "intitule": "Charge de clientele",
+     "nb": 16,
      "salaire_median": null,
-     "source": "partenaires",
-     "site": "DirectEmploi"
-    },
-    {
-     "intitule": "Community manager",
-     "nb": 29,
-     "salaire_median": 20000,
-     "source": "partenaires",
-     "site": "Meteojob"
-    },
-    {
-     "intitule": "Chargé / Chargée de relation client",
-     "nb": 27,
-     "salaire_median": 28500,
-     "source": "partenaires",
-     "site": "Ouest-France Emploi"
-    },
-    {
-     "intitule": "Responsable marketing",
-     "nb": 27,
-     "salaire_median": 55000,
-     "source": "partenaires",
-     "site": "Meteojob"
-    },
-    {
-     "intitule": "Employé(e) commercial(e)",
-     "nb": 26,
-     "salaire_median": null,
-     "source": "partenaires",
-     "site": "Distrijob"
-    },
-    {
-     "intitule": "Assistant d'agence",
-     "nb": 24,
-     "salaire_median": 28200,
      "source": "partenaires",
      "site": "DirectEmploi"
     }
@@ -709,59 +682,59 @@
    "description": "Offres d'autres sites d'emploi rediffusées par l'API France Travail",
    "sites": [
     {
-     "nom": "PMEJob",
-     "nb": 1167
+     "nom": "Meteojob",
+     "nb": 590
     },
     {
      "nom": "DirectEmploi",
-     "nb": 1015
-    },
-    {
-     "nom": "Meteojob",
-     "nb": 587
+     "nb": 292
     },
     {
      "nom": "Beetween",
-     "nb": 403
+     "nb": 206
     },
     {
      "nom": "Distrijob",
-     "nb": 214
+     "nb": 178
     },
     {
-     "nom": "La bonne alternance",
-     "nb": 201
+     "nom": "PMEJob",
+     "nb": 138
     },
     {
      "nom": "Xtramile",
-     "nb": 201
-    },
-    {
-     "nom": "TalentPlug",
-     "nb": 156
+     "nb": 93
     },
     {
      "nom": "We Recruit",
-     "nb": 132
+     "nb": 79
     },
     {
-     "nom": "Ouest-France Emploi",
-     "nb": 131
+     "nom": "Grp Blachere",
+     "nb": 60
     },
     {
      "nom": "Handicap Job",
-     "nb": 120
+     "nb": 58
+    },
+    {
+     "nom": "TalentPlug",
+     "nb": 57
     },
     {
      "nom": "Indeed",
-     "nb": 95
+     "nb": 41
+    },
+    {
+     "nom": "Broadbean",
+     "nb": 40
     }
    ]
   },
-  "jobicy": {
-   "nb_offres": 9,
-   "nouvelles": 1,
-   "actives": 9,
+  "lba": {
+   "nb_offres": 52,
+   "nouvelles": 52,
+   "actives": 52,
    "jour_nouvelles": "2026-11-26",
    "salaires": {
     "min": null,
@@ -801,492 +774,127 @@
    "contrats": {
     "CDI": 0,
     "CDD": 0,
-    "Alternance/Stage": 0,
-    "Autre": 9
+    "Alternance/Stage": 52,
+    "Autre": 0
    },
-   "contrats_publies": false,
+   "contrats_publies": true,
    "teletravail": {
     "nb": 9,
-    "part": 1.0
+    "part": 0.1731
    },
    "top_postes": [
     {
-     "intitule": "UI Artist for Games",
-     "nb": 1,
-     "salaire_median": null,
-     "source": "jobicy",
-     "site": "Jobicy"
-    },
-    {
-     "intitule": "User Acquisition Manager (Meta & SnapChat)",
-     "nb": 1,
-     "salaire_median": null,
-     "source": "jobicy",
-     "site": "Jobicy"
-    },
-    {
-     "intitule": "Conceptual Copywriter",
-     "nb": 1,
-     "salaire_median": null,
-     "source": "jobicy",
-     "site": "Jobicy"
-    },
-    {
-     "intitule": "Senior User Acquisition Manager, Paid Social Ads",
-     "nb": 1,
-     "salaire_median": null,
-     "source": "jobicy",
-     "site": "Jobicy"
-    },
-    {
-     "intitule": "Product Marketing Manager, AI Governance (EMEA)",
-     "nb": 1,
-     "salaire_median": null,
-     "source": "jobicy",
-     "site": "Jobicy"
-    },
-    {
-     "intitule": "Sales Manager, Mid-Market - EMEA",
-     "nb": 1,
-     "salaire_median": null,
-     "source": "jobicy",
-     "site": "Jobicy"
-    },
-    {
-     "intitule": "Lead Brand Designer",
-     "nb": 1,
-     "salaire_median": null,
-     "source": "jobicy",
-     "site": "Jobicy"
-    },
-    {
-     "intitule": "Community Lead & Talent Acquisition Advisor - DACH",
-     "nb": 1,
-     "salaire_median": null,
-     "source": "jobicy",
-     "site": "Jobicy"
-    },
-    {
-     "intitule": "Customer Marketing Manager, EMEA",
-     "nb": 1,
-     "salaire_median": null,
-     "source": "jobicy",
-     "site": "Jobicy"
-    }
-   ],
-   "libelle": "Jobicy",
-   "description": "Offres en télétravail ouvertes depuis la France : marketing, contenu, communication, design",
-   "date_collecte": "2026-11-26",
-   "credit": {
-    "texte": "Offres en télétravail fournies par Jobicy",
-    "url": "https://jobicy.com"
-   }
-  },
-  "himalayas": {
-   "nb_offres": 162,
-   "nouvelles": 5,
-   "actives": 158,
-   "jour_nouvelles": "2026-11-26",
-   "salaires": {
-    "min": 12000,
-    "max": 160000,
-    "mediane": 55000,
-    "moyenne": 63528,
-    "nb_renseignes": 18,
-    "q1": 33000,
-    "q3": 89500,
-    "ecart_type": 38052,
-    "asymetrie": 0.69,
-    "aplatissement": 0.28,
-    "histogramme": [
-     0,
-     0,
-     2,
-     0,
-     0,
-     2,
-     1,
-     0,
-     1,
-     2,
-     1,
-     0,
-     1,
-     0,
-     0,
-     1,
-     1,
-     2,
-     1,
-     1,
-     2
-    ]
-   },
-   "contrats": {
-    "CDI": 0,
-    "CDD": 2,
-    "Alternance/Stage": 3,
-    "Autre": 157
-   },
-   "contrats_publies": false,
-   "teletravail": {
-    "nb": 162,
-    "part": 1.0
-   },
-   "top_postes": [
-    {
-     "intitule": "Senior Product Marketing Manager",
+     "intitule": "Apprenti Vendeur Ecole + Entreprise Titre Vcm Niveau Bac",
      "nb": 3,
      "salaire_median": null,
-     "source": "himalayas",
-     "site": "Himalayas"
+     "source": "lba",
+     "site": "La bonne alternance"
     },
     {
-     "intitule": "Marketing Manager",
-     "nb": 3,
-     "salaire_median": null,
-     "source": "himalayas",
-     "site": "Himalayas"
-    },
-    {
-     "intitule": "Growth Marketing Manager",
+     "intitule": "Assistant Chef de Projet E-Commerce en Alternance",
      "nb": 2,
      "salaire_median": null,
-     "source": "himalayas",
-     "site": "Himalayas"
+     "source": "lba",
+     "site": "La bonne alternance"
     },
     {
-     "intitule": "Content Manager & Digital Marketing Expert",
-     "nb": 2,
-     "salaire_median": null,
-     "source": "himalayas",
-     "site": "Himalayas"
-    },
-    {
-     "intitule": "Director of Marketing, EMEA",
-     "nb": 2,
-     "salaire_median": 95000,
-     "source": "himalayas",
-     "site": "Himalayas"
-    },
-    {
-     "intitule": "Social Media Lead",
-     "nb": 2,
-     "salaire_median": null,
-     "source": "himalayas",
-     "site": "Himalayas"
-    },
-    {
-     "intitule": "Social Media Manager",
-     "nb": 2,
-     "salaire_median": null,
-     "source": "himalayas",
-     "site": "Himalayas"
-    },
-    {
-     "intitule": "Head of Marketing",
-     "nb": 2,
-     "salaire_median": null,
-     "source": "himalayas",
-     "site": "Himalayas"
-    },
-    {
-     "intitule": "Partner Marketing Manager",
-     "nb": 2,
-     "salaire_median": null,
-     "source": "himalayas",
-     "site": "Himalayas"
-    },
-    {
-     "intitule": "EMEA - Marketing Manager",
+     "intitule": "Alternance Business Developer",
      "nb": 1,
      "salaire_median": null,
-     "source": "himalayas",
-     "site": "Himalayas"
+     "source": "lba",
+     "site": "La bonne alternance"
     },
     {
-     "intitule": "Sr. Product Marketing Manager",
+     "intitule": "Alternant Business Developer",
      "nb": 1,
      "salaire_median": null,
-     "source": "himalayas",
-     "site": "Himalayas"
+     "source": "lba",
+     "site": "La bonne alternance"
     },
     {
-     "intitule": "Influencer Marketing Manager (m/f/d)",
+     "intitule": "Commercial B2B",
      "nb": 1,
      "salaire_median": null,
-     "source": "himalayas",
-     "site": "Himalayas"
+     "source": "lba",
+     "site": "La bonne alternance"
     },
     {
-     "intitule": "Marketing Manager - Market Data",
+     "intitule": "Alternant Marketing & Communication",
      "nb": 1,
      "salaire_median": null,
-     "source": "himalayas",
-     "site": "Himalayas"
+     "source": "lba",
+     "site": "La bonne alternance"
     },
     {
-     "intitule": "Freelance Marketing Project Manager (Berlin, DE)",
+     "intitule": "Business Developer Turcophone - V.I.E. Istanbul",
      "nb": 1,
      "salaire_median": null,
-     "source": "himalayas",
-     "site": "Himalayas"
+     "source": "lba",
+     "site": "La bonne alternance"
     },
     {
-     "intitule": "Senior Content Marketer, Campaigns/Enterprise",
+     "intitule": "APPRENTI CAP / BP en COMMERCE",
      "nb": 1,
      "salaire_median": null,
-     "source": "himalayas",
-     "site": "Himalayas"
+     "source": "lba",
+     "site": "La bonne alternance"
+    },
+    {
+     "intitule": "Apprenti Responsable de Secteur Merchandiser - Hauts-De-France et Île-De-France Nord",
+     "nb": 1,
+     "salaire_median": null,
+     "source": "lba",
+     "site": "La bonne alternance"
+    },
+    {
+     "intitule": "ALTERNANT CHEF DE SECTEUR RESEAU BIO en région AURA",
+     "nb": 1,
+     "salaire_median": null,
+     "source": "lba",
+     "site": "La bonne alternance"
+    },
+    {
+     "intitule": "Commercial comptoir ALT - 40 - Kiloutou",
+     "nb": 1,
+     "salaire_median": null,
+     "source": "lba",
+     "site": "La bonne alternance"
+    },
+    {
+     "intitule": "Business Developer - Ingénieur d'Affaires - Alternance",
+     "nb": 1,
+     "salaire_median": null,
+     "source": "lba",
+     "site": "La bonne alternance"
+    },
+    {
+     "intitule": "Business Developer - Ingénieur d'Affaires -Alternance",
+     "nb": 1,
+     "salaire_median": null,
+     "source": "lba",
+     "site": "La bonne alternance"
+    },
+    {
+     "intitule": "Manager de Magasin",
+     "nb": 1,
+     "salaire_median": null,
+     "source": "lba",
+     "site": "La bonne alternance"
+    },
+    {
+     "intitule": "Apprenti Chargé de Développement Commercial - EHPAD",
+     "nb": 1,
+     "salaire_median": null,
+     "source": "lba",
+     "site": "La bonne alternance"
     }
    ],
-   "libelle": "Himalayas",
-   "description": "Offres en télétravail ouvertes aux candidats basés en France",
+   "libelle": "La bonne alternance",
+   "description": "Offres en alternance, hors France Travail",
    "date_collecte": "2026-11-26",
    "credit": {
-    "texte": "Offres fournies par Himalayas",
-    "url": "https://himalayas.app"
-   }
-  },
-  "arbeitnow": {
-   "nb_offres": 22,
-   "nouvelles": 5,
-   "actives": 15,
-   "jour_nouvelles": "2026-11-26",
-   "salaires": {
-    "min": null,
-    "max": null,
-    "mediane": null,
-    "moyenne": null,
-    "nb_renseignes": 0,
-    "q1": null,
-    "q3": null,
-    "ecart_type": null,
-    "asymetrie": null,
-    "aplatissement": null,
-    "histogramme": [
-     0,
-     0,
-     0,
-     0,
-     0,
-     0,
-     0,
-     0,
-     0,
-     0,
-     0,
-     0,
-     0,
-     0,
-     0,
-     0,
-     0,
-     0,
-     0,
-     0,
-     0
-    ]
-   },
-   "contrats": {
-    "CDI": 7,
-    "CDD": 0,
-    "Alternance/Stage": 3,
-    "Autre": 12
-   },
-   "contrats_publies": false,
-   "teletravail": {
-    "nb": 1,
-    "part": 0.0455
-   },
-   "top_postes": [
-    {
-     "intitule": "Account Executive, Ecommerce",
-     "nb": 1,
-     "salaire_median": null,
-     "source": "arbeitnow",
-     "site": "Arbeitnow"
-    },
-    {
-     "intitule": "Account Executive 🇫🇷 (Mid-market)",
-     "nb": 1,
-     "salaire_median": null,
-     "source": "arbeitnow",
-     "site": "Arbeitnow"
-    },
-    {
-     "intitule": "Alternance - Talent Acquisition Intern",
-     "nb": 1,
-     "salaire_median": null,
-     "source": "arbeitnow",
-     "site": "Arbeitnow"
-    },
-    {
-     "intitule": "Brand Designer",
-     "nb": 1,
-     "salaire_median": null,
-     "source": "arbeitnow",
-     "site": "Arbeitnow"
-    },
-    {
-     "intitule": "Cdi - designer junior jersey",
-     "nb": 1,
-     "salaire_median": null,
-     "source": "arbeitnow",
-     "site": "Arbeitnow"
-    },
-    {
-     "intitule": "Consultant(e) SEO confirmé(e) - Bordeaux",
-     "nb": 1,
-     "salaire_median": null,
-     "source": "arbeitnow",
-     "site": "Arbeitnow"
-    },
-    {
-     "intitule": "Digital Data AI Therapeutic Office Lead",
-     "nb": 1,
-     "salaire_median": null,
-     "source": "arbeitnow",
-     "site": "Arbeitnow"
-    },
-    {
-     "intitule": "Graphic Designer & Digital Content Creation Intern (H1/2027)",
-     "nb": 1,
-     "salaire_median": null,
-     "source": "arbeitnow",
-     "site": "Arbeitnow"
-    },
-    {
-     "intitule": "Marketing Coordinator Intern",
-     "nb": 1,
-     "salaire_median": null,
-     "source": "arbeitnow",
-     "site": "Arbeitnow"
-    },
-    {
-     "intitule": "SEO & Digital Marketing Specialist",
-     "nb": 1,
-     "salaire_median": null,
-     "source": "arbeitnow",
-     "site": "Arbeitnow"
-    },
-    {
-     "intitule": "Responsable Marketing Digital",
-     "nb": 1,
-     "salaire_median": null,
-     "source": "arbeitnow",
-     "site": "Arbeitnow"
-    },
-    {
-     "intitule": "Senior Brand Manager",
-     "nb": 1,
-     "salaire_median": null,
-     "source": "arbeitnow",
-     "site": "Arbeitnow"
-    },
-    {
-     "intitule": "Senior Data Analyst - Acquisition",
-     "nb": 1,
-     "salaire_median": null,
-     "source": "arbeitnow",
-     "site": "Arbeitnow"
-    },
-    {
-     "intitule": "Stage - Assistant(e) Chef(fe) de Projet Marketing - Projets Spéciaux",
-     "nb": 1,
-     "salaire_median": null,
-     "source": "arbeitnow",
-     "site": "Arbeitnow"
-    },
-    {
-     "intitule": "Talent Acquisition Specialist",
-     "nb": 1,
-     "salaire_median": null,
-     "source": "arbeitnow",
-     "site": "Arbeitnow"
-    }
-   ],
-   "libelle": "Arbeitnow",
-   "description": "Offres d'entreprises européennes situées en France",
-   "date_collecte": "2026-11-26",
-   "credit": {
-    "texte": "Offres fournies par Arbeitnow",
-    "url": "https://www.arbeitnow.com"
-   }
-  },
-  "remotive": {
-   "nb_offres": 2,
-   "nouvelles": 0,
-   "actives": 2,
-   "jour_nouvelles": "2026-11-26",
-   "salaires": {
-    "min": null,
-    "max": null,
-    "mediane": null,
-    "moyenne": null,
-    "nb_renseignes": 0,
-    "q1": null,
-    "q3": null,
-    "ecart_type": null,
-    "asymetrie": null,
-    "aplatissement": null,
-    "histogramme": [
-     0,
-     0,
-     0,
-     0,
-     0,
-     0,
-     0,
-     0,
-     0,
-     0,
-     0,
-     0,
-     0,
-     0,
-     0,
-     0,
-     0,
-     0,
-     0,
-     0,
-     0
-    ]
-   },
-   "contrats": {
-    "CDI": 0,
-    "CDD": 0,
-    "Alternance/Stage": 0,
-    "Autre": 2
-   },
-   "contrats_publies": false,
-   "teletravail": {
-    "nb": 2,
-    "part": 1.0
-   },
-   "top_postes": [
-    {
-     "intitule": "Freelance Writer",
-     "nb": 1,
-     "salaire_median": null,
-     "source": "remotive",
-     "site": "Remotive"
-    },
-    {
-     "intitule": "Freelance Copywriter",
-     "nb": 1,
-     "salaire_median": null,
-     "source": "remotive",
-     "site": "Remotive"
-    }
-   ],
-   "libelle": "Remotive",
-   "description": "Offres marketing en télétravail ouvertes à la France ou à l'Europe",
-   "date_collecte": "2026-11-26",
-   "credit": {
-    "texte": "Offres fournies par Remotive",
-    "url": "https://remotive.com"
+    "texte": "Offres fournies par La bonne alternance",
+    "url": "https://labonnealternance.apprentissage.beta.gouv.fr"
    }
   }
  }
