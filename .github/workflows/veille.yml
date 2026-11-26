@@ -42,6 +42,7 @@ jobs:
       # Refait le résumé, collecte Jobicy, Himalayas, Arbeitnow et Remotive, et écrit data/observatoire.json
       - name: Refaire les résumés et collecter les autres sites
         env:
+          LBA_API_KEY: ${{ secrets.LBA_API_KEY }}
           OBSERVATOIRE_SANS_COLLECTE: ${{ inputs.sources == 'france_travail' && '1' || '' }}
         run: python scripts/resumer.py
 
