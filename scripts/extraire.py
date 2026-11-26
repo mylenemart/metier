@@ -81,7 +81,12 @@ def obtenir_token():
         "client_secret": secret,
         "scope": "api_offresdemploiv2 o2dsoffre",
     }, headers={"Content-Type": "application/x-www-form-urlencoded"}, timeout=30)
-    r.raise_for_status()
+    if r.status_code != 200:
+        # France Travail explique le refus : invalid_client (identifiant ou secret faux),
+        # invalid_scope (application non abonnée à l'API Offres d'emploi v2)…
+        indice = (f"identifiant de {len(cid)} caractères, {'commence bien' if cid.startswith('PAR_') else 'ne commence pas'} "
+                  f"par PAR_ ; secret de {len(secret)} caractères ; espaces en trop : {'oui' if cid != cid.strip() or secret != secret.strip() else 'non'}")
+        sys.exit(f"Connexion refusée par France Travail ({r.status_code}) : {r.text[:300]}\n({indice})")
     return r.json()["access_token"]
 
 
