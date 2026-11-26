@@ -143,6 +143,19 @@
   "url": "https://www.arbeitnow.fr/jobs/companies/qonto/afc-sanctions-investigations-officer-paris-50293"
  },
  {
+  "id": "arbeitnow-ai-engineer-hf-paris-286099",
+  "source": "arbeitnow",
+  "site": "Arbeitnow",
+  "intitule": "AI Engineer - HF",
+  "entreprise": "Hubvisory",
+  "zone": "Paris, Île-de-France, France",
+  "contrat": "CDI",
+  "salaire": null,
+  "teletravail": false,
+  "date": "2026-11-26",
+  "url": "https://www.arbeitnow.fr/jobs/companies/hubvisory/ai-engineer-hf-paris-286099"
+ },
+ {
   "id": "arbeitnow-alternance-ingenieur-methodes-energie-f-h-chantonnay-82531",
   "source": "arbeitnow",
   "site": "Arbeitnow",
@@ -167,19 +180,6 @@
   "teletravail": false,
   "date": "2026-11-20",
   "url": "https://www.arbeitnow.fr/jobs/companies/exotec/alternance-talent-acquisition-intern-lille-90220"
- },
- {
-  "id": "arbeitnow-analyst-legacy-paris-406366",
-  "source": "arbeitnow",
-  "site": "Arbeitnow",
-  "intitule": "Analyst (Legacy)",
-  "entreprise": "Marble",
-  "zone": "Paris, France",
-  "contrat": "Alternance/Stage",
-  "salaire": null,
-  "teletravail": false,
-  "date": "2026-11-20",
-  "url": "https://www.arbeitnow.fr/jobs/companies/marble/analyst-legacy-paris-406366"
  },
  {
   "id": "arbeitnow-anti-financial-crime-expert-french-market-paris-359404",
@@ -299,19 +299,6 @@
   "url": "https://www.arbeitnow.fr/jobs/companies/jacquemus/cdi-designer-junior-jersey-h-f-paris-hq-ile-de-france-54456"
  },
  {
-  "id": "arbeitnow-cdi-responsable-rd-traiteur-f-h-la-meilleraie-tillay-498793",
-  "source": "arbeitnow",
-  "site": "Arbeitnow",
-  "intitule": "CDI - Responsable R&D Traiteur",
-  "entreprise": "FLEURY MICHON",
-  "zone": "La Meilleraie-Tillay, Pays de la Loire, France",
-  "contrat": "CDI",
-  "salaire": null,
-  "teletravail": false,
-  "date": "2026-11-20",
-  "url": "https://www.arbeitnow.fr/jobs/companies/fleury-michon/cdi-responsable-rd-traiteur-f-h-la-meilleraie-tillay-498793"
- },
- {
   "id": "arbeitnow-cdi-senior-client-advisor-bon-marche-homme-paris-432904",
   "source": "arbeitnow",
   "site": "Arbeitnow",
@@ -429,19 +416,6 @@
   "url": "https://www.arbeitnow.fr/jobs/companies/hubvisory/consultante-senior-transformation-product-conduite-du-changement-h-f-paris-307405"
  },
  {
-  "id": "arbeitnow-consultante-seo-confirmee-bordeaux-h-f-349537",
-  "source": "arbeitnow",
-  "site": "Arbeitnow",
-  "intitule": "Consultant(e) SEO confirmé(e) - Bordeaux",
-  "entreprise": "PIXALIONE",
-  "zone": "Bordeaux, Nouvelle-Aquitaine, France",
-  "contrat": "CDI",
-  "salaire": null,
-  "teletravail": false,
-  "date": "2026-11-25",
-  "url": "https://www.arbeitnow.fr/jobs/companies/pixalione/consultante-seo-confirmee-bordeaux-h-f-349537"
- },
- {
   "id": "arbeitnow-core-account-executive-france-386634",
   "source": "arbeitnow",
   "site": "Arbeitnow",
@@ -544,19 +518,6 @@
   "teletravail": false,
   "date": "2026-11-25",
   "url": "https://www.arbeitnow.fr/jobs/companies/dastra/data-migration-manager-paris-350419"
- },
- {
-  "id": "arbeitnow-digital-data-ai-therapeutic-office-lead-boulogne-billancourt-71728",
-  "source": "arbeitnow",
-  "site": "Arbeitnow",
-  "intitule": "Digital Data AI Therapeutic Office Lead",
-  "entreprise": "Excelya",
-  "zone": "Boulogne-Billancourt, France",
-  "contrat": "Autre",
-  "salaire": null,
-  "teletravail": false,
-  "date": "2026-11-24",
-  "url": "https://www.arbeitnow.fr/jobs/companies/excelya/digital-data-ai-therapeutic-office-lead-boulogne-billancourt-71728"
  },
  {
   "id": "arbeitnow-director-sales-engineering-southern-europe-france-281295",
@@ -819,95 +780,17 @@
   "url": "https://www.arbeitnow.fr/jobs/companies/n2jsoft/head-of-sales-enablement-excellence-lyon-103216"
  },
  {
-  "id": "arbeitnow-inbound-account-development-representative-france-boulogne-billancourt-220224",
+  "id": "arbeitnow-head-of-search-paidseo-geo-paris-191192",
   "source": "arbeitnow",
   "site": "Arbeitnow",
-  "intitule": "Inbound Account Development Representative - France",
-  "entreprise": "Samsara",
-  "zone": "Boulogne-Billancourt, France",
-  "contrat": "Autre",
+  "intitule": "Head of Search (Paid+SEO/GEO)",
+  "entreprise": "Les Pépites",
+  "zone": "Paris, Île-de-France, France",
+  "contrat": "CDI",
   "salaire": null,
   "teletravail": false,
-  "date": "2026-11-20",
-  "url": "https://www.arbeitnow.fr/jobs/companies/samsara/inbound-account-development-representative-france-boulogne-billancourt-220224"
- },
- {
-  "id": "arbeitnow-inbound-account-development-representative-france-lyon-455775",
-  "source": "arbeitnow",
-  "site": "Arbeitnow",
-  "intitule": "Inbound Account Development Representative - France",
-  "entreprise": "Samsara",
-  "zone": "Lyon, France",
-  "contrat": "Autre",
-  "salaire": null,
-  "teletravail": false,
-  "date": "2026-11-20",
-  "url": "https://www.arbeitnow.fr/jobs/companies/samsara/inbound-account-development-representative-france-lyon-455775"
- },
- {
-  "id": "arbeitnow-inbound-account-development-representative-france-paris-382707",
-  "source": "arbeitnow",
-  "site": "Arbeitnow",
-  "intitule": "Inbound Account Development Representative - France",
-  "entreprise": "Samsara",
-  "zone": "Paris, France",
-  "contrat": "Autre",
-  "salaire": null,
-  "teletravail": false,
-  "date": "2026-11-20",
-  "url": "https://www.arbeitnow.fr/jobs/companies/samsara/inbound-account-development-representative-france-paris-382707"
- },
- {
-  "id": "arbeitnow-inbound-account-development-representative-france-pontoise-46996",
-  "source": "arbeitnow",
-  "site": "Arbeitnow",
-  "intitule": "Inbound Account Development Representative - France",
-  "entreprise": "Samsara",
-  "zone": "Pontoise, France",
-  "contrat": "Autre",
-  "salaire": null,
-  "teletravail": false,
-  "date": "2026-11-20",
-  "url": "https://www.arbeitnow.fr/jobs/companies/samsara/inbound-account-development-representative-france-pontoise-46996"
- },
- {
-  "id": "arbeitnow-inbound-account-development-representative-france-saint-etienne-178144",
-  "source": "arbeitnow",
-  "site": "Arbeitnow",
-  "intitule": "Inbound Account Development Representative - France",
-  "entreprise": "Samsara",
-  "zone": "Saint-Etienne, France",
-  "contrat": "Autre",
-  "salaire": null,
-  "teletravail": false,
-  "date": "2026-11-20",
-  "url": "https://www.arbeitnow.fr/jobs/companies/samsara/inbound-account-development-representative-france-saint-etienne-178144"
- },
- {
-  "id": "arbeitnow-inbound-account-development-representative-france-toulouse-332446",
-  "source": "arbeitnow",
-  "site": "Arbeitnow",
-  "intitule": "Inbound Account Development Representative - France",
-  "entreprise": "Samsara",
-  "zone": "Toulouse, France",
-  "contrat": "Autre",
-  "salaire": null,
-  "teletravail": false,
-  "date": "2026-11-20",
-  "url": "https://www.arbeitnow.fr/jobs/companies/samsara/inbound-account-development-representative-france-toulouse-332446"
- },
- {
-  "id": "arbeitnow-inbound-account-development-representative-france-villeurbanne-275425",
-  "source": "arbeitnow",
-  "site": "Arbeitnow",
-  "intitule": "Inbound Account Development Representative - France",
-  "entreprise": "Samsara",
-  "zone": "Villeurbanne, France",
-  "contrat": "Autre",
-  "salaire": null,
-  "teletravail": false,
-  "date": "2026-11-20",
-  "url": "https://www.arbeitnow.fr/jobs/companies/samsara/inbound-account-development-representative-france-villeurbanne-275425"
+  "date": "2026-11-26",
+  "url": "https://www.arbeitnow.fr/jobs/companies/les-pepites/head-of-search-paidseo-geo-paris-191192"
  },
  {
   "id": "arbeitnow-inbound-sales-paris-france-246225",
@@ -1207,32 +1090,6 @@
   "teletravail": false,
   "date": "2026-11-20",
   "url": "https://www.arbeitnow.fr/jobs/companies/samsara/outbound-account-development-representative-france-boulogne-billancourt-452262"
- },
- {
-  "id": "arbeitnow-outbound-account-development-representative-france-lyon-304583",
-  "source": "arbeitnow",
-  "site": "Arbeitnow",
-  "intitule": "Outbound Account Development Representative - France",
-  "entreprise": "Samsara",
-  "zone": "Lyon, France",
-  "contrat": "Autre",
-  "salaire": null,
-  "teletravail": false,
-  "date": "2026-11-20",
-  "url": "https://www.arbeitnow.fr/jobs/companies/samsara/outbound-account-development-representative-france-lyon-304583"
- },
- {
-  "id": "arbeitnow-outbound-account-development-representative-france-paris-313574",
-  "source": "arbeitnow",
-  "site": "Arbeitnow",
-  "intitule": "Outbound Account Development Representative - France",
-  "entreprise": "Samsara",
-  "zone": "Paris, France",
-  "contrat": "Autre",
-  "salaire": null,
-  "teletravail": false,
-  "date": "2026-11-20",
-  "url": "https://www.arbeitnow.fr/jobs/companies/samsara/outbound-account-development-representative-france-paris-313574"
  },
  {
   "id": "arbeitnow-outbound-account-development-representative-france-pontoise-26239",
@@ -1586,19 +1443,6 @@
   "url": "https://www.arbeitnow.fr/jobs/companies/constructor/remote-sr-customer-success-manager-french-speaking-422782"
  },
  {
-  "id": "arbeitnow-representante-commerciale-marseille-352687",
-  "source": "arbeitnow",
-  "site": "Arbeitnow",
-  "intitule": "Représentant(e) commercial(e) - Marseille",
-  "entreprise": "Salonkee",
-  "zone": "France / Marseille",
-  "contrat": "Autre",
-  "salaire": null,
-  "teletravail": false,
-  "date": "2026-11-20",
-  "url": "https://www.arbeitnow.fr/jobs/companies/salonkee/representante-commerciale-marseille-352687"
- },
- {
   "id": "arbeitnow-responsable-administratif-et-comptable-h-f-bordeaux-297761",
   "source": "arbeitnow",
   "site": "Arbeitnow",
@@ -1662,19 +1506,6 @@
   "teletravail": false,
   "date": "2026-11-22",
   "url": "https://www.arbeitnow.fr/jobs/companies/le-fourgon/responsable-logistique-h-f-lesquin-102764"
- },
- {
-  "id": "arbeitnow-responsable-marketing-digital-paris-196683",
-  "source": "arbeitnow",
-  "site": "Arbeitnow",
-  "intitule": "Responsable Marketing Digital",
-  "entreprise": "Les Pépites",
-  "zone": "Paris, Île-de-France, France",
-  "contrat": "CDI",
-  "salaire": null,
-  "teletravail": false,
-  "date": "2026-11-20",
-  "url": "https://www.arbeitnow.fr/jobs/companies/les-pepites/responsable-marketing-digital-paris-196683"
  },
  {
   "id": "arbeitnow-responsable-moyens-generaux-et-hse-h-f-paris-355738",
@@ -1805,19 +1636,6 @@
   "teletravail": false,
   "date": "2026-11-23",
   "url": "https://www.arbeitnow.fr/jobs/companies/kraken/senior-client-enablement-coaching-lead-paris-263991"
- },
- {
-  "id": "arbeitnow-senior-data-analyst-acquisition-paris-461960",
-  "source": "arbeitnow",
-  "site": "Arbeitnow",
-  "intitule": "Senior Data Analyst - Acquisition",
-  "entreprise": "Pennylane SAS",
-  "zone": "All France (remote)",
-  "contrat": "Autre",
-  "salaire": null,
-  "teletravail": false,
-  "date": "2026-11-20",
-  "url": "https://www.arbeitnow.fr/jobs/companies/pennylane-sas/senior-data-analyst-acquisition-paris-461960"
  },
  {
   "id": "arbeitnow-senior-data-engineer-financial-flows-france-494969",

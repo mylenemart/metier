@@ -79,25 +79,25 @@
   {
    "date": "2026-11-26",
    "nouvelles": {
-    "france_travail": 730,
-    "partenaires": 1965,
+    "france_travail": 733,
+    "partenaires": 1999,
     "jobicy": 1,
     "himalayas": 5,
-    "arbeitnow": 4
+    "arbeitnow": 5
    },
-   "cumul": 7282
+   "cumul": 7320
   }
  ],
  "tests": [
   {
    "test": "Chi² d'indépendance",
    "variables": "Origine de l'offre × type de contrat (CDI, CDD, alternance/stage)",
-   "n": 6455,
-   "statistique": "χ² = 310,8",
+   "n": 6492,
+   "statistique": "χ² = 321,7",
    "ddl": 2,
-   "p": 3.3087558227632125e-68,
+   "p": 1.4258355750191839e-70,
    "effet": "V de Cramer = 0,22",
-   "effet_valeur": 0.219,
+   "effet_valeur": 0.223,
    "effet_niveau": "petit",
    "condition": "effectifs attendus ≥ 5 dans toutes les cases",
    "tableau": {
@@ -113,13 +113,13 @@
     "valeurs": [
      [
       148,
-      650,
-      925
+      652,
+      926
      ],
      [
-      987,
-      884,
-      2861
+      998,
+      878,
+      2890
      ]
     ]
    }
@@ -127,10 +127,10 @@
   {
    "test": "Chi² d'indépendance",
    "variables": "Source × télétravail",
-   "n": 7282,
-   "statistique": "χ² = 1144,0",
+   "n": 7320,
+   "statistique": "χ² = 1146,8",
    "ddl": 5,
-   "p": 3.907169922701886e-245,
+   "p": 9.764235078887288e-246,
    "effet": "V de Cramer = 0,40",
    "effet_valeur": 0.396,
    "effet_niveau": "moyen",
@@ -150,11 +150,11 @@
     ],
     "valeurs": [
      [
-      20,
+      21,
       1
      ],
      [
-      1636,
+      1639,
       188
      ],
      [
@@ -170,8 +170,8 @@
       2
      ],
      [
-      4647,
-      617
+      4678,
+      620
      ]
     ]
    }
@@ -179,29 +179,29 @@
   {
    "test": "ANOVA à un facteur",
    "variables": "Source × salaire annuel brut (sources avec au moins 15 salaires)",
-   "n": 2231,
-   "statistique": "F(2 ; 2228) = 130,5",
-   "ddl": "2 ; 2228",
-   "p": 2.624880494157052e-54,
+   "n": 2234,
+   "statistique": "F(2 ; 2231) = 131,0",
+   "ddl": "2 ; 2231",
+   "p": 1.6084069349816154e-54,
    "effet": "êta² = 0,105",
-   "effet_valeur": 0.1048,
+   "effet_valeur": 0.1051,
    "effet_niveau": "moyen",
-   "condition": "suppose des salaires proches de la loi normale dans chaque groupe (France Travail : 1189, Sites partenaires : 1024, Himalayas : 18) : ce n'est pas le cas (asymétrie positive), d'où le test de Kruskal-Wallis en contrôle"
+   "condition": "suppose des salaires proches de la loi normale dans chaque groupe (France Travail : 1189, Sites partenaires : 1027, Himalayas : 18) : ce n'est pas le cas (asymétrie positive), d'où le test de Kruskal-Wallis en contrôle"
   },
   {
    "test": "Kruskal-Wallis",
    "variables": "Source × salaire annuel brut (sources avec au moins 15 salaires)",
-   "n": 2231,
-   "statistique": "H = 225,7",
+   "n": 2234,
+   "statistique": "H = 227,0",
    "ddl": 2,
-   "p": 9.892460052656903e-50,
-   "effet": "epsilon² = 0,101",
-   "effet_valeur": 0.1012,
+   "p": 5.035796767770707e-50,
+   "effet": "epsilon² = 0,102",
+   "effet_valeur": 0.1017,
    "effet_niveau": "moyen",
    "condition": "compare les rangs : ne suppose pas la normalité, adapté à des salaires asymétriques"
   }
  ],
- "doublons_probables": 1415,
+ "doublons_probables": 1417,
  "tranches_salaire": [
   0,
   5000,
@@ -227,21 +227,21 @@
  ],
  "perimetre": "Toutes les offres vues depuis le 2026-09-22 (les offres retirées restent comptées). Métiers du marketing et du digital : 23 codes ROME pour France Travail et ses partenaires ; pour Jobicy, Himalayas, Arbeitnow et Remotive, offres ouvertes aux candidats en France dont l'intitulé relève du marketing, du contenu, de la communication ou du design.",
  "global": {
-  "nb_offres": 7282,
-  "nouvelles": 2705,
-  "actives": 3042,
+  "nb_offres": 7320,
+  "nouvelles": 2743,
+  "actives": 3043,
   "jour_nouvelles": "2026-11-26",
   "salaires": {
    "min": 4800,
    "max": 160000,
    "mediane": 30000,
-   "moyenne": 34191,
-   "nb_renseignes": 2231,
-   "q1": 23514,
+   "moyenne": 34206,
+   "nb_renseignes": 2234,
+   "q1": 23516,
    "q3": 42500,
-   "ecart_type": 15177,
+   "ecart_type": 15182,
    "asymetrie": 1.64,
-   "aplatissement": 5.62,
+   "aplatissement": 5.59,
    "histogramme": [
     2,
     23,
@@ -249,14 +249,14 @@
     208,
     372,
     375,
-    305,
+    306,
     201,
-    198,
+    199,
     190,
     103,
     65,
     35,
-    23,
+    24,
     22,
     15,
     5,
@@ -267,15 +267,15 @@
    ]
   },
   "contrats": {
-   "CDI": 3792,
-   "CDD": 1536,
-   "Alternance/Stage": 1141,
+   "CDI": 3823,
+   "CDD": 1532,
+   "Alternance/Stage": 1152,
    "Autre": 813
   },
   "contrats_publies": true,
   "teletravail": {
-   "nb": 979,
-   "part": 0.1344
+   "nb": 982,
+   "part": 0.1342
   },
   "top_postes": [
    {
@@ -294,7 +294,7 @@
    },
    {
     "intitule": "Chef de mission",
-    "nb": 77,
+    "nb": 78,
     "salaire_median": null,
     "source": "partenaires",
     "site": "DirectEmploi"
@@ -336,7 +336,7 @@
    },
    {
     "intitule": "Charge de clientele",
-    "nb": 37,
+    "nb": 38,
     "salaire_median": null,
     "source": "partenaires",
     "site": "DirectEmploi"
@@ -356,6 +356,13 @@
     "site": "Beetween"
    },
    {
+    "intitule": "Opérateur sur presse",
+    "nb": 30,
+    "salaire_median": null,
+    "source": "partenaires",
+    "site": "DirectEmploi"
+   },
+   {
     "intitule": "Community manager",
     "nb": 29,
     "salaire_median": 25089,
@@ -363,15 +370,8 @@
     "site": "France Travail"
    },
    {
-    "intitule": "Opérateur sur presse",
-    "nb": 29,
-    "salaire_median": null,
-    "source": "partenaires",
-    "site": "DirectEmploi"
-   },
-   {
     "intitule": "Community manager",
-    "nb": 28,
+    "nb": 29,
     "salaire_median": 20000,
     "source": "partenaires",
     "site": "Meteojob"
@@ -387,9 +387,9 @@
  },
  "sources": {
   "france_travail": {
-   "nb_offres": 1824,
-   "nouvelles": 730,
-   "actives": 766,
+   "nb_offres": 1827,
+   "nouvelles": 733,
+   "actives": 765,
    "jour_nouvelles": "2026-11-26",
    "salaires": {
     "min": 6078,
@@ -427,15 +427,15 @@
     ]
    },
    "contrats": {
-    "CDI": 925,
-    "CDD": 650,
+    "CDI": 926,
+    "CDD": 652,
     "Alternance/Stage": 148,
     "Autre": 101
    },
    "contrats_publies": true,
    "teletravail": {
     "nb": 188,
-    "part": 0.1031
+    "part": 0.1029
    },
    "top_postes": [
     {
@@ -468,7 +468,7 @@
     },
     {
      "intitule": "Chargé / Chargée de communication",
-     "nb": 21,
+     "nb": 22,
      "salaire_median": 26028,
      "source": "france_travail",
      "site": "France Travail"
@@ -548,21 +548,21 @@
    "description": "Offres déposées directement sur francetravail.fr"
   },
   "partenaires": {
-   "nb_offres": 5264,
-   "nouvelles": 1965,
-   "actives": 2089,
+   "nb_offres": 5298,
+   "nouvelles": 1999,
+   "actives": 2094,
    "jour_nouvelles": "2026-11-26",
    "salaires": {
     "min": 4800,
     "max": 130000,
     "mediane": 37500,
-    "moyenne": 38431,
-    "nb_renseignes": 1024,
+    "moyenne": 38452,
+    "nb_renseignes": 1027,
     "q1": 27500,
     "q3": 48500,
     "ecart_type": 16386,
     "asymetrie": 0.97,
-    "aplatissement": 2.66,
+    "aplatissement": 2.64,
     "histogramme": [
      2,
      20,
@@ -570,14 +570,14 @@
      42,
      95,
      114,
-     142,
+     143,
      112,
-     101,
+     102,
      157,
      70,
      42,
      25,
-     19,
+     20,
      15,
      8,
      4,
@@ -588,15 +588,15 @@
     ]
    },
    "contrats": {
-    "CDI": 2861,
-    "CDD": 884,
-    "Alternance/Stage": 987,
+    "CDI": 2890,
+    "CDD": 878,
+    "Alternance/Stage": 998,
     "Autre": 532
    },
    "contrats_publies": true,
    "teletravail": {
-    "nb": 617,
-    "part": 0.1172
+    "nb": 620,
+    "part": 0.117
    },
    "top_postes": [
     {
@@ -615,7 +615,7 @@
     },
     {
      "intitule": "Chef de mission",
-     "nb": 77,
+     "nb": 78,
      "salaire_median": null,
      "source": "partenaires",
      "site": "DirectEmploi"
@@ -650,7 +650,7 @@
     },
     {
      "intitule": "Charge de clientele",
-     "nb": 37,
+     "nb": 38,
      "salaire_median": null,
      "source": "partenaires",
      "site": "DirectEmploi"
@@ -664,14 +664,14 @@
     },
     {
      "intitule": "Opérateur sur presse",
-     "nb": 29,
+     "nb": 30,
      "salaire_median": null,
      "source": "partenaires",
      "site": "DirectEmploi"
     },
     {
      "intitule": "Community manager",
-     "nb": 28,
+     "nb": 29,
      "salaire_median": 20000,
      "source": "partenaires",
      "site": "Meteojob"
@@ -714,7 +714,7 @@
     },
     {
      "nom": "DirectEmploi",
-     "nb": 984
+     "nb": 1015
     },
     {
      "nom": "Meteojob",
@@ -738,7 +738,7 @@
     },
     {
      "nom": "TalentPlug",
-     "nb": 153
+     "nb": 156
     },
     {
      "nom": "We Recruit",
@@ -1049,9 +1049,9 @@
    }
   },
   "arbeitnow": {
-   "nb_offres": 21,
-   "nouvelles": 4,
-   "actives": 18,
+   "nb_offres": 22,
+   "nouvelles": 5,
+   "actives": 15,
    "jour_nouvelles": "2026-11-26",
    "salaires": {
     "min": null,
@@ -1089,7 +1089,7 @@
     ]
    },
    "contrats": {
-    "CDI": 6,
+    "CDI": 7,
     "CDD": 0,
     "Alternance/Stage": 3,
     "Autre": 12
@@ -1097,7 +1097,7 @@
    "contrats_publies": false,
    "teletravail": {
     "nb": 1,
-    "part": 0.0476
+    "part": 0.0455
    },
    "top_postes": [
     {
