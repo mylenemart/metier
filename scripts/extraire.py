@@ -72,7 +72,8 @@ CHAMPS_VOLATILS = {"dateActualisation"}
 
 
 def obtenir_token():
-    cid, secret = os.getenv("FT_CLIENT_ID"), os.getenv("FT_CLIENT_SECRET")
+    # Les identifiants ne contiennent jamais d'espace : on retire ceux d'un copier-coller
+    cid, secret = (re.sub(r"\s+", "", os.getenv(k) or "") for k in ("FT_CLIENT_ID", "FT_CLIENT_SECRET"))
     if not cid or not secret or cid.startswith("PAR_votre"):
         sys.exit("Identifiants absents : copiez .env.example en .env et remplissez-le.")
     r = requests.post(TOKEN_URL, data={
@@ -85,7 +86,7 @@ def obtenir_token():
         # France Travail explique le refus : invalid_client (identifiant ou secret faux),
         # invalid_scope (application non abonnée à l'API Offres d'emploi v2)…
         indice = (f"identifiant de {len(cid)} caractères, {'commence bien' if cid.startswith('PAR_') else 'ne commence pas'} "
-                  f"par PAR_ ; secret de {len(secret)} caractères ; espaces en trop : {'oui' if cid != cid.strip() or secret != secret.strip() else 'non'}")
+                  f"par PAR_ ; secret de {len(secret)} caractères")
         sys.exit(f"Connexion refusée par France Travail ({r.status_code}) : {r.text[:300]}\n({indice})")
     return r.json()["access_token"]
 
