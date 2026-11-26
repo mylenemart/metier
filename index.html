@@ -3,18 +3,18 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Les métiers du marketing — le marché, lu dans les offres</title>
+<title>Marketing, digital et commerce — le marché, lu dans les offres</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.min.css">
 <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js"></script>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet.markercluster@1.5.3/dist/MarkerCluster.min.css">
 <script src="https://cdn.jsdelivr.net/npm/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
-<link rel="stylesheet" href="assets/commun.css?v=3">
+<link rel="stylesheet" href="assets/commun.css?v=5">
 </head>
 <body>
 <main>
   <div id="nav-ici"></div>
-  <h1>Les métiers du marketing — le marché, lu dans les offres</h1>
+  <h1>Marketing, digital et commerce — le marché, lu dans les offres</h1>
   <p class="sous" id="sous">Chargement des données…</p>
 
   <!-- ============ 1. FILTRES (posés par commun.js) ============ -->
@@ -29,12 +29,16 @@
   <div class="carte large"><h3>Chaque point est une offre — survolez pour la lire, cliquez pour l'ouvrir</h3>
     <div class="carte-outils">
       <button data-vue="france">France</button>
-      <button data-vue="clermont">Clermont</button>
+      <button data-vue="idf">Île-de-France</button>
       <button data-vue="aura">Auvergne-Rhône-Alpes</button>
-      <button data-vue="paris">Île-de-France</button>
+      <button data-vue="cvl">Centre-Val de Loire</button>
+      <button data-vue="occ">Occitanie</button>
+      <button data-vue="la">Loire-Atlantique</button>
+      <button data-vue="na">Nouvelle-Aquitaine</button>
+      <button data-vue="hdf">Hauts-de-France</button>
       <button data-fond="gris" class="actif">Fond gris</button>
       <button data-fond="osm">Fond OpenStreetMap</button>
-      <span class="legende"><span><i style="background:#0a5cff"></i>cœur marketing</span><span><i style="background:#ff6a00"></i>digital</span><span><i style="background:#8e8e93"></i>frontière</span></span>
+      <span class="legende"><span><i style="background:#0a5cff"></i>marketing</span><span><i style="background:#ff6a00"></i>digital</span><span><i style="background:#8e8e93"></i>commerce</span></span>
     </div>
     <div id="map"></div>
     <p class="note" id="note-carte"></p></div>
@@ -47,7 +51,7 @@
   <!-- ============ 4. LE RESTE, PAGE PAR PAGE ============ -->
   <h2>Le reste, page par page <small>— vos filtres vous suivent</small></h2>
   <div class="liens">
-    <a class="lien" href="salaires.html"><b>Ce que ça paie</b><span><i id="cle-salaires">—</i> — fourchettes par niveau, par métier, par contrat, et Île-de-France ou ailleurs.</span></a>
+    <a class="lien" href="salaires.html"><b>Ce que ça paie</b><span><i id="cle-salaires">—</i> — fourchettes par niveau, par métier, par contrat, et par région.</span></a>
     <a class="lien" href="exigences.html"><b>Ce qu'on vous demande</b><span><i id="cle-exigences">—</i> — expérience, formation, outils et compétences cités dans les annonces.</span></a>
     <a class="lien" href="recruteurs.html"><b>Qui recrute</b><span><i id="cle-recruteurs">—</i> — entreprises, secteurs, niveau de poste par métier, et les dernières offres.</span></a>
     <a class="lien" href="mouvement.html"><b>Le marché bouge</b><span><i id="cle-mouvement">—</i> — les extractions successives, la fraîcheur des annonces, et les limites de ces chiffres.</span></a>
@@ -56,7 +60,7 @@
   <footer id="pied"></footer>
 </main>
 
-<script src="assets/commun.js?v=3"></script>
+<script src="assets/commun.js?v=5"></script>
 <script>
 /* ============ Accueil : chiffres, carte, départements, contrats ============ */
 let carte, calque;
@@ -71,9 +75,10 @@ function rendre(offres, D) {
   const debutants = offres.filter(debutantAccepte).length;
   const tuiles = [
     [n, "offres sélectionnées"],
-    [offres.filter(o => o.dep === "63").length, "dans le Puy-de-Dôme"],
-    [offres.filter(o => AURA.has(o.dep)).length, "en Auvergne-Rhône-Alpes"],
+    [offres.filter(o => o.region === "idf").length, "en Île-de-France"],
+    [offres.filter(o => o.region && o.region !== "idf").length, "dans les autres zones suivies"],
     [offres.filter(o => familleContrat(o) === "alt").length, "en alternance"],
+    [offres.filter(estStage).length, "avec « stage » dans l'intitulé"],
     [pct(debutants, n) + " %", `acceptent un débutant (${debutants})`],
     [pct(avecSal.length, n) + " %", `affichent un salaire (${avecSal.length})`],
     [avecSal.length ? euro(mediane(mins), 100) + " → " + euro(mediane(maxs), 100) : "—", "brut annuel affiché, médiane des minima → des maxima"],
@@ -119,7 +124,8 @@ function rendre(offres, D) {
 }
 
 /* ---- La carte, créée une fois : elle n'attend pas les données ---- */
-const VUES = { france: [[46.4, 2.4], 6], clermont: [[45.78, 3.09], 11], aura: [[45.5, 4.6], 8], paris: [[48.8, 2.4], 10] };
+const VUES = { france: [[46.4, 2.4], 6], idf: [[48.75, 2.5], 9], aura: [[45.5, 4.4], 8], cvl: [[47.4, 1.7], 8],
+  occ: [[43.7, 2.2], 8], la: [[47.3, -1.7], 9.5], na: [[45.2, 0.2], 7.5], hdf: [[49.9, 2.8], 8] };
 const FONDS = {
   gris: L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}", { maxZoom: 16, attribution: "Tiles &copy; Esri, HERE, Garmin, OpenStreetMap" }),
   osm: L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", { maxZoom: 19, attribution: "&copy; OpenStreetMap" }),
