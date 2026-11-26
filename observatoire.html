@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Observatoire de l'emploi</title>
-  <meta name="description" content="Tableau de bord des offres d'emploi en marketing et digital : France Travail, sites d'emploi partenaires et Jobicy." />
+  <meta name="description" content="Tableau de bord des offres d'emploi en marketing et digital : France Travail, sites d'emploi partenaires et La bonne alternance." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
@@ -312,7 +312,7 @@
     <header class="top">
       <div>
         <h1>Observatoire du marché du travail</h1>
-        <p>Marketing et digital en France · France Travail, sites d'emploi partenaires, La bonne alternance et sites en accès libre</p>
+        <p>Marketing, digital et commerce dans sept zones · France Travail, sites partenaires et La bonne alternance</p>
       </div>
       <div class="meta">
         <span id="updated">Chargement…</span>
@@ -332,18 +332,6 @@
       </button>
       <button class="filter-btn" data-source="part" aria-pressed="false" disabled>
         <span class="dot" style="background:var(--src-part)"></span>Sites partenaires
-      </button>
-      <button class="filter-btn" data-source="jobicy" aria-pressed="false" disabled>
-        <span class="dot" style="background:var(--src-jobicy)"></span>Jobicy · télétravail
-      </button>
-      <button class="filter-btn" data-source="himalayas" aria-pressed="false" disabled>
-        <span class="dot" style="background:var(--src-himalayas)"></span>Himalayas
-      </button>
-      <button class="filter-btn" data-source="arbeitnow" aria-pressed="false" disabled>
-        <span class="dot" style="background:var(--src-arbeitnow)"></span>Arbeitnow
-      </button>
-      <button class="filter-btn" data-source="remotive" aria-pressed="false" disabled>
-        <span class="dot" style="background:var(--src-remotive)"></span>Remotive
       </button>
       <button class="filter-btn" data-source="lba" aria-pressed="false" disabled>
         <span class="dot" style="background:var(--src-lba)"></span>La bonne alternance
@@ -527,7 +515,7 @@
           </table></div>
           <h3>La collecte</h3>
           <ul>
-            <li>Chaque matin, une Action GitHub interroge l'API France Travail (23 codes ROME du marketing et du digital) et les API de La bonne alternance, Jobicy, Himalayas, Arbeitnow et Remotive, puis republie ce site.</li>
+            <li>Chaque matin, une Action GitHub interroge l'API France Travail (11 codes ROME, sept zones) et l'API La bonne alternance, puis republie ce site.</li>
             <li>La base est <b>cumulative</b> : une offre vue une fois reste comptée, même après son retrait. La date de première observation permet de suivre les nouvelles offres jour après jour.</li>
             <li>Les offres des « sites partenaires » viennent de l'API France Travail, qui rediffuse des annonces d'Indeed, Meteojob, DirectEmploi, PMEJob… avec le nom du site d'origine.</li>
             <li>Welcome to the Jungle et l'Apec ne sont pas collectés : leurs conditions d'utilisation interdisent la collecte automatique.</li>
@@ -535,11 +523,10 @@
           <h3>Le nettoyage</h3>
           <ul>
             <li><b>Salaire</b> : ramené en brut annuel (mensuel × 12, horaire × 1 607 h) ; pour une fourchette, le milieu ; hors de 4 000 – 250 000 € la valeur est écartée (saisie erronée). Seuls les salaires en euros sont gardés.</li>
-            <li><b>Contrat</b> : CDI ; CDD (y compris intérim et saisonnier) ; alternance/stage (apprentissage, professionnalisation, stage) ; autre. Les sites internationaux ne publient pas de contrat de droit français.</li>
-            <li><b>Télétravail</b> : mention du télétravail dans l'annonce, hors formulations négatives (« pas de télétravail ») ; 100 % pour les sites d'offres à distance.</li>
+            <li><b>Contrat</b> : CDI ; CDD (y compris intérim et saisonnier) ; alternance/stage (apprentissage, professionnalisation, stage) ; autre.</li>
+            <li><b>Télétravail</b> : mention du télétravail dans l'annonce, hors formulations négatives (« pas de télétravail »).</li>
             <li><b>Intitulés</b> : mentions (H/F) retirées, casse harmonisée, pour regrouper les mêmes postes.</li>
             <li><b>Doublons</b> : <span id="doublonsTxt">—</span></li>
-            <li><b>Périmètre des sites internationaux</b> : seules les offres dont l'intitulé relève du marketing, du contenu, de la communication ou du design sont gardées.</li>
           </ul>
           <h3>Les variables et leur nature</h3>
           <div class="table-wrap"><table>
@@ -556,7 +543,6 @@
           <h3>Les limites</h3>
           <ul>
             <li>Environ un salaire sur trois seulement est affiché dans les annonces : les salaires décrits ici sont ceux des offres qui en publient un, pas ceux de tout le marché.</li>
-            <li>Les sites internationaux apportent peu d'offres et presque aucun salaire en euros : leurs résultats reposent sur de petits effectifs.</li>
             <li>Avec plusieurs milliers d'offres, presque tous les tests sont significatifs : c'est la taille d'effet qui dit si un écart compte.</li>
             <li id="limiteFT"></li>
           </ul>
@@ -581,8 +567,7 @@
       <p id="perimetre"></p>
       <p>Sources : <a href="https://francetravail.io/data/api/offres-emploi">API Offres d'emploi de France Travail</a>
         (offres déposées sur francetravail.fr et offres de sites partenaires rediffusées par France Travail) ·
-        offres fournies par <a href="https://jobicy.com">Jobicy</a>, <a href="https://himalayas.app">Himalayas</a>,
-        <a href="https://www.arbeitnow.com">Arbeitnow</a>, <a href="https://remotive.com">Remotive</a> et <a href="https://labonnealternance.apprentissage.beta.gouv.fr">La bonne alternance</a>.
+        offres fournies par <a href="https://labonnealternance.apprentissage.beta.gouv.fr">La bonne alternance</a>.
         Mise à jour automatique chaque matin.</p>
     </footer>
   </div>
@@ -613,11 +598,6 @@
         aliases: ["france_travail", "francetravail", "france travail", "ft", "pole_emploi", "pôle emploi", "pole emploi"] },
       { id: "part",   label: "Sites partenaires",     short: "Partenaire",     colorVar: "--src-part",
         aliases: ["partenaires", "sites_partenaires", "sites partenaires", "partenaire"] },
-      { id: "jobicy", label: "Jobicy · télétravail",  short: "Jobicy",         colorVar: "--src-jobicy",
-        aliases: ["jobicy"] },
-      { id: "himalayas", label: "Himalayas", short: "Himalayas", colorVar: "--src-himalayas", aliases: ["himalayas"] },
-      { id: "arbeitnow", label: "Arbeitnow", short: "Arbeitnow", colorVar: "--src-arbeitnow", aliases: ["arbeitnow"] },
-      { id: "remotive",  label: "Remotive",  short: "Remotive",  colorVar: "--src-remotive",  aliases: ["remotive"] },
       { id: "lba", label: "La bonne alternance", short: "Alternance", colorVar: "--src-lba", aliases: ["lba"] }
     ];
     const CONTRACTS = [
