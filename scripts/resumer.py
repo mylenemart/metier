@@ -30,6 +30,7 @@ import requests
 RACINE = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(RACINE / "scripts"))
 from extraire import METIERS  # noqa: E402  (la liste des métiers vit dans un seul fichier)
+from zone import ZONES, departement, region  # noqa: E402
 
 # Les outils et compétences que l'on cherche dans les annonces : c'est VOTRE grille, adaptez-la.
 # Chaque entrée : libellé affiché -> variantes cherchées (mot entier, insensible à la casse).
@@ -209,14 +210,6 @@ def salaire_min_max(lib):
     return (round(min(vals)), round(max(vals))) if vals else (None, None)
 
 
-def departement(lieu):
-    cp = lieu.get("codePostal") or ""
-    if cp[:2].isdigit() and cp != "99999":
-        return "2A" if cp[:2] == "20" and cp < "20200" else ("2B" if cp[:2] == "20" else cp[:2])
-    m = re.match(r"\s*(\d{2}|2A|2B)\s*-", lieu.get("libelle") or "")
-    return m.group(1) if m else ""
-
-
 class Geocodeur:
     """Centre des communes et villes principales des départements, via geo.api.gouv.fr, avec cache."""
 
@@ -278,7 +271,7 @@ def main():
         raise SystemExit("Aucune extraction : lancez d'abord scripts/extraire.py")
     jour = jours[-1].stem
     with jours[-1].open(encoding="utf-8") as f:
-        actives = [(r["rome"], r["id"]) for r in csv.DictReader(f)]
+        actives = [(r["rome"], r["id"]) for r in csv.DictReader(f) if r["rome"] in METIERS]
     ids_actifs = {i for _, i in actives}
 
     # Dernière version connue de chaque offre active (les fichiers sont lus dans l'ordre des mois).
@@ -290,14 +283,21 @@ def main():
                     v = json.loads(ligne)
                     if v["id"] in ids_actifs:
                         versions[v["id"]] = v
-    nb_versions = sum(1 for f in (RACINE / "data" / "brut").glob("*/*.jsonl")
-                      for l in f.open(encoding="utf-8") if l.strip())
+    # Zone de chaque offre connue (dernière version), et nombre de versions dans le périmètre.
+    zones, nb_versions = {}, 0
+    for f in sorted((RACINE / "data" / "brut").glob("*/*.jsonl")):
+        with f.open(encoding="utf-8") as fh:
+            for ligne in fh:
+                if ligne.strip():
+                    v = json.loads(ligne)
+                    zones[v["id"]] = region(v["offre"].get("lieuTravail") or {})
+                    nb_versions += bool(v["rome"] in METIERS and zones[v["id"]])
 
     geo = Geocodeur()
     offres = []
     for rome, oid in actives:
         v = versions.get(oid)
-        if not v:
+        if not v or not zones.get(oid):
             continue
         o = v["offre"]
         lieu = o.get("lieuTravail") or {}
@@ -312,6 +312,7 @@ def main():
             "entreprise": (o.get("entreprise") or {}).get("nom"),
             "lieu": lieu.get("libelle"),
             "dep": departement(lieu),
+            "region": zones[oid],
             "lat": lat, "lon": lon, "prec": precision,
             "contrat": o.get("typeContrat"),
             "experience": o.get("experienceLibelle"),
@@ -336,16 +337,22 @@ def main():
         })
     geo.sauver()
 
-    # Série : par jour et par métier
-    serie = defaultdict(dict)
-    with (RACINE / "data" / "serie.csv").open(encoding="utf-8") as f:
-        for r in csv.DictReader(f):
-            serie[r["date"]][r["rome"]] = int(r["total"])
+    # Série : par jour et par métier, recomptée sur la zone suivie à partir des offres actives
+    # (data/serie.csv garde les totaux annoncés par l'API, France entière avant le changement).
+    serie = {}
+    for fichier in jours:
+        with fichier.open(encoding="utf-8") as f:
+            lignes = [r for r in csv.DictReader(f) if r["rome"] in METIERS]
+        compte = defaultdict(int)
+        for r in lignes:
+            compte[r["rome"]] += bool(zones.get(r["id"]))
+        serie[fichier.stem] = dict(compte)
 
     resume = {
         "date": jour,
         "source": "France Travail — API Offres d'emploi v2",
-        "requete": "une requête codeROME par métier, France entière",
+        "requete": "une requête codeROME par métier et par zone",
+        "regions": [[cle, lib] for cle, (lib, _, _) in ZONES.items()],
         "metiers": [{"code": c, "libelle": l, "groupe": g, "coche": k,
                      "actives": sum(1 for o in offres if o["rome"] == c)}
                     for c, (l, g, k) in METIERS.items()],
