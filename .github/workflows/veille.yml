@@ -5,7 +5,7 @@ name: veille
 
 on:
   schedule:
-    - cron: "0 5 * * *"       # 5 h UTC = 7 h à Paris en été (6 h en hiver) ; GitHub ne connaît que l'UTC
+    - cron: "23 4 * * *"      # 4 h 23 UTC = 5 h 23 à Paris en hiver, 6 h 23 en été ; GitHub peut démarrer en retard
   workflow_dispatch:          # et le bouton « Run workflow » pour lancer à la main
     inputs:
       sources:
@@ -31,6 +31,7 @@ jobs:
 
       # Si France Travail refuse la connexion, on continue : les autres sources sont collectées quand même.
       - name: Extraire les offres France Travail
+        id: france_travail
         continue-on-error: true
         env:
           # Les clés les plus récentes (3, puis 2) passent avant les anciennes
@@ -51,3 +52,10 @@ jobs:
           git add data
           git commit -m "veille : offres du $(date -u +%Y-%m-%d)" || echo "rien de nouveau"
           git push
+
+      # Les autres sources sont déjà enregistrées : on passe le lancement au rouge pour signaler la panne
+      - name: Signaler un échec France Travail
+        if: steps.france_travail.outcome == 'failure'
+        run: |
+          echo "::error::France Travail a échoué : les offres affichées ne sont pas à jour."
+          exit 1
