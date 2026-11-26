@@ -221,20 +221,7 @@ SITES_LIBRES = {
                   "description": "Offres d'entreprises européennes situées en France"},
     "remotive": {"libelle": "Remotive", "url": "https://remotive.com",
                  "description": "Offres marketing en télétravail ouvertes à la France ou à l'Europe"},
-    # Agrégateurs français : API officielles gratuites, avec une clé personnelle (secrets GitHub).
-    # Sans clé, la source est simplement ignorée.
-    "adzuna": {"libelle": "Adzuna", "url": "https://www.adzuna.fr",
-               "description": "Agrégateur d'offres françaises (nombreux sites d'emploi), via son API officielle",
-               "contrats": True},
-    "jooble": {"libelle": "Jooble", "url": "https://fr.jooble.org",
-               "description": "Agrégateur d'offres françaises, via son API officielle",
-               "contrats": True},
 }
-RECHERCHES_FR = {"marketing": 10, "communication": 3, "community manager": 2, "seo": 2,
-                 "e-commerce": 2, "chef de produit": 2, "marketing digital": 3}
-# Compte Adzuna en essai (25 appels au total) : 5 appels par collecte. Passer à None une fois
-# le compte activé (5 000 appels par mois) pour utiliser toutes les recherches ci-dessus.
-ADZUNA_RECHERCHES_ESSAI = {"marketing": 5}
 HIMALAYAS_RECHERCHES = {"marketing": 5, "seo": 1, "content": 1, "social media": 1, "e-commerce": 1}
 ZONES_FRANCE = re.compile(r"france|europe|emea|worldwide|anywhere|partout|paris", re.IGNORECASE)
 PERIODES = {"year": 1, "annual": 1, "yearly": 1, "month": 12, "monthly": 12, "hour": 1607, "hourly": 1607}
@@ -354,65 +341,7 @@ def collecter_remotive():
     return offres
 
 
-def collecter_adzuna():
-    """API Adzuna (https://developer.adzuna.com) : 50 offres par page, offres des 2 derniers jours."""
-    app_id, app_key = os.getenv("ADZUNA_APP_ID"), os.getenv("ADZUNA_APP_KEY")
-    if not app_id or not app_key:
-        print("Adzuna : pas de clé (secrets ADZUNA_APP_ID et ADZUNA_APP_KEY), source ignorée")
-        return {}
-    contrats = {"permanent": "CDI", "contract": "CDD"}
-    offres = {}
-    for q, pages in (ADZUNA_RECHERCHES_ESSAI or RECHERCHES_FR).items():
-        for page in range(1, pages + 1):
-            time.sleep(1)
-            try:
-                d = lire_json(f"https://api.adzuna.com/v1/api/jobs/fr/search/{page}?app_id={app_id}&app_key={app_key}"
-                              f"&results_per_page=50&max_days_old=2&what={urllib.parse.quote(q)}&content-type=application/json")
-            except urllib.error.HTTPError as e:  # quota épuisé ou clé refusée : on garde ce qui est déjà reçu
-                print(f"Adzuna : arrêt (HTTP {e.code}), {len(offres)} offres gardées")
-                return offres
-            res = d.get("results") or []
-            for j in res:
-                predit = str(j.get("salary_is_predicted")) == "1"  # salaire estimé par Adzuna : écarté
-                offres[f"adzuna-{j.get('id')}"] = offre_libre(
-                    "adzuna", j.get("id"), j.get("title"), (j.get("company") or {}).get("display_name"),
-                    contrats.get(j.get("contract_type")) or contrat_texte(j.get("title")),
-                    None if predit else salaire_euros(j.get("salary_min"), j.get("salary_max"), "EUR"),
-                    teletravail(f"{j.get('title') or ''} {j.get('description') or ''}"),
-                    j.get("created"), j.get("redirect_url"), (j.get("location") or {}).get("display_name"))
-            if len(res) < 50:
-                break
-    return offres
-
-
-def collecter_jooble():
-    """API Jooble (https://jooble.org/api/about) : requêtes POST, 20 offres par page."""
-    cle = os.getenv("JOOBLE_KEY")
-    if not cle:
-        print("Jooble : pas de clé (secret JOOBLE_KEY), source ignorée")
-        return {}
-    offres = {}
-    for q, pages in RECHERCHES_FR.items():
-        for page in range(1, min(pages, 5) + 1):
-            time.sleep(1)
-            corps = json.dumps({"keywords": q, "location": "France", "page": page}).encode()
-            req = urllib.request.Request(f"https://jooble.org/api/{cle}", data=corps,
-                                         headers={"Content-Type": "application/json", "User-Agent": USER_AGENT})
-            with urllib.request.urlopen(req, timeout=30) as r:
-                jobs = json.loads(r.read().decode("utf-8")).get("jobs") or []
-            for j in jobs:
-                offres[f"jooble-{j.get('id')}"] = offre_libre(
-                    "jooble", j.get("id"), j.get("title"), j.get("company"),
-                    contrat_texte(f"{j.get('type') or ''} {j.get('title') or ''}"), salaire_remotive(j.get("salary")),
-                    teletravail(f"{j.get('title') or ''} {j.get('snippet') or ''}"),
-                    j.get("updated"), j.get("link"), j.get("location"))
-            if len(jobs) < 20:
-                break
-    return offres
-
-
-COLLECTEURS = {"himalayas": collecter_himalayas, "arbeitnow": collecter_arbeitnow, "remotive": collecter_remotive,
-               "adzuna": collecter_adzuna, "jooble": collecter_jooble}
+COLLECTEURS = {"himalayas": collecter_himalayas, "arbeitnow": collecter_arbeitnow, "remotive": collecter_remotive}
 
 
 def offres_collectees(slug):
@@ -752,7 +681,7 @@ def main(argv=None):
         "tranches_salaire": TRANCHES,
         "perimetre": f"Toutes les offres vues depuis le {debut} (les offres retirées restent comptées). "
                      "Métiers du marketing et du digital : 23 codes ROME pour France Travail et ses "
-                     "partenaires ; pour Adzuna et Jooble, recherches par mots-clés en France ; pour Jobicy, Himalayas, Arbeitnow et Remotive, offres ouvertes aux candidats "
+                     "partenaires ; pour Jobicy, Himalayas, Arbeitnow et Remotive, offres ouvertes aux candidats "
                      "en France dont l'intitulé relève du marketing, du contenu, de la communication ou du design.",
         "global": {**agreger(toutes, contrats_publies=True, jour=jour),
                    "nouvelles": sum(1 for o in toutes if o["premiere_vue"] in jours_collecte)},
