@@ -42,6 +42,8 @@ RACINE = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(RACINE / "scripts"))
 from resumer import salaire_min_max  # noqa: E402  (même lecture des salaires que la page principale)
 import labonnealternance  # noqa: E402
+from extraire import METIERS  # noqa: E402
+from zone import region, region_adresse  # noqa: E402
 
 SORTIE = RACINE / "data" / "observatoire.json"
 DOSSIER_JOBICY = RACINE / "data" / "jobicy"
@@ -135,6 +137,8 @@ def offres_france_travail():
             for ligne in fh:
                 if ligne.strip():
                     v = json.loads(ligne)
+                    if v["rome"] not in METIERS or not region(v["offre"].get("lieuTravail") or {}):
+                        continue
                     oid = v["id"]
                     premiere[oid] = min(premiere.get(oid, v["vu_le"]), v["vu_le"])
                     if oid not in versions or v["vu_le"] >= versions[oid]["vu_le"]:
@@ -216,15 +220,9 @@ def collecter_jobicy(jour):
 #   Arbeitnow  https://www.arbeitnow.com/blog/job-board-api   offres d'entreprises européennes (ATS)
 #   Remotive   https://remotive.com/api-documentation         offres marketing en télétravail
 SITES_LIBRES = {
-    "himalayas": {"libelle": "Himalayas", "url": "https://himalayas.app",
-                  "description": "Offres en télétravail ouvertes aux candidats basés en France"},
-    "arbeitnow": {"libelle": "Arbeitnow", "url": "https://www.arbeitnow.com",
-                  "description": "Offres d'entreprises européennes situées en France"},
-    "remotive": {"libelle": "Remotive", "url": "https://remotive.com",
-                 "description": "Offres marketing en télétravail ouvertes à la France ou à l'Europe"},
-    # Avec clé (LBA_API_KEY) ; déjà filtrée par code ROME, donc pas de filtre sur l'intitulé.
+    # Avec clé (LBA_API_KEY) ; interrogée par code ROME, puis limitée à la zone suivie.
     "lba": {"libelle": "La bonne alternance", "url": "https://labonnealternance.apprentissage.beta.gouv.fr",
-            "description": "Offres en alternance, hors France Travail", "contrats": True, "par_rome": True},
+            "description": "Offres en alternance, hors France Travail", "contrats": True},
 }
 HIMALAYAS_RECHERCHES = {"marketing": 5, "seo": 1, "content": 1, "social media": 1, "e-commerce": 1}
 ZONES_FRANCE = re.compile(r"france|europe|emea|worldwide|anywhere|partout|paris", re.IGNORECASE)
@@ -352,8 +350,7 @@ def collecter_lba():
             for oid, o in labonnealternance.collecter(deja - {None}).items()}
 
 
-COLLECTEURS = {"himalayas": collecter_himalayas, "arbeitnow": collecter_arbeitnow, "remotive": collecter_remotive,
-               "lba": collecter_lba}
+COLLECTEURS = {"lba": collecter_lba}
 
 
 def offres_collectees(slug):
@@ -602,8 +599,6 @@ def main(argv=None):
     jour, ft = offres_france_travail()
     # OBSERVATOIRE_SANS_COLLECTE=1 : on ne collecte que France Travail (test sans consommer les quotas)
     if not args.sans_jobicy and not os.getenv("OBSERVATOIRE_SANS_COLLECTE"):
-        fichier = collecter_jobicy(f"{date.today():%Y-%m-%d}")
-        print(f"Jobicy : {'collecte enregistrée dans ' + str(fichier.relative_to(RACINE)) if fichier else 'aucune offre récupérée, on garde la dernière collecte'}")
         aujourdhui = f"{date.today():%Y-%m-%d}"
         for slug, collecter in COLLECTEURS.items():
             try:
@@ -611,8 +606,6 @@ def main(argv=None):
                 print(f"{SITES_LIBRES[slug]['libelle']} : {'collecte enregistrée' if fichier else 'aucune offre'}")
             except (urllib.error.URLError, TimeoutError, ValueError, KeyError) as e:
                 print(f"{SITES_LIBRES[slug]['libelle']} : collecte impossible ({e}), on garde les précédentes")
-    jour_jobicy, jobicy = offres_jobicy()
-    jobicy = [o for o in jobicy if JOBICY_INTITULES.search(o["intitule"] or "")]
 
     directes = [o for o in ft if o["source"] == "france_travail"]
     partenaires = [o for o in ft if o["source"] == "partenaires"]
@@ -631,20 +624,10 @@ def main(argv=None):
             "sites": [{"nom": n, "nb": c} for n, c in sites.most_common(12)],
         },
     }
-    if jobicy:
-        sources["jobicy"] = {
-            **agreger(jobicy, contrats_publies=False, jour=jour_jobicy),
-            "libelle": "Jobicy",
-            "description": "Offres en télétravail ouvertes depuis la France : marketing, contenu, communication, design",
-            "date_collecte": jour_jobicy,
-            "credit": {"texte": "Offres en télétravail fournies par Jobicy", "url": "https://jobicy.com"},
-        }
-
-    libres, jours_collecte = [], [jour, jour_jobicy]
+    libres, jours_collecte = [], [jour]
     for slug, info in SITES_LIBRES.items():
         jour_site, offres = offres_collectees(slug)
-        if not info.get("par_rome"):
-            offres = [o for o in offres if JOBICY_INTITULES.search(o["intitule"] or "")]
+        offres = [o for o in offres if region_adresse(o.get("zone"))]
         if not offres:
             continue
         sources[slug] = {
@@ -656,7 +639,7 @@ def main(argv=None):
         libres += offres
         jours_collecte.append(jour_site)
 
-    toutes = directes + partenaires + jobicy + libres
+    toutes = directes + partenaires + libres
     debut = min(o["premiere_vue"] for o in toutes)
     par_jour = defaultdict(Counter)
     for o in toutes:
@@ -692,10 +675,10 @@ def main(argv=None):
         "tests": tests,
         "doublons_probables": doublons,
         "tranches_salaire": TRANCHES,
-        "perimetre": f"Toutes les offres vues depuis le {debut} (les offres retirées restent comptées). "
-                     "Métiers du marketing et du digital : 23 codes ROME pour France Travail et ses "
-                     "partenaires ; pour Jobicy, Himalayas, Arbeitnow et Remotive, offres ouvertes aux candidats "
-                     "en France dont l'intitulé relève du marketing, du contenu, de la communication ou du design.",
+        "perimetre": f"Toutes les offres vues depuis le {debut} dans la zone suivie (les offres retirées restent comptées). "
+                     "11 codes ROME du marketing, du digital et du commerce ; Île-de-France, Auvergne-Rhône-Alpes, "
+                     "Centre-Val de Loire, Occitanie, Loire-Atlantique, Nouvelle-Aquitaine et Hauts-de-France. "
+                     "Sources : France Travail, ses partenaires et La bonne alternance.",
         "global": {**agreger(toutes, contrats_publies=True, jour=jour),
                    "nouvelles": sum(1 for o in toutes if o["premiere_vue"] in jours_collecte)},
         "sources": sources,
@@ -708,7 +691,7 @@ def main(argv=None):
     print(f"Écrit : {SORTIE.relative_to(RACINE)} — {len(toutes)} offres depuis le {debut} "
           f"(+{resume['global']['nouvelles']} nouvelles) : France Travail {len(directes)}, "
           f"sites partenaires {len(partenaires)} ({', '.join(f'{n} {c}' for n, c in sites.most_common(4))}…), "
-          f"Jobicy {len(jobicy)}, autres sites {len(libres)}")
+          f"La bonne alternance {len(libres)}")
 
 
 if __name__ == "__main__":
