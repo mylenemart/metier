@@ -1,6 +1,6 @@
 {
- "date_maj": "2026-11-26",
- "date_france_travail": "2026-11-26",
+ "date_maj": "2026-11-27",
+ "date_france_travail": "2026-11-27",
  "depuis": "2026-09-22",
  "historique": [
   {
@@ -74,18 +74,27 @@
     "lba": 52
    },
    "cumul": 3283
+  },
+  {
+   "date": "2026-11-27",
+   "nouvelles": {
+    "france_travail": 33,
+    "partenaires": 74,
+    "lba": 3
+   },
+   "cumul": 3393
   }
  ],
  "tests": [
   {
    "test": "Chi² d'indépendance",
    "variables": "Origine de l'offre × type de contrat (CDI, CDD, alternance/stage)",
-   "n": 2863,
-   "statistique": "χ² = 106,0",
+   "n": 2962,
+   "statistique": "χ² = 114,1",
    "ddl": 2,
-   "p": 9.427874449547275e-24,
-   "effet": "V de Cramer = 0,19",
-   "effet_valeur": 0.192,
+   "p": 1.7052640740552817e-25,
+   "effet": "V de Cramer = 0,20",
+   "effet_valeur": 0.196,
    "effet_niveau": "petit",
    "condition": "effectifs attendus ≥ 5 dans toutes les cases",
    "tableau": {
@@ -100,14 +109,14 @@
     ],
     "valeurs": [
      [
-      45,
-      231,
-      633
+      46,
+      240,
+      652
      ],
      [
+      236,
       234,
-      231,
-      1489
+      1554
      ]
     ]
    }
@@ -115,12 +124,12 @@
   {
    "test": "Chi² d'indépendance",
    "variables": "Source × télétravail",
-   "n": 3283,
-   "statistique": "χ² = 13,9",
+   "n": 3393,
+   "statistique": "χ² = 18,9",
    "ddl": 2,
-   "p": 0.0009582998867254724,
+   "p": 7.926893947025635e-05,
    "effet": "V de Cramer = 0,07",
-   "effet_valeur": 0.065,
+   "effet_valeur": 0.075,
    "effet_niveau": "négligeable",
    "condition": "1 case(s) avec un effectif attendu < 5 : résultat à prendre avec prudence",
    "tableau": {
@@ -135,16 +144,16 @@
     ],
     "valeurs": [
      [
-      925,
+      958,
       83
      ],
      [
-      43,
-      9
+      44,
+      11
      ],
      [
-      2088,
-      135
+      2157,
+      140
      ]
     ]
    }
@@ -152,29 +161,29 @@
   {
    "test": "ANOVA à un facteur",
    "variables": "Source × salaire annuel brut (sources avec au moins 15 salaires)",
-   "n": 1344,
-   "statistique": "F(1 ; 1342) = 171,8",
-   "ddl": "1 ; 1342",
-   "p": 5.078916032243128e-37,
-   "effet": "êta² = 0,113",
-   "effet_valeur": 0.1135,
+   "n": 1396,
+   "statistique": "F(1 ; 1394) = 179,9",
+   "ddl": "1 ; 1394",
+   "p": 1.1463872058038422e-38,
+   "effet": "êta² = 0,114",
+   "effet_valeur": 0.1143,
    "effet_niveau": "moyen",
-   "condition": "suppose des salaires proches de la loi normale dans chaque groupe (France Travail : 653, Sites partenaires : 691) : ce n'est pas le cas (asymétrie positive), d'où le test de Kruskal-Wallis en contrôle"
+   "condition": "suppose des salaires proches de la loi normale dans chaque groupe (France Travail : 671, Sites partenaires : 725) : ce n'est pas le cas (asymétrie positive), d'où le test de Kruskal-Wallis en contrôle"
   },
   {
    "test": "Kruskal-Wallis",
    "variables": "Source × salaire annuel brut (sources avec au moins 15 salaires)",
-   "n": 1344,
-   "statistique": "H = 207,5",
+   "n": 1396,
+   "statistique": "H = 215,2",
    "ddl": 1,
-   "p": 4.743331475576526e-47,
-   "effet": "epsilon² = 0,155",
-   "effet_valeur": 0.1545,
+   "p": 1.0117700999949756e-48,
+   "effet": "epsilon² = 0,154",
+   "effet_valeur": 0.1543,
    "effet_niveau": "fort",
    "condition": "compare les rangs : ne suppose pas la normalité, adapté à des salaires asymétriques"
   }
  ],
- "doublons_probables": 793,
+ "doublons_probables": 841,
  "tranches_salaire": [
   0,
   5000,
@@ -200,38 +209,38 @@
  ],
  "perimetre": "Toutes les offres vues depuis le 2026-09-22 dans la zone suivie (les offres retirées restent comptées). 11 codes ROME du marketing, du digital et du commerce ; Île-de-France, Auvergne-Rhône-Alpes, Centre-Val de Loire, Occitanie, Loire-Atlantique, Nouvelle-Aquitaine et Hauts-de-France. Sources : France Travail, ses partenaires et La bonne alternance.",
  "global": {
-  "nb_offres": 3283,
-  "nouvelles": 2379,
-  "actives": 2402,
-  "jour_nouvelles": "2026-11-26",
+  "nb_offres": 3393,
+  "nouvelles": 110,
+  "actives": 2350,
+  "jour_nouvelles": "2026-11-27",
   "salaires": {
    "min": 4800,
    "max": 167292,
-   "mediane": 31399,
-   "moyenne": 35012,
-   "nb_renseignes": 1344,
+   "mediane": 31800,
+   "moyenne": 35172,
+   "nb_renseignes": 1396,
    "q1": 25500,
-   "q3": 41588,
-   "ecart_type": 14925,
-   "asymetrie": 2.06,
-   "aplatissement": 9.12,
+   "q3": 42500,
+   "ecart_type": 14889,
+   "asymetrie": 2.01,
+   "aplatissement": 8.79,
    "histogramme": [
     2,
     8,
     19,
     100,
-    180,
-    265,
-    248,
-    143,
-    70,
-    128,
-    57,
-    41,
-    23,
+    187,
+    273,
+    254,
+    153,
+    72,
+    131,
+    62,
+    49,
+    24,
     11,
-    18,
-    13,
+    19,
+    14,
     6,
     0,
     5,
@@ -240,21 +249,21 @@
    ]
   },
   "contrats": {
-   "CDI": 2122,
-   "CDD": 462,
-   "Alternance/Stage": 331,
-   "Autre": 368
+   "CDI": 2206,
+   "CDD": 474,
+   "Alternance/Stage": 337,
+   "Autre": 376
   },
   "contrats_publies": true,
   "teletravail": {
-   "nb": 227,
-   "part": 0.0691
+   "nb": 234,
+   "part": 0.069
   },
   "top_postes": [
    {
     "intitule": "Responsable de magasin de détail",
-    "nb": 96,
-    "salaire_median": 29496,
+    "nb": 109,
+    "salaire_median": 34800,
     "source": "partenaires",
     "site": "Meteojob"
    },
@@ -267,31 +276,31 @@
    },
    {
     "intitule": "Responsable de Magasin",
-    "nb": 51,
+    "nb": 54,
     "salaire_median": 30900,
     "source": "partenaires",
     "site": "Beetween"
    },
    {
+    "intitule": "Directeur / Directrice de magasin de détail",
+    "nb": 50,
+    "salaire_median": 36000,
+    "source": "partenaires",
+    "site": "Meteojob"
+   },
+   {
     "intitule": "Responsable commercial cabinet de recrutement",
-    "nb": 49,
+    "nb": 50,
     "salaire_median": 32700,
     "source": "partenaires",
     "site": "Meteojob"
    },
    {
     "intitule": "Responsable de magasin",
-    "nb": 44,
+    "nb": 45,
     "salaire_median": 32000,
     "source": "france_travail",
     "site": "France Travail"
-   },
-   {
-    "intitule": "Directeur / Directrice de magasin de détail",
-    "nb": 44,
-    "salaire_median": 36000,
-    "source": "partenaires",
-    "site": "Meteojob"
    },
    {
     "intitule": "Gérant de magasin franchisé",
@@ -322,18 +331,18 @@
     "site": "Meteojob"
    },
    {
+    "intitule": "Responsable adjoint de magasin",
+    "nb": 27,
+    "salaire_median": 33490,
+    "source": "partenaires",
+    "site": "Meteojob"
+   },
+   {
     "intitule": "Agent commercial indépendant",
     "nb": 26,
     "salaire_median": null,
     "source": "france_travail",
     "site": "France Travail"
-   },
-   {
-    "intitule": "Responsable adjoint de magasin",
-    "nb": 25,
-    "salaire_median": 33490,
-    "source": "partenaires",
-    "site": "Meteojob"
    },
    {
     "intitule": "Directeur agence - Franchise Camif Habitat",
@@ -344,15 +353,15 @@
    },
    {
     "intitule": "Responsable de boutique",
-    "nb": 22,
+    "nb": 23,
     "salaire_median": 28800,
     "source": "partenaires",
     "site": "Meteojob"
    },
    {
     "intitule": "Responsable commercial / commerciale",
-    "nb": 22,
-    "salaire_median": 48750,
+    "nb": 23,
+    "salaire_median": 50000,
     "source": "partenaires",
     "site": "Uptoo"
    }
@@ -360,34 +369,34 @@
  },
  "sources": {
   "france_travail": {
-   "nb_offres": 1008,
-   "nouvelles": 728,
-   "actives": 731,
-   "jour_nouvelles": "2026-11-26",
+   "nb_offres": 1041,
+   "nouvelles": 33,
+   "actives": 721,
+   "jour_nouvelles": "2026-11-27",
    "salaires": {
     "min": 10800,
     "max": 125000,
-    "mediane": 27500,
-    "moyenne": 29842,
-    "nb_renseignes": 653,
-    "q1": 22945,
-    "q3": 33000,
-    "ecart_type": 10808,
-    "asymetrie": 2.55,
-    "aplatissement": 12.62,
+    "mediane": 27600,
+    "moyenne": 29942,
+    "nb_renseignes": 671,
+    "q1": 23038,
+    "q3": 33336,
+    "ecart_type": 10824,
+    "asymetrie": 2.5,
+    "aplatissement": 12.15,
     "histogramme": [
      0,
      0,
      8,
      88,
-     134,
-     163,
-     125,
-     53,
+     139,
+     165,
+     129,
+     57,
      24,
      19,
      15,
-     10,
+     13,
      6,
      1,
      2,
@@ -400,20 +409,20 @@
     ]
    },
    "contrats": {
-    "CDI": 633,
-    "CDD": 231,
-    "Alternance/Stage": 45,
-    "Autre": 99
+    "CDI": 652,
+    "CDD": 240,
+    "Alternance/Stage": 46,
+    "Autre": 103
    },
    "contrats_publies": true,
    "teletravail": {
     "nb": 83,
-    "part": 0.0823
+    "part": 0.0797
    },
    "top_postes": [
     {
      "intitule": "Responsable de magasin",
-     "nb": 44,
+     "nb": 45,
      "salaire_median": 32000,
      "source": "france_travail",
      "site": "France Travail"
@@ -521,38 +530,38 @@
    "description": "Offres déposées directement sur francetravail.fr"
   },
   "partenaires": {
-   "nb_offres": 2223,
-   "nouvelles": 1599,
-   "actives": 1619,
-   "jour_nouvelles": "2026-11-26",
+   "nb_offres": 2297,
+   "nouvelles": 74,
+   "actives": 1578,
+   "jour_nouvelles": "2026-11-27",
    "salaires": {
     "min": 4800,
     "max": 167292,
-    "mediane": 35544,
-    "moyenne": 39898,
-    "nb_renseignes": 691,
-    "q1": 29130,
+    "mediane": 36000,
+    "moyenne": 40013,
+    "nb_renseignes": 725,
+    "q1": 29260,
     "q3": 48500,
-    "ecart_type": 16553,
-    "asymetrie": 1.77,
-    "aplatissement": 7.9,
+    "ecart_type": 16429,
+    "asymetrie": 1.73,
+    "aplatissement": 7.72,
     "histogramme": [
      2,
      8,
      11,
      12,
-     46,
-     102,
-     123,
-     90,
-     46,
-     109,
-     42,
-     31,
-     17,
+     48,
+     108,
+     125,
+     96,
+     48,
+     112,
+     47,
+     36,
+     18,
      10,
-     16,
-     11,
+     17,
+     12,
      5,
      0,
      4,
@@ -561,21 +570,21 @@
     ]
    },
    "contrats": {
-    "CDI": 1489,
-    "CDD": 231,
-    "Alternance/Stage": 234,
-    "Autre": 269
+    "CDI": 1554,
+    "CDD": 234,
+    "Alternance/Stage": 236,
+    "Autre": 273
    },
    "contrats_publies": true,
    "teletravail": {
-    "nb": 135,
-    "part": 0.0607
+    "nb": 140,
+    "part": 0.0609
    },
    "top_postes": [
     {
      "intitule": "Responsable de magasin de détail",
-     "nb": 96,
-     "salaire_median": 29496,
+     "nb": 109,
+     "salaire_median": 34800,
      "source": "partenaires",
      "site": "Meteojob"
     },
@@ -588,22 +597,22 @@
     },
     {
      "intitule": "Responsable de Magasin",
-     "nb": 51,
+     "nb": 54,
      "salaire_median": 30900,
      "source": "partenaires",
      "site": "Beetween"
     },
     {
-     "intitule": "Responsable commercial cabinet de recrutement",
-     "nb": 49,
-     "salaire_median": 32700,
+     "intitule": "Directeur / Directrice de magasin de détail",
+     "nb": 50,
+     "salaire_median": 36000,
      "source": "partenaires",
      "site": "Meteojob"
     },
     {
-     "intitule": "Directeur / Directrice de magasin de détail",
-     "nb": 44,
-     "salaire_median": 36000,
+     "intitule": "Responsable commercial cabinet de recrutement",
+     "nb": 50,
+     "salaire_median": 32700,
      "source": "partenaires",
      "site": "Meteojob"
     },
@@ -637,7 +646,7 @@
     },
     {
      "intitule": "Responsable adjoint de magasin",
-     "nb": 25,
+     "nb": 27,
      "salaire_median": 33490,
      "source": "partenaires",
      "site": "Meteojob"
@@ -651,21 +660,21 @@
     },
     {
      "intitule": "Responsable de boutique",
-     "nb": 22,
+     "nb": 23,
      "salaire_median": 28800,
      "source": "partenaires",
      "site": "Meteojob"
     },
     {
      "intitule": "Responsable commercial / commerciale",
-     "nb": 22,
-     "salaire_median": 48750,
+     "nb": 23,
+     "salaire_median": 50000,
      "source": "partenaires",
      "site": "Uptoo"
     },
     {
      "intitule": "Commercial",
-     "nb": 21,
+     "nb": 22,
      "salaire_median": 48500,
      "source": "partenaires",
      "site": "Beetween"
@@ -683,7 +692,7 @@
    "sites": [
     {
      "nom": "Meteojob",
-     "nb": 590
+     "nb": 630
     },
     {
      "nom": "DirectEmploi",
@@ -691,19 +700,19 @@
     },
     {
      "nom": "Beetween",
-     "nb": 206
+     "nb": 211
     },
     {
      "nom": "Distrijob",
-     "nb": 178
+     "nb": 181
     },
     {
      "nom": "PMEJob",
-     "nb": 138
+     "nb": 140
     },
     {
      "nom": "Xtramile",
-     "nb": 93
+     "nb": 94
     },
     {
      "nom": "We Recruit",
@@ -711,7 +720,7 @@
     },
     {
      "nom": "Grp Blachere",
-     "nb": 60
+     "nb": 61
     },
     {
      "nom": "Handicap Job",
@@ -723,7 +732,7 @@
     },
     {
      "nom": "Indeed",
-     "nb": 41
+     "nb": 49
     },
     {
      "nom": "Broadbean",
@@ -732,10 +741,10 @@
    ]
   },
   "lba": {
-   "nb_offres": 52,
-   "nouvelles": 52,
-   "actives": 52,
-   "jour_nouvelles": "2026-11-26",
+   "nb_offres": 55,
+   "nouvelles": 3,
+   "actives": 51,
+   "jour_nouvelles": "2026-11-27",
    "salaires": {
     "min": null,
     "max": null,
@@ -774,18 +783,25 @@
    "contrats": {
     "CDI": 0,
     "CDD": 0,
-    "Alternance/Stage": 52,
+    "Alternance/Stage": 55,
     "Autre": 0
    },
    "contrats_publies": true,
    "teletravail": {
-    "nb": 9,
-    "part": 0.1731
+    "nb": 11,
+    "part": 0.2
    },
    "top_postes": [
     {
      "intitule": "Apprenti Vendeur Ecole + Entreprise Titre Vcm Niveau Bac",
      "nb": 3,
+     "salaire_median": null,
+     "source": "lba",
+     "site": "La bonne alternance"
+    },
+    {
+     "intitule": "Community manager",
+     "nb": 2,
      "salaire_median": null,
      "source": "lba",
      "site": "La bonne alternance"
@@ -880,18 +896,11 @@
      "salaire_median": null,
      "source": "lba",
      "site": "La bonne alternance"
-    },
-    {
-     "intitule": "Apprenti Chargé de Développement Commercial - EHPAD",
-     "nb": 1,
-     "salaire_median": null,
-     "source": "lba",
-     "site": "La bonne alternance"
     }
    ],
    "libelle": "La bonne alternance",
    "description": "Offres en alternance, hors France Travail",
-   "date_collecte": "2026-11-26",
+   "date_collecte": "2026-11-27",
    "credit": {
     "texte": "Offres fournies par La bonne alternance",
     "url": "https://labonnealternance.apprentissage.beta.gouv.fr"
